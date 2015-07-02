@@ -1,0 +1,55 @@
+.ui-header{
+	width:100%;
+	text-align: center;
+	border:none;
+	>background-image: url(../img/app_header_bg.jpg);
+	background-repeat: repeat-x;
+}
+.ui-footer{
+	padding-top: 5px;
+	width:100%;
+	text-align: center;
+	border:none;
+	background-image: url(../img/app_header_bg.jpg);
+	background-repeat: repeat-x;
+	font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+	font-size: 50%;
+	height: 20px;
+	color: #C60;
+	vertical-align: middle;
+}
+
+.ui-btn{
+font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+}
+.ui-btn{
+	text-align: left;
+	}
+
+.ui-navbar{
+	margin-top: 10px;
+}
+
+
+.headline{
+	background-color: #8F9FA5;
+	width: 110%;
+	color: #FFF;
+	height: 21px;
+	margin-left: -15px;
+	padding-left: 15px;
+}
+
+.headline_blog{
+	background-color: #528DA0;
+	width: 110%;
+	color: #FFF;
+	height: 21px;
+	margin-left: -15px;
+	padding-left: 15px;
+}
+
+
+
+
+
