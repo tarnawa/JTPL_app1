@@ -53,6 +53,7 @@ function initializeMap() {
 		var pushpin= new Microsoft.Maps.Pushpin(map.getCenter(), null); 
         map.entities.push(pushpin);
 }
+//--------------------------------------------------------------------------------------------------------------------
 </script>
 <script>
 document.addEventListener("deviceready", function() {
@@ -71,12 +72,11 @@ document.addEventListener("deviceready", function() {
     navBar.setLogo("SomeImageFileFromResourcesOrURL.png")
     navBar.showLeftButton()
     navBar.showRightButton()
-												  });
+});
+//------------------------------------------------------------------------------------------------------------
+</script>
 
-
-
-
-//--------------------------------------------------------------------------------
+<script>
 function getData(barcode){
 //$('#search_item').on ("keyup", function () {
   searchitem=0812927532;
@@ -85,7 +85,6 @@ function getData(barcode){
   //$( "#cont" ).append( searchitem );
   
 //alert('this is: ' + barcode);
-
     $.ajax({
         type       : "POST",
         url: "http://www.jeffersonlibrary.net/pol3.php",
@@ -116,10 +115,6 @@ $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
   searchitem=0;
   searchitem= $('#search_item').val();
-  //searchitem='the';
-  //$( "#cont" ).append( searchitem );
-//alert('this is: ' + searchitem);
-
     $.ajax({
         type       : "POST",
         url: "http://www.jeffersonlibrary.net/pol2.php",
@@ -144,7 +139,6 @@ $('#search_item').on ("keyup", function () {
 
 });
 });
-       
 </script>
 
 
@@ -182,21 +176,12 @@ $('#search_item').on ("keyup", function () {
 
 <div data-role="page" id="catalog_search">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<h1>Hours</h1></div>
+<h1>Catalog Search</h1></div>
 <div data-role="ui-content" id="catalog_search_content">	
-
-<h2>Catalog Search:</h2>
-        <div class="app">
-            <div id="deviceready" class="blink">
-              <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-
-           <!-- <button onclick="getData()">Click me</button>-->
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
 
-<p id="info">Results will populate here</p>
+<p id="info">Results:</p>
 
         </div>
 		<script type="text/javascript">
