@@ -80,6 +80,7 @@ document.addEventListener("deviceready", function() {
 function getData(barcode){
 //$('#search_item').on ("keyup", function () {
   searchitem=0812927532;
+  //searchitem=2557;
   //searchitem= $('#search_item').val();
   //searchitem='the';
   //$( "#cont" ).append( searchitem );
@@ -129,7 +130,7 @@ $('#search_item').on ("keyup", function () {
             //console.error(JSON.stringify(response));
             //alert('Works!');
 			$( "#blist" ).empty();
-			$( "#blist" ).append(response);
+			$( "#blist" ).append(response).enhanceWithin();
         },
         error      : function() {
             console.error("error");
@@ -138,6 +139,38 @@ $('#search_item').on ("keyup", function () {
     });     
 
 });
+});
+</script>
+
+<script> 
+$(document).ready(function(){
+$(document).on('click', '.trail a', function () {
+ searchitem=$(this).attr("id");
+ //searchitem=2557;
+ // alert('this is' + contid + 'here');
+
+ $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/pol3.php",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$( "#bdetail" ).empty();
+			$( "#bdetail" ).append(response).enhanceWithin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+});     
 });
 </script>
 
@@ -157,13 +190,14 @@ $('#search_item').on ("keyup", function () {
 	
 	<a href="#catalog_search" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
     <a href="http://catalog.mainlib.org/Mobile/MyAccount/Logon" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
+    <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
     <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
     <a href="#direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
     <a href="#hours" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
     <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
     <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
     <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
-    <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
+    
 
     <div id="siteloader"></div>
 
@@ -181,18 +215,30 @@ $('#search_item').on ("keyup", function () {
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
 
-<p id="blist">Results:</p>
+<p id="blist"></p>
 
+</div>
         </div>
 		<script type="text/javascript">
           app.initialize();
         </script>
-
-
 </div>
 </div>
 
+<div data-role="page" id="bib_detail">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Bibliographical Detail</h1></div>
+<div data-role="ui-content" id="catalog_search_content">	
 
+<p id="bdetail"></p>
+
+</div>
+        </div>
+		<script type="text/javascript">
+          app.initialize();
+        </script>
+</div>
+</div>
 
 <div data-role="page" id="hours">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
