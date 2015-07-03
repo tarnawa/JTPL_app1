@@ -77,6 +77,7 @@ document.addEventListener("deviceready", function() {
 </script>
 
 <script>
+//BARCODE SCANNER
 function getData(barcode){
 //$('#search_item').on ("keyup", function () {
   searchitem=0812927532;
@@ -112,6 +113,7 @@ function getData(barcode){
 
 </script>
 <script> 
+//AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
   searchitem=0;
@@ -142,7 +144,8 @@ $('#search_item').on ("keyup", function () {
 });
 </script>
 
-<script> 
+<script>
+//AJAX to Book Detail
 $(document).ready(function(){
 $(document).on('click', '.trail a', function () {
  searchitem=$(this).attr("id");
@@ -151,7 +154,7 @@ $(document).on('click', '.trail a', function () {
 
  $.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/pol3.php",
+        url: "http://www.jeffersonlibrary.net/pol4.php",
         crossDomain: true,
         data: {val: searchitem},
 		//dataType   : 'json',
@@ -228,11 +231,10 @@ $(document).on('click', '.trail a', function () {
 <h1>Bibliographical Detail</h1></div>
 <div data-role="ui-content" id="catalog_search_content">	
 
-<p id="bdetail"></p>
+<div id="bdetail"></div>
 
 </div>
-        </div>
-
+</div>
 
 </div>
 
