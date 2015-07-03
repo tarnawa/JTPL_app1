@@ -98,8 +98,8 @@ function getData(barcode){
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('Works!');
-			$( "#info" ).empty();
-			$( "#info" ).append(response);
+			$( "#bcode" ).empty();
+			$( "#bcode" ).append(response);
         },
         error      : function() {
             console.error("error");
@@ -128,8 +128,8 @@ $('#search_item').on ("keyup", function () {
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('Works!');
-			$( "#info" ).empty();
-			$( "#info" ).append(response);
+			$( "#blist" ).empty();
+			$( "#blist" ).append(response);
         },
         error      : function() {
             console.error("error");
@@ -181,7 +181,7 @@ $('#search_item').on ("keyup", function () {
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
 
-<p id="info">Results:</p>
+<p id="blist">Results:</p>
 
         </div>
 		<script type="text/javascript">
@@ -277,7 +277,7 @@ Fax: 973-697-7051<br />
             <a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN</a>
             <a href="#" button class="ui-btn ui-corner-all" id="encode">ENCODE</a>
 
-          <p id="info">outside www</p>
+          <p id="bcode">Title in Library:</p>
 
         </div>  
 
