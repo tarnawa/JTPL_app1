@@ -114,27 +114,30 @@ function getData(barcode){
 <script> 
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
-  //searchitem=0;
+  searchitem=0;
   searchitem= $('#search_item').val();
   //searchitem='the';
   //$( "#cont" ).append( searchitem );
-alert('this is: ' + searchitem);
+//alert('this is: ' + searchitem);
 
     $.ajax({
         type       : "POST",
         url: "http://www.jeffersonlibrary.net/pol2.php",
         crossDomain: true,
-        beforeSend : function() {$.mobile.loading('show')},
-        complete   : function() {$.mobile.loading('hide')},
-        //data       : {username : 'subin', password : 'passwordx'},
         data: {val: searchitem},
 		//dataType   : 'json',
-        success    : function(response) {
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
             //console.error(JSON.stringify(response));
-            alert('Works!');
+            //alert('Works!');
+			$( "#info" ).empty();
+			$( "#info" ).append(response);
         },
         error      : function() {
-            //console.error("error");
+            console.error("error");
             alert('Not working!');                  
         }
     });     
@@ -182,23 +185,23 @@ alert('this is: ' + searchitem);
 <h1>Hours</h1></div>
 <div data-role="ui-content" id="catalog_search_content">	
 
-<h4>Catalog Search:</h4>
+<h2>Catalog Search:</h2>
         <div class="app">
-            <h2>ISBN Barcode Scanner</h2>
             <div id="deviceready" class="blink">
               <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-<p id="info">Results will populate here</p>
+
            <!-- <button onclick="getData()">Click me</button>-->
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
-<input name="button" id="button" value="button" type="button">
 
-          <p id="info">outside www</p>
+<p id="info">Results will populate here</p>
 
         </div>
-
+		<script type="text/javascript">
+          app.initialize();
+        </script>
 
 
 </div>
