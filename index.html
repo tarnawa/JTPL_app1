@@ -143,7 +143,6 @@ $('#search_item').on ("keyup", function () {
 });
 });
 </script>
-
 <script>
 //AJAX to Book Detail
 $(document).ready(function(){
@@ -192,7 +191,7 @@ $(document).on('click', '.trail a', function () {
 	<div data-role="ui-content" data-theme="a">
 	
 	<a href="#catalog_search" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
-    <a href="http://catalog.mainlib.org/Mobile/MyAccount/Logon" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
+    <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
     <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
     <a href="#direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
@@ -229,9 +228,27 @@ $(document).on('click', '.trail a', function () {
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
 <h1>Bibliographical Detail</h1></div>
-<div data-role="ui-content" id="catalog_search_content">	
+<div data-role="ui-content" id="bib_detail">	
 
 <div id="bdetail"></div>
+
+</div>
+</div>
+
+</div>
+
+<div data-role="page" id="login">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Login to your MAIN account</h1></div>
+<div data-role="ui-content" id="login_field">	
+
+<div data-role="fieldcontain">
+	         <label for="name">Library Card #:</label>
+	         <input type="text" name="name" id="name" value=""  /><br /><br />
+             <label for="name">PIN #:</label>
+	         <input type="text" name="name" id="name" value=""  />
+			</div>
+
 
 </div>
 </div>
@@ -315,13 +332,14 @@ Fax: 973-697-7051<br />
         <div class="app">
             <h2>ISBN Barcode Scanner</h2>
             <div id="deviceready" class="blink">
-              <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+             <!--<p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>-->
             </div>
-            <a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN</a>
-            <a href="#" button class="ui-btn ui-corner-all" id="encode">ENCODE</a>
+            <a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN ISBN CODE</a>
+            <!--<a href="#" button class="ui-btn ui-corner-all" id="encode">ENCODE</a>-->
 
-          <p id="bcode">Title in Library:</p>
+          <p>Title in Library:</p>
+          <p id="bcode"></p>
 
         </div>  
 
