@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
 <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans: 400normal,400italic,600normal,600italic,700normal,700italic,800normal,800italic|Roboto:400normal|Oswald:400normal|Lato:400normal|Source+Sans+Pro:400normal|Open+Sans+Condensed:300normal|Droid+Sans:400normal" type="text/css" />-->
 
-<script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
 		<script>
 		//allow jquery mobile cross domain communication (needs to be initialized befroe jquery mobile)
 		  $(document).bind("mobileinit", function(){
@@ -89,7 +89,7 @@ function getData(barcode){
 //alert('this is: ' + barcode);
     $.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=1",
+        url: "http://www.jeffersonlibrary.net/pol3.php",
         crossDomain: true,
         data: {val: searchitem},
 		//dataType   : 'json',
@@ -109,8 +109,9 @@ function getData(barcode){
         }
     });     
  };
-</script>
 
+
+</script>
 <script> 
 //AJAX to Book Search
 $(document).ready(function(){
@@ -119,7 +120,7 @@ $('#search_item').on ("keyup", function () {
   searchitem= $('#search_item').val();
     $.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
+        url: "http://www.jeffersonlibrary.net/pol2.php",
         crossDomain: true,
         data: {val: searchitem},
 		//dataType   : 'json',
@@ -131,17 +132,6 @@ $('#search_item').on ("keyup", function () {
             //console.error(JSON.stringify(response));
             //alert('Works!');
 			$( "#blist" ).empty();
-			
-			/*$.each( response.BibSearchRows, function( key, value ) {
-				$.each( response.BibSearchRows, function( key, value ) {
-  			//alert( key + ": " + value );
-			  if(value){
-			 $( "#blist" ).append("<li>" + key + ": " + value + "</li>");
-			  }
-			});											
-			});
-			*/
-			
 			$( "#blist" ).append(response).enhanceWithin();
         },
         error      : function() {
@@ -153,17 +143,17 @@ $('#search_item').on ("keyup", function () {
 });
 });
 </script>
-
 <script>
 //AJAX to Book Detail
 $(document).ready(function(){
 $(document).on('click', '.trail a', function () {
-searchitem=$(this).attr("id");
+ searchitem=$(this).attr("id");
  //searchitem=2557;
  // alert('this is' + contid + 'here');
+
  $.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=3",
+        url: "http://www.jeffersonlibrary.net/pol4.php",
         crossDomain: true,
         data: {val: searchitem},
 		//dataType   : 'json',
@@ -172,16 +162,9 @@ searchitem=$(this).attr("id");
 		timeout:60000,
 		cache: false,
         success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
 			$( "#bdetail" ).empty();
-
-			/*$.each( response.BibSearchRows[0], function( key, value ) {
-  			//alert( key + ": " + value );
-			  if(value){
-			  $( "#bdetail" ).append("<li>" + key + ": " + value + "</li>");
-			  }
-			});
-			//response=response.BibSearchRows[0].Title;
-			*/
 			$( "#bdetail" ).append(response).enhanceWithin();
         },
         error      : function() {
@@ -193,254 +176,6 @@ searchitem=$(this).attr("id");
 });
 </script>
 
-<script> 
-//AJAX to Patron Login
-$(document).ready(function(){
-//$('#loginsubmit').css({display: 'none'});
-$('#login').on('click', function(){
-$("#loginresponse").empty();
-$("#loginform .ui-btn").show();
-});
-var form = $('#loginform');	
-						   
-$('#loginsubmit').on ("click", function () {
-    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
-        crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var res_pat_id=response.PatronID;
-			//$( "#loginresponse" ).append(res_pat_id);
-			//this validates the Patron and returns the PatronID
-			//$(function(){
-			//putonhold();
-			//});
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    });     
-});
-});
-</script>
-
-<script>
-//Hold Request
-$(document).ready(function(){						   
-
-var form = $('#loginform');
-$(document).on('click', '.hold_req a', function () {
-cont_num=$(this).attr("id");
-$('#cn_holdreq').val(cont_num);
-});
-						   
-$('#loginsubmit').on ("click", function () {
-    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
-        crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var res_pat_id=response.PatronID;
-			var pat_barcode=response.PatronBarcode;
-			//alert('hello');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			putonhold(res_pat_id, cont_num, pat_barcode);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    });     
-});
-
-function putonhold(res_pat_id, cont_num, pat_barcode){
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=5",
-        crossDomain: true,
-        data: {ControlID: cont_num, PatronID: res_pat_id},
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var response=response.Message;
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			getholds(pat_barcode);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	}); 
-};//e putonhold function
-
-
-function getholds(pat_barcode){
-	//alert('this is' + pat_barcode + 'here');
-	searchitem1=pat_barcode;
-	searchitem2=$('#libpin').val();
-	
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
-        crossDomain: true,
-        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	}); 
-};//e getholds function
-
-});
-</script>
-
-<script>
-//Cancel Hold
-$(document).on('click', '.hold_id a', function () {
-hold_id=$(this).attr("id");	
-//alert('hold_id is' + hold_id + 'here');
-$( "#loginresponse" ).empty();
-$("#loginform .ui-btn").hide();
-var form = $('#loginform');
-
-    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
-        crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var PatronID= response.PatronID;
-			var pat_barcode=response.PatronBarcode;
-			//alert('hello from Ajax');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			cancelhold(PatronID, pat_barcode, hold_id);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    });     
-
-function cancelhold(PatronID, pat_barcode, hold_id){
-	//alert('this is cancelhold ' + pat_barcode + hold_id + 'here');
-	searchitem1=$('#libpin').val();
-	searchitem2=hold_id;
-	searchitem3=pat_barcode;
-	
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=6",
-        crossDomain: true,
-        data: {PatronBarcode:searchitem3, hold_id:searchitem2, libpin:searchitem1 },
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			getholds(pat_barcode) 
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	}); 
-};//e getholds function
-
-function getholds(pat_barcode){
-	//alert('this is getholds' + pat_barcode + 'here');
-	searchitem1=pat_barcode;
-	searchitem2=$('#libpin').val();
-	
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
-        crossDomain: true,
-        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	}); 
-};//e getholds function
-
-});
-</script>
 
 </head>
 <body>
@@ -508,16 +243,11 @@ function getholds(pat_barcode){
 <div data-role="ui-content" id="login_field">	
 
 <div data-role="fieldcontain">
-<form method="post" id="loginform" action="">
-	         <label for="libcard">Library Card #:</label>
-	         <input type="text" name="libcard" id="libcard" value=""  /><br />
-             <label for="libpin">PIN #:</label>
-	         <input type="text" name="libpin" id="libpin" value=""  /><br />
-             <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
-             <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
-</form>
-<div id="loginresponse"></div>		
-</div>
+	         <label for="name">Library Card #:</label>
+	         <input type="text" name="name" id="name" value=""  /><br /><br />
+             <label for="name">PIN #:</label>
+	         <input type="text" name="name" id="name" value=""  />
+			</div>
 
 
 </div>
