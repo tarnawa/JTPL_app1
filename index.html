@@ -148,6 +148,7 @@ function getData(barcode){
 //AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
+window.plugins.spinnerDialog.show();
   searchitem=0;
   searchitem= $('#search_item').val();
     $.ajax({
@@ -191,7 +192,8 @@ $('#search_item').on ("keyup", function () {
             console.error("error");
             alert('Not working!');                  
         }
-    });     
+    });
+	window.plugins.spinnerDialog.hide();
 
 });
 });
@@ -668,7 +670,7 @@ Fax: 973-697-7051<br />
 //window.showSpinner() = function(){
    // cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
 //};
-window.plugins.spinnerDialog.show();
+
 </script>
 
 
