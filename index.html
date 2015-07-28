@@ -500,8 +500,9 @@ function getholds(pat_barcode){
 
 <script>
 //Flashlight
-$(document).on('click', '#flashlight', function () {
-
+$(document).ready(function(){
+$('#flashlight').on('click', function () {
+alert('clicki');
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -517,8 +518,8 @@ window.plugins.flashlight.available(function(isAvailable) {
     alert("Flashlight not available on this device");
   }
 });
-
-}
+});
+});
 </script>
 
 
@@ -544,7 +545,7 @@ window.plugins.flashlight.available(function(isAvailable) {
     <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
     <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
     <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
-    <a href="#" id="flashlight" class="ui-btn ui-icon-star ui-btn-icon-left">Flashlight</a>
+    <a href="#" name="flashlight" id="flashlight" class="ui-btn ui-icon-star ui-btn-icon-left">Flashlight</a>
     
 
     <div id="siteloader"></div>
