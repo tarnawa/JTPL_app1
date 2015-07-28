@@ -12,7 +12,8 @@
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" source="plugins.cordova.io" />
-    <feature name="http://api.phonegap.com/1.0/device" />
+    <gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
+	<feature name="http://api.phonegap.com/1.0/device" />
     <feature name="debug-server" required="true">
         <param name="domain" value="http://debug.phonegap.com" />
         <param name="key" value="willoughby" />

@@ -32,11 +32,7 @@
 <!--<script src="js/barcodescanner.js"></script>-->
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=true"></script>-->
 
-<script>
-window.showSpinner() = function(){
-    cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
-};
-</script>
+
 
 <script>
 $(function() {
@@ -668,7 +664,12 @@ Fax: 973-697-7051<br />
 
 </div>
 </div>
-
+<script>
+//window.showSpinner() = function(){
+   // cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
+//};
+window.plugins.spinnerDialog.show();
+</script>
 
 
 </body>
