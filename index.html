@@ -144,11 +144,20 @@ function getData(barcode){
  };
 </script>
 
+<script>
+function start_spin(){
+window.plugins.spinnerDialog.show();
+}
+function stop_spin(){
+window.plugins.spinnerDialog.hide();
+}
+</script>
+
 <script> 
 //AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
-window.plugins.spinnerDialog.show();
+start_spin;
   searchitem=0;
   searchitem= $('#search_item').val();
     $.ajax({
@@ -186,7 +195,7 @@ window.plugins.spinnerDialog.show();
 				myhtml +="</td></tr></table>";
 				});
 				$( "#blist" ).append(myhtml);
-			window.plugins.spinnerDialog.hide();
+			stop_spin;
         },
         error      : function() {
             console.error("error");
@@ -525,7 +534,7 @@ function getholds(pat_barcode){
 <h1>Catalog Search</h1></div>
 <div data-role="ui-content" id="catalog_search_content">	
 
-<input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
+<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" />
 
 <div id="blist"></div>
 
@@ -555,9 +564,9 @@ function getholds(pat_barcode){
 <div data-role="fieldcontain">
 <form method="post" id="loginform" action="">
 	         <label for="libcard">Library Card #:</label>
-	         <input type="text" name="libcard" id="libcard" value=""  /><br />
+	         <input type="text" name="libcard" id="libcard" value=""  data-clear-btn="true"/><br />
              <label for="libpin">PIN #:</label>
-	         <input type="text" name="libpin" id="libpin" value=""  /><br />
+	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" /><br />
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
 </form>
@@ -665,15 +674,6 @@ Fax: 973-697-7051<br />
 
 </div>
 </div>
-<script>
-//window.showSpinner() = function(){
-   // cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
-//};
-
-
-
-</script>
-
 
 </body>
 </html>
