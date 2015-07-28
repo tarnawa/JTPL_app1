@@ -186,14 +186,13 @@ window.plugins.spinnerDialog.show();
 				myhtml +="</td></tr></table>";
 				});
 				$( "#blist" ).append(myhtml);
-			
+			window.plugins.spinnerDialog.hide();
         },
         error      : function() {
             console.error("error");
             alert('Not working!');                  
         }
     });
-
 
 });
 });
