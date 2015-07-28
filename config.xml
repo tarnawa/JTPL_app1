@@ -11,6 +11,7 @@
     <access origin="http://jeffersonlibrary.net/pol3.php" />
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" source="plugins.cordova.io" />
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="debug-server" required="true">
         <param name="domain" value="http://debug.phonegap.com" />
@@ -49,7 +50,6 @@
     <gap:splash gap:platform="ios" height="2208" src="res/screen/ios/Splash-2208x1242.png" width="1242" />
     <gap:splash gap:platform="ios" height="1242" src="res/screen/ios/Splash-1242x2208.png" width="2208" />
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
-	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" version="1.2.0" />
-    <engine name="android" spec="^4.0.2" />
+	<engine name="android" spec="^4.0.2" />
     <engine name="ios" spec="^3.8.0" />
 </widget>

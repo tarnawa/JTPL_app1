@@ -31,16 +31,19 @@
 <!--<script src="www/js/NavigationBar.js"></script>-->
 <!--<script src="js/barcodescanner.js"></script>-->
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=true"></script>-->
-<script>
-$(function() {
-    FastClick.attach(document.body);
-});
-</script>
+
 <script>
 window.showSpinner() = function(){
     cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
 };
 </script>
+
+<script>
+$(function() {
+    FastClick.attach(document.body);
+});
+</script>
+
 <script type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1"></script>
 <script>
 var map = null;
@@ -521,6 +524,7 @@ function getholds(pat_barcode){
 
 <div data-role="page" id="catalog_search">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+
 <h1>Catalog Search</h1></div>
 <div data-role="ui-content" id="catalog_search_content">	
 
