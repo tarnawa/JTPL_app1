@@ -37,7 +37,9 @@ $(function() {
 });
 </script>
 <script>
-window.plugins.spinnerDialog.show;
+window.showSpinner() = function(){
+    cordova.exec(null, null, 'SpinnerDialog', 'show', ['Ehi', 'You']);
+};
 </script>
 <script type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1"></script>
 <script>
@@ -180,7 +182,7 @@ $('#search_item').on ("keyup", function () {
 					}
 					}
 				});
-				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Put on Hold</a></p>";
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
 				myhtml +="</td></tr></table>";
 				});
 				$( "#blist" ).append(myhtml);
