@@ -147,9 +147,11 @@ function getData(barcode){
 <script>
 function start_spin(){
 window.plugins.spinnerDialog.show();
+//alert('startspin');
 }
 function stop_spin(){
 window.plugins.spinnerDialog.hide();
+//alert('stopspin');
 }
 </script>
 
@@ -157,7 +159,7 @@ window.plugins.spinnerDialog.hide();
 //AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
-start_spin;
+start_spin();
   searchitem=0;
   searchitem= $('#search_item').val();
     $.ajax({
@@ -195,7 +197,7 @@ start_spin;
 				myhtml +="</td></tr></table>";
 				});
 				$( "#blist" ).append(myhtml);
-			stop_spin;
+			stop_spin();
         },
         error      : function() {
             console.error("error");
