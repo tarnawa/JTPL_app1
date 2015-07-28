@@ -22,6 +22,7 @@
 		</script>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.mobile-1.4.5.js"></script>
+<script type='application/javascript' src='js/fastclick.js'></script>
 <script src="www/js/NavigationBar.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <!--<script type="text/javascript" src="www/js/barcodescanner.js"></script>-->
@@ -30,8 +31,14 @@
 <!--<script src="www/js/NavigationBar.js"></script>-->
 <!--<script src="js/barcodescanner.js"></script>-->
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=true"></script>-->
-
-
+<script>
+$(function() {
+    FastClick.attach(document.body);
+});
+</script>
+<script>
+window.plugins.spinnerDialog.show;
+</script>
 <script type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1"></script>
 <script>
 var map = null;
@@ -74,6 +81,31 @@ document.addEventListener("deviceready", function() {
     navBar.showRightButton()
 });
 //------------------------------------------------------------------------------------------------------------
+</script>
+<script>
+//run a blind query
+$(window).load(function() {
+$.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
+        crossDomain: true,
+        data: {val: 'X'},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			//alert('hello');
+		//$( "#blist" ).append(response);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+
+});
 </script>
 
 <script>
@@ -129,20 +161,30 @@ $('#search_item').on ("keyup", function () {
 		cache: false,
         success : function(response) {
             //console.error(JSON.stringify(response));
-            //alert('Works!');
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
 			$( "#blist" ).empty();
+
+			var myhtml='';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Put on Hold</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#blist" ).append(myhtml);
 			
-			/*$.each( response.BibSearchRows, function( key, value ) {
-				$.each( response.BibSearchRows, function( key, value ) {
-  			//alert( key + ": " + value );
-			  if(value){
-			 $( "#blist" ).append("<li>" + key + ": " + value + "</li>");
-			  }
-			});											
-			});
-			*/
-			
-			$( "#blist" ).append(response).enhanceWithin();
         },
         error      : function() {
             console.error("error");
@@ -482,7 +524,7 @@ function getholds(pat_barcode){
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
 
-<p id="blist"></p>
+<div id="blist"></div>
 
 </div>
 </div>

@@ -1,3 +1,7 @@
+#blist img{
+	padding: 20px;
+	float: left;
+}
 .ui-header{
 	width:100%;
 	text-align: center;
