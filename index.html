@@ -254,10 +254,10 @@ searchitem=$(this).attr("id");
 //AJAX to Patron Login
 $(document).ready(function(){
 //$('#loginsubmit').css({display: 'none'});
-$('#login').on('click', function(){
-$("#loginresponse").empty();
-$("#loginform .ui-btn").show();
-});
+//$('#login').on('click', function(){
+//$("#loginresponse").empty();
+//$("#loginform .ui-btn").show();
+//});
 var form = $('#loginform');	
 						   
 $('#loginsubmit').on ("click", function () {
@@ -274,14 +274,20 @@ $('#loginsubmit').on ("click", function () {
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('Works!');
-			$( "#loginresponse" ).empty();
+			$("#loginresponse").empty();
 			var response= jQuery.parseJSON(response);
 			var res_pat_id=response.PatronID;
-			//$( "#loginresponse" ).append(res_pat_id);
-			//this validates the Patron and returns the PatronID
-			//$(function(){
-			//putonhold();
-			//});
+			var valid_pat=response.ValidPatron;
+			var pat_barcode=response.Barcode;
+			
+			//$("#loginresponse").append(pat_barcode);
+			if(valid_pat==true){
+				login();
+			} else{
+			$("#loginresponse").append(valid_pat);
+			}
+			
+				
         },
         error      : function() {
             console.error("error");
@@ -504,7 +510,7 @@ function getholds(pat_barcode){
 $(document).ready(function(){
 $('#flashlight').on('click', function () {
 //alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
+//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -579,6 +585,13 @@ $(document).on('click', '#thesearch', function () {
 });
 </script>
 
+<script>
+function login(){
+	$.mobile.changePage("#inside");
+}
+
+</script>
+
 </head>
 <body>
 <!--<body onLoad="initializeMap()">-->
@@ -602,7 +615,7 @@ $(document).on('click', '#thesearch', function () {
     <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
     <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
     <div class="ui-grid-solo center">
-    <div class="flash"><input type="button" id="flashlight" value="Need some light? Click here."></div>
+    <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
     </div>
 
     <div id="siteloader"></div>
@@ -662,11 +675,28 @@ $(document).on('click', '#thesearch', function () {
 <div id="loginresponse"></div>		
 </div>
 
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="inside">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Your MAIN account</h1></div>
+
+
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently borrowed</h4>
+   			<div id="borrowed"></div>
+			</div>
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently on hold</h4>
+   			<div id="borrowed"></div>
+			</div>
 
 </div>
-</div>
 
-</div>
+
 
 <div data-role="page" id="hours">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
