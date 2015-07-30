@@ -504,6 +504,7 @@ function getholds(pat_barcode){
 $(document).ready(function(){
 $('#flashlight').on('click', function () {
 //alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -514,8 +515,9 @@ window.plugins.flashlight.available(function(isAvailable) {
     setTimeout(function() {
       window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
     }, 5000);
-
-  } else {
+	$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+  } 
+  else {
     alert("Flashlight not available on this device");
   }
 });
