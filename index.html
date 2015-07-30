@@ -510,13 +510,14 @@ window.plugins.flashlight.available(function(isAvailable) {
     // switch on
     window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
 
-    // switch off after 3 seconds
+    // switch off after 5 seconds
     setTimeout(function() {
       window.plugins.flashlight.switchOff();
-	  $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
-}
+	  }
+	  
 	  // success/error callbacks may be passed
     }, 5000);
+	$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
 
   } else {
     alert("Flashlight not available");
