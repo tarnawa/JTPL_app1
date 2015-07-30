@@ -512,11 +512,14 @@ window.plugins.flashlight.available(function(isAvailable) {
 
     // switch off after 3 seconds
     setTimeout(function() {
-      window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
+      window.plugins.flashlight.switchOff();
+	  $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+}
+	  // success/error callbacks may be passed
     }, 5000);
 
   } else {
-    alert("Flashlight not available on this device");
+    alert("Flashlight not available");
   }
 });
 });
