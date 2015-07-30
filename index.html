@@ -510,7 +510,7 @@ function getholds(pat_barcode){
 $(document).ready(function(){
 $('#flashlight').on('click', function () {
 //alert('clicky');
-//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -586,10 +586,10 @@ $(document).on('click', '#thesearch', function () {
 </script>
 
 <script>
+//logged-in page
 function login(){
 	$.mobile.changePage("#inside");
 }
-
 </script>
 
 </head>
@@ -682,6 +682,7 @@ function login(){
 
 <div data-role="page" id="inside">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Your MAIN account</h1></div>
 
 
