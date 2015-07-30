@@ -1,3 +1,18 @@
+.flash .ui-btn{
+	margin: 0 auto !important;
+	width:100%;
+	text-align: center;
+}
+.ui-grid-solo .flash .ui-btn{
+	background-color: #FFF7B7;
+}
+.ui-grid-solo .flash .ui-btn:hover{
+	background-color: #FDF000;
+}
+
+.home {
+	float: right;
+}
 .picbox{
 	background-color: #ECECFF;
 	font-family: Arial, Helvetica, sans-serif;

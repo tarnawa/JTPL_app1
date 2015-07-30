@@ -84,6 +84,7 @@ document.addEventListener("deviceready", function() {
 //------------------------------------------------------------------------------------------------------------
 </script>
 <script>
+//testquery
 //run a blind query
 $(window).load(function() {
 $.ajax({
@@ -160,7 +161,7 @@ window.plugins.spinnerDialog.hide();
 //AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
-start_spin();
+//start_spin();
   searchitem=0;
   searchitem= $('#search_item').val();
     $.ajax({
@@ -198,7 +199,7 @@ start_spin();
 				myhtml +="</td></tr></table>";
 				});
 				$( "#blist" ).append(myhtml);
-			stop_spin();
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
@@ -502,7 +503,7 @@ function getholds(pat_barcode){
 //Flashlight
 $(document).ready(function(){
 $('#flashlight').on('click', function () {
-alert('clicky');
+//alert('clicky');
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -512,7 +513,7 @@ window.plugins.flashlight.available(function(isAvailable) {
     // switch off after 3 seconds
     setTimeout(function() {
       window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
-    }, 3000);
+    }, 5000);
 
   } else {
     alert("Flashlight not available on this device");
@@ -522,6 +523,59 @@ window.plugins.flashlight.available(function(isAvailable) {
 });
 </script>
 
+<script>
+//get new publications
+$(document).on('click', '#thesearch', function () {
+//alert('SEARCH');
+//start_spin();
+  searchitem='x';
+  //searchitem= $('#search_item').val();
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=8",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			$( "#news" ).empty();
+
+			var myhtml='';
+			myhtml +='<H3>New Publications</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#news" ).append(myhtml);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+
+});
+</script>
 
 </head>
 <body>
@@ -536,7 +590,7 @@ window.plugins.flashlight.available(function(isAvailable) {
 
 	<div data-role="ui-content" data-theme="a">
 	
-	<a href="#catalog_search" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
+	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
     <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
     <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
@@ -545,8 +599,9 @@ window.plugins.flashlight.available(function(isAvailable) {
     <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
     <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
     <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
-   
-    <input name="flashlight" type="button" id="flashlight" value="Flashlight">
+    <div class="ui-grid-solo center">
+    <div class="flash"><input type="button" id="flashlight" value="Need some light? Click here."></div>
+    </div>
 
     <div id="siteloader"></div>
 
@@ -554,27 +609,30 @@ window.plugins.flashlight.available(function(isAvailable) {
 
 
 <div data-role="footer" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
-
 </div><!-- /page -->
 
 <div data-role="page" id="catalog_search">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-
+ 
 <h1>Catalog Search</h1></div>
+
 <div data-role="ui-content" id="catalog_search_content">	
 
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" />
 
 <div id="blist"></div>
 
+<div id="news"></div>
 </div>
 </div>
-		
+</div><!-- /page -->
 
-</div>
+
+
 
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Bibliographical Detail</h1></div>
 <div data-role="ui-content" id="bib_detail">	
 
@@ -678,6 +736,7 @@ Fax: 973-697-7051<br />
 
 <div data-role="page" id="scanner">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-star ui-btn-icon-right">Home</a></span>
 <h1>ISBN Scanner</h1></div>
 <div data-role="ui-content" id="scanner">
 
