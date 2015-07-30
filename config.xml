@@ -1,14 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.ryanw.barcodedemo" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>JTPL Scanner Demo</name>
+    <name>JTPL Library App</name>
     <description>
         Scans barcodes.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
     </author>
-    <access origin="http://jeffersonlibrary.net/pol2.php" />
-    <access origin="http://jeffersonlibrary.net/pol3.php" />
+    <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
