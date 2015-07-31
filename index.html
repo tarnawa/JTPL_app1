@@ -10,9 +10,7 @@
 <link rel="stylesheet" href="www/css/2014_app.css" type="text/css" />
 <link rel="stylesheet" href="www/css/JTPL_icons.min.css" />
 <link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
-<!--<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />-->
 
-<!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans: 400normal,400italic,600normal,600italic,700normal,700italic,800normal,800italic|Roboto:400normal|Oswald:400normal|Lato:400normal|Source+Sans+Pro:400normal|Open+Sans+Condensed:300normal|Droid+Sans:400normal" type="text/css" />-->
 
 <script src="js/jquery-1.11.2.min.js"></script>
 		<script>
@@ -34,16 +32,12 @@
 <!--<script src="www/js/NavigationBar.js"></script>-->
 <!--<script src="js/barcodescanner.js"></script>-->
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=true"></script>-->
-
-
 <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=false"> </script>-->
 
 
-//--------------------------------------------------------------------------------------------------------------------
-
 <script>
 $(document).ready(function(){
-$('#direction').on ("click", function () {
+$('#direction').on ("tap", function () {
 									   
 launchnavigator.navigate(
   [41.0204913,-74.5491630],
@@ -57,29 +51,9 @@ launchnavigator.navigate(
 
 });
 });
-//launchnavigator.navigate(destination, start, successCallback, errorCallback, options);
+
 </script>
 
-<script>
-/*document.addEventListener("deviceready", function() {
-    console.log("Cordova ready")
-    var navBar = cordova.require("cordova/plugin/iOSNavigationBar")
-    navBar.init()
-    navBar.create()
-    // or to apply a certain style (one of "Black", "BlackOpaque", "BlackTranslucent", "Default"):
-    navBar.create("BlackOpaque")
-    // or with a yellow tint color (note: parameters might be changed to one object in a later version)
-    navBar.create('BlackOpaque', {tintColorRgba: '255,255,0,255'})
-    navBar.hideLeftButton()
-    navBar.hideRightButton()
-    navBar.setTitle("My heading")
-    // or with a logo image
-    navBar.setLogo("SomeImageFileFromResourcesOrURL.png")
-    navBar.showLeftButton()
-    navBar.showRightButton()
-});*/
-//------------------------------------------------------------------------------------------------------------
-</script>
 <script>
 //testquery
 //run a blind query
