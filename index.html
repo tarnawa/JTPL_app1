@@ -503,7 +503,7 @@ function getholds(pat_barcode){
 <script>
 //Flashlight
 $(document).ready(function(){
-$('#flashlight').on('tap', function () {
+$('#flashlight').on('touchstart', function () {
 //alert('clicky');
 $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
 window.plugins.flashlight.available(function(isAvailable) {
