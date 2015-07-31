@@ -23,7 +23,8 @@
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.mobile-1.4.5.js"></script>
 <script type='application/javascript' src='js/fastclick.js'></script>
-<script src="www/js/NavigationBar.js"></script>
+<!--><script type='application/javascript' src='www/js/fastclick.js'></script>-->
+<!--><script src="www/js/NavigationBar.js"></script>-->
 <script type="text/javascript" src="cordova.js"></script>
 <!--<script type="text/javascript" src="www/js/barcodescanner.js"></script>-->
 <script type="text/javascript" src="js/index.js"></script>
@@ -31,14 +32,9 @@
 <!--<script src="www/js/NavigationBar.js"></script>-->
 <!--<script src="js/barcodescanner.js"></script>-->
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCQfhwvbq1h47rQz06EsEobEA4LCOm6BY&sensor=true"></script>-->
-<script>
-$(function() {
-    FastClick.attach(document.body);
-});
-</script>
-<script>
-window.plugins.spinnerDialog.show;
-</script>
+
+
+
 <script type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1"></script>
 <script>
 var map = null;
@@ -63,7 +59,7 @@ function initializeMap() {
 //--------------------------------------------------------------------------------------------------------------------
 </script>
 <script>
-document.addEventListener("deviceready", function() {
+/*document.addEventListener("deviceready", function() {
     console.log("Cordova ready")
     var navBar = cordova.require("cordova/plugin/iOSNavigationBar")
     navBar.init()
@@ -79,10 +75,11 @@ document.addEventListener("deviceready", function() {
     navBar.setLogo("SomeImageFileFromResourcesOrURL.png")
     navBar.showLeftButton()
     navBar.showRightButton()
-});
+});*/
 //------------------------------------------------------------------------------------------------------------
 </script>
 <script>
+//testquery
 //run a blind query
 $(window).load(function() {
 $.ajax({
@@ -143,10 +140,23 @@ function getData(barcode){
  };
 </script>
 
+<script>
+//spinner
+function start_spin(){
+window.plugins.spinnerDialog.show();
+//alert('startspin');
+}
+function stop_spin(){
+window.plugins.spinnerDialog.hide();
+//alert('stopspin');
+}
+</script>
+
 <script> 
 //AJAX to Book Search
 $(document).ready(function(){
 $('#search_item').on ("keyup", function () {
+//start_spin();
   searchitem=0;
   searchitem= $('#search_item').val();
     $.ajax({
@@ -161,37 +171,36 @@ $('#search_item').on ("keyup", function () {
 		cache: false,
         success : function(response) {
             //console.error(JSON.stringify(response));
-            //alert('Works!');
-
 			var response= jQuery.parseJSON(response);
 			//console.error(jQuery.parseJSON(response));
 			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
 			$( "#blist" ).empty();
-			
+
+			var myhtml='';
 				$.each(response.BibSearchRows, function(key, value) {
 					cont_no=value.ControlNumber;
 					ISBN=value.ISBN;
 					//$( "#blist" ).append('');
-					$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 				$.each(value, function(key2, value2) {
-					//if(value2!=''){
+					if(value2!=''){
 					if(jQuery.inArray( key2, selection )!== -1){
-					var bodylines=key2 + ": " + value2 + "<br>"
-					//var buffer[];
-					//buffer.push(key2 + ": " + value2);
-						
-					$( "#blist" ).append(key2 + ": " + value2 + "<br>");
-					}//}
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					}
 				});
-					$( "#blist" ).append("<li class='trail'><a id=" + cont_no + " href='#bib_detail'>Put on Hold</a></li><br>");
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
 				});
-			
+				$( "#blist" ).append(myhtml);
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
             alert('Not working!');                  
         }
-    });     
+    });
 
 });
 });
@@ -240,10 +249,10 @@ searchitem=$(this).attr("id");
 //AJAX to Patron Login
 $(document).ready(function(){
 //$('#loginsubmit').css({display: 'none'});
-$('#login').on('click', function(){
-$("#loginresponse").empty();
-$("#loginform .ui-btn").show();
-});
+//$('#login').on('click', function(){
+//$("#loginresponse").empty();
+//$("#loginform .ui-btn").show();
+//});
 var form = $('#loginform');	
 						   
 $('#loginsubmit').on ("click", function () {
@@ -260,14 +269,20 @@ $('#loginsubmit').on ("click", function () {
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('Works!');
-			$( "#loginresponse" ).empty();
+			$("#loginresponse").empty();
 			var response= jQuery.parseJSON(response);
 			var res_pat_id=response.PatronID;
-			//$( "#loginresponse" ).append(res_pat_id);
-			//this validates the Patron and returns the PatronID
-			//$(function(){
-			//putonhold();
-			//});
+			var valid_pat=response.ValidPatron;
+			var pat_barcode=response.Barcode;
+			
+			//$("#loginresponse").append(pat_barcode);
+			if(valid_pat==true){
+				login();
+			} else{
+			$("#loginresponse").append(valid_pat);
+			}
+			
+				
         },
         error      : function() {
             console.error("error");
@@ -485,9 +500,102 @@ function getholds(pat_barcode){
 });
 </script>
 
+<script>
+//Flashlight
+$(document).ready(function(){
+$('#flashlight').on('click', function () {
+//alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
+window.plugins.flashlight.available(function(isAvailable) {
+  if (isAvailable) {
+
+    // switch on
+    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
+
+    // switch off after 5 seconds
+    setTimeout(function() {
+     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
+    $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+	}, 5000);
+	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+  } 
+ else {
+    alert("Flashlight not available on this device");
+  }
+});
+});
+});
+</script>
+
+<script>
+//get new publications
+$(document).on('click', '#thesearch', function () {
+//alert('SEARCH');
+//start_spin();
+  searchitem='x';
+  //searchitem= $('#search_item').val();
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=8",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			$( "#news" ).empty();
+
+			var myhtml='';
+			myhtml +='<H3>New Publications</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#news" ).append(myhtml);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+
+});
+</script>
+
+<script>
+//logged-in page
+function login(){
+	$.mobile.changePage("#inside");
+}
+</script>
+
+<script>
+$(function() {
+    FastClick.attach(document.body);
+});
+</script>
 </head>
-<body>
-<!--<body onLoad="initializeMap()">-->
+<!--><body>-->
+<body onLoad="initializeMap()">
 
 <div data-role="page" data-theme="a" id="pageone">
 		
@@ -498,7 +606,7 @@ function getholds(pat_barcode){
 
 	<div data-role="ui-content" data-theme="a">
 	
-	<a href="#catalog_search" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
+	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
     <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
     <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
@@ -507,7 +615,9 @@ function getholds(pat_barcode){
     <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
     <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
     <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
-    
+    <div class="ui-grid-solo center">
+    <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
+    </div>
 
     <div id="siteloader"></div>
 
@@ -515,26 +625,30 @@ function getholds(pat_barcode){
 
 
 <div data-role="footer" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
-
 </div><!-- /page -->
 
 <div data-role="page" id="catalog_search">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+ 
 <h1>Catalog Search</h1></div>
+
 <div data-role="ui-content" id="catalog_search_content">	
 
-<input name="search_item" id="search_item" type="text" size="25" maxlength="25" />
+<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" />
 
 <div id="blist"></div>
 
+<div id="news"></div>
 </div>
 </div>
-		
+</div><!-- /page -->
 
-</div>
+
+
 
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Bibliographical Detail</h1></div>
 <div data-role="ui-content" id="bib_detail">	
 
@@ -553,20 +667,38 @@ function getholds(pat_barcode){
 <div data-role="fieldcontain">
 <form method="post" id="loginform" action="">
 	         <label for="libcard">Library Card #:</label>
-	         <input type="text" name="libcard" id="libcard" value=""  /><br />
+	         <input type="text" name="libcard" id="libcard" value=""  data-clear-btn="true"/><br />
              <label for="libpin">PIN #:</label>
-	         <input type="text" name="libpin" id="libpin" value=""  /><br />
+	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" /><br />
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
 </form>
 <div id="loginresponse"></div>		
 </div>
 
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="inside">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Your MAIN account</h1></div>
+
+
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently borrowed</h4>
+   			<div id="borrowed"></div>
+			</div>
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently on hold</h4>
+   			<div id="borrowed"></div>
+			</div>
 
 </div>
-</div>
 
-</div>
+
 
 <div data-role="page" id="hours">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
@@ -638,6 +770,7 @@ Fax: 973-697-7051<br />
 
 <div data-role="page" id="scanner">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-star ui-btn-icon-right">Home</a></span>
 <h1>ISBN Scanner</h1></div>
 <div data-role="ui-content" id="scanner">
 
@@ -663,8 +796,6 @@ Fax: 973-697-7051<br />
 
 </div>
 </div>
-
-
 
 </body>
 </html>

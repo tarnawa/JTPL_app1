@@ -13,6 +13,7 @@
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
+	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="plugins.cordova.io" />
 	<preference name="StatusBarOverlaysWebView" value="true" />
 	<preference name="StatusBarBackgroundColor" value="#000000" />
 	        <feature name="StatusBar">
