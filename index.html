@@ -23,7 +23,7 @@
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.mobile-1.4.5.js"></script>
 <script type='application/javascript' src='js/fastclick.js'></script>
-<script src="www/js/NavigationBar.js"></script>
+<!--><script src="www/js/NavigationBar.js"></script>-->
 <script type="text/javascript" src="cordova.js"></script>
 <!--<script type="text/javascript" src="www/js/barcodescanner.js"></script>-->
 <script type="text/javascript" src="js/index.js"></script>
@@ -58,7 +58,7 @@ function initializeMap() {
 //--------------------------------------------------------------------------------------------------------------------
 </script>
 <script>
-document.addEventListener("deviceready", function() {
+/*document.addEventListener("deviceready", function() {
     console.log("Cordova ready")
     var navBar = cordova.require("cordova/plugin/iOSNavigationBar")
     navBar.init()
@@ -74,7 +74,7 @@ document.addEventListener("deviceready", function() {
     navBar.setLogo("SomeImageFileFromResourcesOrURL.png")
     navBar.showLeftButton()
     navBar.showRightButton()
-});
+});*/
 //------------------------------------------------------------------------------------------------------------
 </script>
 <script>
@@ -588,8 +588,8 @@ function login(){
 </script>
 
 </head>
-<body>
-<!--<body onLoad="initializeMap()">-->
+<!--><body>-->
+<body onLoad="initializeMap()">
 
 <div data-role="page" data-theme="a" id="pageone">
 		
