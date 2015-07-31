@@ -23,6 +23,7 @@
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.mobile-1.4.5.js"></script>
 <script type='application/javascript' src='js/fastclick.js'></script>
+<script type='application/javascript' src='www/js/fastclick.js'></script>
 <!--><script src="www/js/NavigationBar.js"></script>-->
 <script type="text/javascript" src="cordova.js"></script>
 <!--<script type="text/javascript" src="www/js/barcodescanner.js"></script>-->
@@ -587,6 +588,11 @@ function login(){
 }
 </script>
 
+<script>
+$(function() {
+    FastClick.attach(document.body);
+});
+</script>
 </head>
 <!--><body>-->
 <body onLoad="initializeMap()">
@@ -790,11 +796,7 @@ Fax: 973-697-7051<br />
 
 </div>
 </div>
-<script>
-$(function() {
-    FastClick.attach(document.body);
-});
-</script>
+
 </body>
 </html>
 
