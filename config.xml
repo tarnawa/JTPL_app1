@@ -14,11 +14,6 @@
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
 	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="plugins.cordova.io" />
-	<preference name="StatusBarOverlaysWebView" value="true" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
-	<feature name="StatusBar">
-        <param name="ios-package" value="CDVStatusBar" onload="true" />
-        </feature>
 	<feature name="http://api.phonegap.com/1.0/device" />
     <feature name="debug-server" required="true">
         <param name="domain" value="http://debug.phonegap.com" />
