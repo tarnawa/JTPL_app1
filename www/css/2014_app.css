@@ -28,6 +28,16 @@
 .bibtbl{
 width: 100%;
 }
+
+#hours_content, #contact_content, #contact_direction{
+	margin-left: 15px;
+}
+#events_frame{
+	width: 100%;
+	height: 600px;
+	
+}
+
 .ui-header{
 	width:100%;
 	text-align: center;

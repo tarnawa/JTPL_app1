@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>JTPL APP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="www/js/jquery.mobile-1.4.5.css" type="text/css" />
+<link rel="stylesheet" href="www/css/2014_app.css" type="text/css" />
+<link rel="stylesheet" href="www/css/JTPL_icons.min.css" />
+<link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
+
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?&sensor=true"></script>
+<script type="text/javascript" src="js/gmaps.min.js"></script>
+
+<script>
+var map;
+    $(document).on("pageshow", "#direction", function () {
+
+      map = new GMaps({
+        div: '#map_canvas',
+        lat: 41.0205399,
+        lng: -74.5490396,
+		width: '100%',
+        height: '250px',
+		zoom: 15,
+        zoomControl: true,
+        zoomControlOpt: {
+            style: 'SMALL',
+            position: 'TOP_LEFT'
+        },
+        panControl: false
+      });
+	  
+	    map.addMarker({
+        lat: 41.0205399,
+        lng: -74.5490396,
+        title: 'JTPL',
+        infoWindow: {
+          content: '<p>Jefferson Township Public Library, 1031 Weldon Road, Oak Ridge, NJ 07438</p>'
+        }
+      });
+	  
+});
+
+</script>
+
+
+
+</head>
+<body>
+
+
+<div data-role="page" data-theme="a" id="pageone">
+
+        <div data-role="header" data-theme="a" data-position="fixed">
+        <img src="www/img/headerbar_app1000.jpg" width="100%">
+
+    </div>
+
+	<div data-role="ui-content" data-theme="a">
+	
+	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
+    <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
+    <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
+    <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
+    <a href="#direction" id="direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
+    <a href="#hours" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
+    <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
+    <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
+    <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
+    <div class="ui-grid-solo center">
+    <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
+    </div>
+
+    <div id="siteloader"></div>
+
+	</div>
+
+
+<div data-role="footer" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="catalog_search">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+ 
+<h1>Catalog Search</h1></div>
+
+<div data-role="ui-content" id="catalog_search_content">	
+
+<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" />
+
+<div id="blist"></div>
+
+<div id="news"></div>
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="bib_detail">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Bibliographical Detail</h1></div>
+<div data-role="ui-content" id="bib_detail">	
+
+<div id="bdetail"></div>
+
+</div>
+</div>
+
+</div>
+
+<div data-role="page" id="login">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Login to your MAIN account</h1></div>
+<div data-role="ui-content" id="login_field">	
+
+<div data-role="fieldcontain">
+<form method="post" id="loginform" action="">
+	         <label for="libcard">Library Card #:</label>
+	         <input type="text" name="libcard" id="libcard" value=""  data-clear-btn="true"/><br />
+             <label for="libpin">PIN #:</label>
+	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" /><br />
+             <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
+             <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
+</form>
+<div id="loginresponse"></div>		
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="inside">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Your MAIN account</h1></div>
+
+
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently borrowed</h4>
+   			<div id="borrowed"></div>
+			</div>
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently on hold</h4>
+   			<div id="borrowed"></div>
+			</div>
+
+</div>
+
+
+
+<div data-role="page" id="hours">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Hours</h1></div>
+<div data-role="ui-content" id="hours_content">	
+<p>Jefferson Township Public Library<br /> 
+1031 Weldon Rd. Oak Ridge, NJ 07438<br />
+Phone: 973-208-6244<br />
+Fax: 973-697-7051<br />
+</p>
+<h4>Opening Hours:</h4>
+<table>
+<tr><td width="143">Monday-Friday</td><td width="212">9:30-9:00</td></tr>
+<tr><td>Saturday</td><td>9:30-6:00</td></tr>
+<tr><td>Sunday</td><td>1-5</td></tr>
+</table>
+</p>
+<h4>Closing Days 2015:</h4>
+<table>
+<tr><td width="143">New Year's Day</td>	<td width="212">1-Jan</td></tr>
+<tr><td>President's Day</td><td>16-Feb</td></tr>
+<tr><td>Good Friday</td><td>3-Apr</td></tr>
+<tr><td>Easter Saturday</td><td>4-Apr</td></tr>
+<tr><td>Easter Sunday</td><td>5-Apr</td></tr>
+<tr><td>Mother's Day</td><td>10-May</td></tr>
+<tr><td>Memorial Day</td><td>25-May</td></tr>
+<tr><td>Father's Day</td><td>21-Jun</td></tr>
+<tr><td>Federal Holiday</td><td>3-Jul</td></tr>
+<tr><td>Independence Day</td><td>4-Jul</td></tr>
+<tr><td>Jefferson Day</td><td>July 11, open at 1:00 p.m.</td></tr>
+<tr><td>Labor Day</td><td>September 7</td></tr>
+<tr><td>Wednesday</td><td>November 25, close at 2:00 p.m.</td></tr>
+<tr><td>Thanksgiving Day</td><td>26-Nov   Friday	27-Nov</td></tr>
+<tr><td>Christmas Eve</td><td>24-Dec</td></tr>
+<tr><td>Christmas Day</td><td>25-Dec</td></tr>
+<tr><td>New Year's Eve</td><td>December 31, close at 1 p.m.</td></tr>
+<tr><td>New Year's Day</td><td>1-Jan-16</td></tr>
+</table>
+</ul>
+</p>
+</div>
+</div>
+
+<div data-role="page" id="contact">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Contact</h1></div>
+<div data-role="ui-content" id="contact_content">
+<p>Jefferson Township Public Library<br /> 
+1031 Weldon Rd. Oak Ridge, NJ 07438<br />
+Phone: <a href="tel:19732086244">973-208-6244</a><br />
+Fax: 973-697-7051<br />
+</p>
+<p><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Seth1_80.jpg" align="left" height="80" hspace="5" width="80" />Library Director: Seth Stephens<br />Phone: 973-208-6244&nbsp; Ext. 207<br /><a href="mailto:seth.stephens@jeffersonlibrary.net">Seth.Stephens@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Sandy_80.jpg" align="left" height="80" hspace="5" width="80" />Assistant Director and &nbsp;ILL Services:&nbsp;Sandy Cale<br /><a href="tel:+19732086244">Phone: 973-208-6244&nbsp; Ext. 204</a><br /><a href="mailto:Sandy.Cale@JeffersonLibrary.net">Sandy.Cale@JeffersonLibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Chris-O'Brien_80.jpg" align="left" height="80" hspace="5" width="80" />Adult Services and Reference: Christine O&rsquo;Brien<br />Phone: 973-208-6244&nbsp; Ext. 202<br /><a href="mailto:Chris.Obrien@Jeffersonlibrary.net">Chris.Obrien@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Pat1_80.jpg" align="left" height="80" hspace="5" width="80" />Main Desk Supervisor: Pat McGraw<br />Phone: 973-208-6244&nbsp; Ext.201<br /><a href="mailto:pat.mcgraw@jeffersonlibrary.net">Pat.Mcgraw@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Chris-Kabshura_80.jpg" align="left" height="80" hspace="5" width="80" />Children&rsquo;s Services: Christine Kabshura<br />Phone: 973-208-6244&nbsp; Ext. 206<br /><a href="mailto:christine.kabshura@jeffersonlibrary.net">christine.kabshura@jeffersonlibrary.net</a></p>
+</div>
+</div>
+
+<div data-role="page" id="direction">
+
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h1>Directions</h1></div>
+<div data-role="ui-content" id="contact_direction">
+
+
+<h4>Directions</h4>
+<div id="map_canvas"></div>	
+<p><font color="#ff0000" size="3">From Route 80</font>, take exit 34B for Route 15 North.&nbsp;Continue traveling North on Route 15 until the exit for Weldon Road, Oak Ridge, Milton. Follow Weldon Road through the Mahlon Dickerson Park Reservation.&nbsp; As you come out of the Reservation you will see the Jefferson Middle School on the right, followed by the Jefferson High School. The Library is the second driveway on the left after the High School. </p><p><font color="#ff0000" size="3">From Route 23</font>,&nbsp;exit at Oak Ridge Road in West Milford. Oak Ridge Road will become Berkshire Valley Road. At the first traffic light on Oak Ridge Road turn right on to Ridge Road.&nbsp; Follow Ridge Road for about 3 miles and turn left on to Russia Road.&nbsp; There will be signs for the Jefferson Township Municipal Complex.&nbsp;Follow Russia Road until it ends into Weldon Road. Turn right on to Weldon Road and travel about a half mile. The library is the next driveway on the right, once you pass Wiegand Farms.</p>
+<div><input type="button" id="dir_start" value="Show me the way to Jefferson Public Library!"></div>
+
+</div>
+</div>
+
+<div data-role="page" id="scanner">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-icon-star ui-btn-icon-right">Home</a></span>
+<h1>ISBN Scanner</h1></div>
+<div data-role="ui-content" id="scanner">
+
+
+        <div class="app">
+            <h2>ISBN Barcode Scanner</h2>
+            <div id="deviceready" class="blink">
+
+            </div>
+            <a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN ISBN CODE</a>
+
+
+          <p>Title in Library:</p>
+          <p id="bcode"></p>
+
+        </div>  
+
+		<script type="text/javascript">
+          app.initialize();
+        </script>
+
+
+</div>
+</div>
+
+</body>
+</html>
+
