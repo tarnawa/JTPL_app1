@@ -10,51 +10,38 @@
 <link rel="stylesheet" href="www/css/JTPL_icons.min.css" />
 <link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
 
+
+
+<script>
+		//allow jquery mobile cross domain communication (needs to be initialized befroe jquery mobile)
+		  $(document).bind("mobileinit", function(){
+		   $.support.cors 
+		  $.mobile.allowCrossDomainPages = true;
+		  });
+		</script>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.mobile-1.4.5.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?&sensor=true"></script>
 <script type="text/javascript" src="js/gmaps.min.js"></script>
+<script type='application/javascript' src='js/fastclick.js'></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
 
 <script>
-var map;
-    $(document).on("pageshow", "#direction", function () {
 
-      map = new GMaps({
-        div: '#map_canvas',
-        lat: 41.0205399,
-        lng: -74.5490396,
-		width: '100%',
-        height: '250px',
-		zoom: 15,
-        zoomControl: true,
-        zoomControlOpt: {
-            style: 'SMALL',
-            position: 'TOP_LEFT'
-        },
-        panControl: false
-      });
-	  
-	    map.addMarker({
-        lat: 41.0205399,
-        lng: -74.5490396,
-        title: 'JTPL',
-        infoWindow: {
-          content: '<p>Jefferson Township Public Library, 1031 Weldon Road, Oak Ridge, NJ 07438</p>'
-        }
-      });
-	  
-});
+{"PAPIErrorCode":0,"ErrorMessage":"","PatronHoldRequestsGetRows":[{"HoldRequestID":150,"BibID":4955,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The Abenaki","Author":"Landau, Elaine.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":151,"BibID":1053,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"12, 20 & 5; a doctor's year in Vietnam","Author":"Parrish, John A. (John Albert), 1939-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":152,"BibID":4481,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The AARP : America's most powerful lobby and the clash of generations","Author":"Morris, Charles R.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":153,"BibID":5466,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The bald eagle : free again!","Author":"Amato, Carol A.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":154,"BibID":2489,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th century","Author":"","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":155,"BibID":5606,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The snowman","Author":"Briggs, Raymond.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":156,"BibID":4744,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"ABC T-Rex","Author":"Most, Bernard.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":164,"BibID":5829,"ConstituentBibID":0,"StatusID":4,"StatusDescription":"Pending","Title":"Wild : from lost to found on the Pacific Crest Trail","Author":"Strayed, Cheryl, 1968-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":1,"QueueTotal":1,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":165,"BibID":5828,"ConstituentBibID":0,"StatusID":4,"StatusDescription":"Pending","Title":"Insurgent","Author":"Roth, Veronica.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":1,"QueueTotal":1,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":158,"BibID":2489,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th century","Author":"","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":159,"BibID":2489,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th century","Author":"","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":160,"BibID":2489,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th century","Author":"","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":157,"BibID":5094,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The abolitionists : the growth of a dissenting minority","Author":"Dillon, Merton Lynn, 1924-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":162,"BibID":2489,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th century","Author":"","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":161,"BibID":4744,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"ABC T-Rex","Author":"Most, Bernard.","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":163,"BibID":5094,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"The abolitionists : the growth of a dissenting minority","Author":"Dillon, Merton Lynn, 1924-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(-68400000-0500)\/","ExpirationDate":"\/Date(15566399000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":146,"BibID":1128,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"1-2-3 math : pre-math opportunities for working with young children","Author":"Warren, Jean, 1940-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(1416200400000-0500)\/","ExpirationDate":"\/Date(1431835199000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":147,"BibID":2557,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th-century fashion : the complete sourcebook","Author":"Peacock, John, 1943-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(1416200400000-0500)\/","ExpirationDate":"\/Date(1431835199000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":148,"BibID":2557,"ConstituentBibID":0,"StatusID":16,"StatusDescription":"Cancelled","Title":"20th-century fashion : the complete sourcebook","Author":"Peacock, John, 1943-","CallNumber":"","FormatID":1,"FormatDescription":"Book","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":0,"QueueTotal":0,"ActivationDate":"\/Date(1416200400000-0500)\/","ExpirationDate":"\/Date(1431835199000-0400)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false},{"HoldRequestID":149,"BibID":5488,"ConstituentBibID":0,"StatusID":4,"StatusDescription":"Pending","Title":"A painted house : a novel","Author":"Grisham, John.","CallNumber":"FIC GRI","FormatID":27,"FormatDescription":"Large Print","PickupBranchID":3,"PickupBranchName":"Branch A","PickupByDate":null,"QueuePosition":1,"QueueTotal":1,"ActivationDate":"\/Date(1437537600000-0400)\/","ExpirationDate":"\/Date(1453179599000-0500)\/","GroupName":"","ItemLevelHold":false,"BorrowByMail":false,"HasConstituentBib":false}]}'
+
+
+
 
 </script>
-
 
 
 </head>
 <body>
 
-
 <div data-role="page" data-theme="a" id="pageone">
-
         <div data-role="header" data-theme="a" data-position="fixed">
         <img src="www/img/headerbar_app1000.jpg" width="100%">
 
@@ -65,12 +52,12 @@ var map;
 	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
     <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
-    <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
+    <a href="#contact" class="ui-btn ui-icon-info ui-btn-icon-left">Contact</a>
     <a href="#direction" id="direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
     <a href="#hours" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
-    <a href="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
-    <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
-    <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
+    <a href="#events" id="events_btn" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
+    <a href="#the_latest" class="ui-btn ui-icon-eye ui-btn-icon-left">The Latest...</a>
+    <a href="#" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
     <div class="ui-grid-solo center">
     <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
     </div>
@@ -102,7 +89,7 @@ var map;
 
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Bibliographical Detail</h1></div>
 <div data-role="ui-content" id="bib_detail">	
 
@@ -115,6 +102,7 @@ var map;
 
 <div data-role="page" id="login">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Login to your MAIN account</h1></div>
 <div data-role="ui-content" id="login_field">	
 
@@ -127,7 +115,7 @@ var map;
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
 </form>
-<div id="loginresponse"></div>		
+		
 </div>
 
 </div>
@@ -137,8 +125,9 @@ var map;
 
 <div data-role="page" id="inside">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Your MAIN account</h1></div>
+
 
 
 <div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
@@ -147,8 +136,8 @@ var map;
 			</div>
 <div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
    			<h4>Items currently on hold</h4>
-   			<div id="borrowed"></div>
-			</div>
+<div id="loginresponse"></div>   			
+            </div>
 
 </div>
 
@@ -210,7 +199,6 @@ Fax: 973-697-7051<br />
 </div>
 
 <div data-role="page" id="direction">
-
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
 <h1>Directions</h1></div>
 <div data-role="ui-content" id="contact_direction">
@@ -219,14 +207,37 @@ Fax: 973-697-7051<br />
 <h4>Directions</h4>
 <div id="map_canvas"></div>	
 <p><font color="#ff0000" size="3">From Route 80</font>, take exit 34B for Route 15 North.&nbsp;Continue traveling North on Route 15 until the exit for Weldon Road, Oak Ridge, Milton. Follow Weldon Road through the Mahlon Dickerson Park Reservation.&nbsp; As you come out of the Reservation you will see the Jefferson Middle School on the right, followed by the Jefferson High School. The Library is the second driveway on the left after the High School. </p><p><font color="#ff0000" size="3">From Route 23</font>,&nbsp;exit at Oak Ridge Road in West Milford. Oak Ridge Road will become Berkshire Valley Road. At the first traffic light on Oak Ridge Road turn right on to Ridge Road.&nbsp; Follow Ridge Road for about 3 miles and turn left on to Russia Road.&nbsp; There will be signs for the Jefferson Township Municipal Complex.&nbsp;Follow Russia Road until it ends into Weldon Road. Turn right on to Weldon Road and travel about a half mile. The library is the next driveway on the right, once you pass Wiegand Farms.</p>
-<div><input type="button" id="dir_start" value="Show me the way to Jefferson Public Library!"></div>
+<div><input type="button" id="dir_start" value="Let my Smart Phone show me the way to JTPL!"></div>
 
 </div>
 </div>
+
+<div data-role="page" id="events">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Library Events</h1></div>
+<div data-role="ui-content" id="event_content">
+
+<iframe id="events_frame" frameborder="0" src="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php"></iframe>
+
+</div>
+</div>
+
+<div data-role="page" id="the_latest">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Library Events</h1></div>
+<div data-role="ui-content" id="the_latest_content">
+
+<iframe id="the_latest_frame" frameborder="0" src="http://jeffersonlibrary.net/incl_m/blog_m.php"></iframe>
+
+</div>
+</div>
+
 
 <div data-role="page" id="scanner">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-star ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>ISBN Scanner</h1></div>
 <div data-role="ui-content" id="scanner">
 

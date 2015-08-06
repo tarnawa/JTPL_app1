@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="www/css/JTPL_icons.min.css" />
 <link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
 
-
-
 <script>
 		//allow jquery mobile cross domain communication (needs to be initialized befroe jquery mobile)
 		  $(document).bind("mobileinit", function(){
@@ -26,7 +24,6 @@
 <script type='application/javascript' src='js/fastclick.js'></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-
 
 <script>
 //google map
@@ -173,7 +170,7 @@ $('#search_item').on ("keyup", function () {
             //console.error(JSON.stringify(response));
 			var response= jQuery.parseJSON(response);
 			//console.error(jQuery.parseJSON(response));
-			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
 			$( "#blist" ).empty();
 
 			var myhtml='';
@@ -213,8 +210,10 @@ $(document).on('click', '.trail a', function () {
 searchitem=$(this).attr("id");
  //searchitem=2557;
  // alert('this is' + contid + 'here');
- $.ajax({
-        type       : "POST",
+var mybib_detail='';
+
+$.ajax({
+        type : "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=3",
         crossDomain: true,
         data: {val: searchitem},
@@ -224,17 +223,34 @@ searchitem=$(this).attr("id");
 		timeout:60000,
 		cache: false,
         success : function(response) {
+			
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
 			$( "#bdetail" ).empty();
 
-			/*$.each( response.BibSearchRows[0], function( key, value ) {
-  			//alert( key + ": " + value );
-			  if(value){
-			  $( "#bdetail" ).append("<li>" + key + ": " + value + "</li>");
-			  }
-			});
-			//response=response.BibSearchRows[0].Title;
-			*/
-			$( "#bdetail" ).append(response).enhanceWithin();
+			var mybib_detail='';
+			mybib_detail +='<H3>Title Detail</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					mybib_detail +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					mybib_detail += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				mybib_detail +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+				mybib_detail +="</td></tr></table>";
+				
+				});
+				$( "#bdetail" ).append(mybib_detail);
+			//stop_spin();
+			
         },
         error      : function() {
             console.error("error");
@@ -255,7 +271,7 @@ $(document).ready(function(){
 //});
 var form = $('#loginform');	
 						   
-$('#loginsubmit').on ("click", function () {
+$('#loginsubmitxx').on ("click", function () {
     $.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
@@ -294,16 +310,22 @@ $('#loginsubmit').on ("click", function () {
 </script>
 
 <script>
-//Hold Request
+//Hold Request and/or Login
 $(document).ready(function(){						   
 
-var form = $('#loginform');
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
 });
-						   
+
+
+
 $('#loginsubmit').on ("click", function () {
+var form = $('#loginform');
+//check if from hold req
+var hold;
+if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
+								 
     $.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
@@ -315,16 +337,17 @@ $('#loginsubmit').on ("click", function () {
 		timeout:60000,
 		cache: false,
         success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
+           
+			//$( "#loginresponse" ).empty();
 			var response= jQuery.parseJSON(response);
 			var res_pat_id=response.PatronID;
 			var pat_barcode=response.PatronBarcode;
-			//alert('hello');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			putonhold(res_pat_id, cont_num, pat_barcode);
+			var valid_pat=response.ValidPatron;
+
+			
+			if(hold){putonhold(res_pat_id, cont_num, pat_barcode);
+			$('#cn_holdreq').val("");
+			}else{getholds(pat_barcode);}
         },
         error      : function() {
             console.error("error");
@@ -334,7 +357,8 @@ $('#loginsubmit').on ("click", function () {
 });
 
 function putonhold(res_pat_id, cont_num, pat_barcode){
-	    $.ajax({
+	    
+		$.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=5",
         crossDomain: true,
@@ -347,9 +371,10 @@ function putonhold(res_pat_id, cont_num, pat_barcode){
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('Works!');
-			$( "#loginresponse" ).empty();
+			//$( "#loginresponse" ).empty();
 			var response= jQuery.parseJSON(response);
-			var response=response.Message;
+			//var response=response.Message;
+			//alert('ajax 5 is done!');
 			//$( "#loginresponse" ).append(response);
 			//this validates the Patron and returns the PatronID
 			getholds(pat_barcode);
@@ -361,12 +386,12 @@ function putonhold(res_pat_id, cont_num, pat_barcode){
     	}); 
 };//e putonhold function
 
-
 function getholds(pat_barcode){
 	//alert('this is' + pat_barcode + 'here');
 	searchitem1=pat_barcode;
 	searchitem2=$('#libpin').val();
-	
+	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
+	$.mobile.changePage("#inside");
 	    $.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
@@ -379,30 +404,126 @@ function getholds(pat_barcode){
 		cache: false,
         success : function(response) {
             //console.error(JSON.stringify(response));
-            //alert('Works!');
+            //alert('7 has a response');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_holds='';
+			var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID'];
 			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_holds += key2 + ": " + value2 + "<br>";
+						}
+
+					if(key2=="HoldRequestID"){
+					hold_req_id=value2;
+					//alert("this is" + hold_req_id + "here");
+					}
+
+					}
+					}
+									   
+				});
+				my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
+				my_holds +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#loginresponse" ).append(my_holds);
+
         },
         error      : function() {
             console.error("error");
             alert('Not working!');                  
         }
-    	}); 
+    }); 
 };//e getholds function
 
+//get items out function
+function getitemsout(pat_barcode){
+	//alert('this is' + pat_barcode + 'here');
+	searchitem1=pat_barcode;
+	searchitem2=$('#libpin').val();
+	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
+	$.mobile.changePage("#inside");
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=9",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('7 has a response');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_borrow='';
+			var hold_selection= ['Title', 'Author', 'DueDate', 'Barcode'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_borrow +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_borrow += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_borrow += key2 + ": " + value2 + "<br>";
+						}
+
+					if(key2=="HoldRequestID"){
+					hold_req_id=value2;
+					//alert("this is" + hold_req_id + "here");
+					}
+
+					}
+					}
+									   
+				});
+				my_borrow +="<p class='extend_item'><a id=" + hold_req_id + " href='#inside'>Do something</a></p>";
+				my_borrow +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#borrowed" ).append(my_borrow);
+
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    }); 
+};//e get items out function
 });
 </script>
 
 <script>
 //Cancel Hold
-$(document).on('click', '.hold_id a', function () {
+$(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
 //alert('hold_id is' + hold_id + 'here');
-$( "#loginresponse" ).empty();
-$("#loginform .ui-btn").hide();
+//$( "#loginresponse" ).empty();
+//$("#loginform .ui-btn").hide();
 var form = $('#loginform');
 
     $.ajax({
@@ -457,7 +578,7 @@ function cancelhold(PatronID, pat_barcode, hold_id){
 			//var response=response.Message;
 			//$( "#loginresponse" ).append(response);
 			//this validates the Patron and returns the PatronID
-			getholds(pat_barcode) 
+			getholds2(pat_barcode, hold_id) 
         },
         error      : function() {
             console.error("error");
@@ -466,11 +587,10 @@ function cancelhold(PatronID, pat_barcode, hold_id){
     	}); 
 };//e getholds function
 
-function getholds(pat_barcode){
-	//alert('this is getholds' + pat_barcode + 'here');
+function getholds2(pat_barcode, hold_id){
+	//alert('this is getholds' + hold_id + 'here');
 	searchitem1=pat_barcode;
 	searchitem2=$('#libpin').val();
-	
 	    $.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
@@ -483,20 +603,46 @@ function getholds(pat_barcode){
 		cache: false,
         success : function(response) {
             //console.error(JSON.stringify(response));
-            //alert('Works!');
+            //alert('7 has a response');
 			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
+			var response= jQuery.parseJSON(response);
+			var my_holds='';
+			var hold_selection= ['Title', 'Author', 'StatusDescription'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_holds += key2 + ": " + value2 + "<br>";
+						}
+
+					}
+					}
+									   
+				});
+				my_holds +="<p class='hold_cancel'><a id=" + hold_id + "href='#inside'>Cancel Hold</a></p>";
+				my_holds +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#loginresponse" ).append(my_holds);
+
         },
         error      : function() {
             console.error("error");
             alert('Not working!');                  
         }
-    	}); 
-};//e getholds function
-
+    }); 
+};//e getholds2 function
 });
 </script>
 
@@ -548,7 +694,7 @@ $(document).on('click', '#thesearch', function () {
             //console.error(JSON.stringify(response));
 			var response= jQuery.parseJSON(response);
 			//console.error(jQuery.parseJSON(response));
-			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
 			$( "#news" ).empty();
 
 			var myhtml='';
@@ -562,11 +708,16 @@ $(document).on('click', '#thesearch', function () {
 				$.each(value, function(key2, value2) {
 					if(value2!=''){
 					if(jQuery.inArray( key2, selection )!== -1){
-					myhtml += key2 + ": " + value2 + "<br>";
+					
+						if(key2=="Title"){
+						myhtml += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						myhtml += key2 + ": " + value2 + "<br>";
+						}
 					}
 					}
 				});
-				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="<p class='trail'><a id='" + cont_no + "' href='#bib_detail'>Detail</a></p>";
 				myhtml +="</td></tr></table>";
 				});
 				$( "#news" ).append(myhtml);
@@ -582,6 +733,7 @@ $(document).on('click', '#thesearch', function () {
 </script>
 
 <script>
+//change place
 //logged-in page
 function login(){
 	$.mobile.changePage("#inside");
@@ -595,14 +747,9 @@ $(function() {
 });
 </script>
 
-<script>
-
-</script>
-
 
 </head>
 <body>
-
 
 <div data-role="page" data-theme="a" id="pageone">
         <div data-role="header" data-theme="a" data-position="fixed">
@@ -615,12 +762,12 @@ $(function() {
 	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
     <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
-    <a href="#contact" class="ui-btn ui-icon-location ui-btn-icon-left">Contact</a>
+    <a href="#contact" class="ui-btn ui-icon-info ui-btn-icon-left">Contact</a>
     <a href="#direction" id="direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
     <a href="#hours" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
     <a href="#events" id="events_btn" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
-    <a href="http://jeffersonlibrary.net/incl_m/blog_m.php" class="ui-btn ui-icon-eye ui-btn-icon-left">Heads-up</a>
-    <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Online Media</a>
+    <a href="#the_latest" class="ui-btn ui-icon-eye ui-btn-icon-left">The Latest...</a>
+    <a href="#" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
     <div class="ui-grid-solo center">
     <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
     </div>
@@ -652,7 +799,7 @@ $(function() {
 
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Bibliographical Detail</h1></div>
 <div data-role="ui-content" id="bib_detail">	
 
@@ -665,6 +812,7 @@ $(function() {
 
 <div data-role="page" id="login">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Login to your MAIN account</h1></div>
 <div data-role="ui-content" id="login_field">	
 
@@ -677,7 +825,7 @@ $(function() {
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
 </form>
-<div id="loginresponse"></div>		
+		
 </div>
 
 </div>
@@ -687,9 +835,8 @@ $(function() {
 
 <div data-role="page" id="inside">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-home ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Your MAIN account</h1></div>
-
 
 <div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
    			<h4>Items currently borrowed</h4>
@@ -697,11 +844,10 @@ $(function() {
 			</div>
 <div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
    			<h4>Items currently on hold</h4>
-   			<div id="borrowed"></div>
-			</div>
+<div id="loginresponse"></div>   			
+            </div>
 
 </div>
-
 
 
 <div data-role="page" id="hours">
@@ -775,6 +921,7 @@ Fax: 973-697-7051<br />
 
 <div data-role="page" id="events">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>Library Events</h1></div>
 <div data-role="ui-content" id="event_content">
 
@@ -783,13 +930,23 @@ Fax: 973-697-7051<br />
 </div>
 </div>
 
+<div data-role="page" id="the_latest">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
+<h1>Library Events</h1></div>
+<div data-role="ui-content" id="the_latest_content">
+
+<iframe id="the_latest_frame" frameborder="0" src="http://jeffersonlibrary.net/incl_m/blog_m.php"></iframe>
+
+</div>
+</div>
+
 
 <div data-role="page" id="scanner">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
-<span class="home"><a href="#pageone" class="ui-btn ui-icon-star ui-btn-icon-right">Home</a></span>
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">Home</a></span>
 <h1>ISBN Scanner</h1></div>
 <div data-role="ui-content" id="scanner">
-
 
         <div class="app">
             <h2>ISBN Barcode Scanner</h2>
