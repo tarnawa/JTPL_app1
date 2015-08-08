@@ -10,6 +10,7 @@
     <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="com.phonegap.plugin.statusbar" />
@@ -27,6 +28,9 @@
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="false" />
+	<preference name="AutoHideSplashScreen" value="false" />
+	<preference name="SplashScreenDelay" value="10000"/>
+	
     <icon src="www/icon.png" />
     <icon gap:density="ldpi" gap:platform="android" src="res/icon/android/icon-36-ldpi.png" />
     <icon gap:density="mdpi" gap:platform="android" src="res/icon/android/icon-48-mdpi.png" />

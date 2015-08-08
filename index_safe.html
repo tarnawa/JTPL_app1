@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>JTPL APP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="www/js/jquery.mobile-1.4.5.css" type="text/css" />
+<link rel="stylesheet" href="www/css/2014_app.css" type="text/css" />
+<link rel="stylesheet" href="www/css/JTPL_icons.min.css" />
+<link rel="stylesheet" href="www/css/jquery.mobile.icons.min.css" />
+
+<script>
+		//allow jquery mobile cross domain communication (needs to be initialized befroe jquery mobile)
+		  $(document).bind("mobileinit", function(){
+		   $.support.cors 
+		  $.mobile.allowCrossDomainPages = true;
+		  });
+		</script>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?&sensor=true"></script>
+<script type="text/javascript" src="js/gmaps.min.js"></script>
+<script type='application/javascript' src='js/fastclick.js'></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script>
+document.addEventListener('deviceready', function() {
+  navigator.splashscreen.hide();
+});
+</script>
+
+<script>
+//google map
+var map;
+    $(document).on("pageshow", "#direction", function () {
+
+      map = new GMaps({
+        div: '#map_canvas',
+        lat: 41.0205399,
+        lng: -74.5490396,
+		width: '100%',
+        height: '250px',
+		zoom: 15,
+        zoomControl: true,
+        zoomControlOpt: {
+            style: 'SMALL',
+            position: 'TOP_LEFT'
+        },
+        panControl: false
+      });
+	  
+	    map.addMarker({
+        lat: 41.0205399,
+        lng: -74.5490396,
+        title: 'JTPL',
+        infoWindow: {
+          content: '<p>Jefferson Township Public Library, 1031 Weldon Road, Oak Ridge, NJ 07438</p>'
+        }
+      });
+});
+</script>
+
+<script>
+//navigator
+$(document).ready(function(){
+$('#dir_start').on ("tap", function () {
+start_spin();									   
+launchnavigator.navigate(
+  [41.0204913,-74.5491630],
+  null,
+  function(){
+     stop_spin(); //alert("Plugin success");
+  },
+  function(error){
+      alert("Directions can not be generated."+ error);
+  });
+
+});
+});
+</script>
+
+<script>
+//testquery
+//run a blind query
+$(window).load(function() {
+$.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
+        crossDomain: true,
+        data: {val: 'X'},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			//alert('hello');
+		//$( "#blist" ).append(response);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+
+});
+</script>
+
+<script>
+//BARCODE SCANNER
+function getData(barcode){
+//$('#search_item').on ("keyup", function () {
+  searchitem=0812927532;
+  //searchitem=2557;
+  //searchitem= $('#search_item').val();
+  //searchitem='the';
+  //$( "#cont" ).append( searchitem );
+  
+//alert('this is: ' + barcode);
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=1",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$( "#bcode" ).empty();
+			$( "#bcode" ).append(response);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+ };
+</script>
+
+<script>
+//spinner
+function start_spin(){
+window.plugins.spinnerDialog.show();
+//alert('startspin');
+}
+function stop_spin(){
+window.plugins.spinnerDialog.hide();
+//alert('stopspin');
+}
+</script>
+
+<script> 
+//AJAX to Book Search
+$(document).ready(function(){
+$('#search_item').on ("keyup", function () {
+//start_spin();
+  searchitem=0;
+  searchitem= $('#search_item').val();
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
+			$( "#blist" ).empty();
+
+			var myhtml='';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#blist" ).append(myhtml);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+
+});
+});
+</script>
+
+<script>
+//AJAX to Book Detail
+$(document).ready(function(){
+$(document).on('click', '.trail a', function () {
+searchitem=$(this).attr("id");
+ //searchitem=2557;
+ // alert('this is' + contid + 'here');
+var mybib_detail='';
+
+$.ajax({
+        type : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=3",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			$( "#bdetail" ).empty();
+
+			var mybib_detail='';
+			mybib_detail +='<H3>Title Detail</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					mybib_detail +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					mybib_detail += key2 + ": " + value2 + "<br>";
+					}
+					}
+				});
+				mybib_detail +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+				mybib_detail +="</td></tr></table>";
+				
+				});
+				$( "#bdetail" ).append(mybib_detail);
+			//stop_spin();
+			
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+});     
+});
+</script>
+
+<script> 
+//AJAX to Patron Login
+$(document).ready(function(){
+//$('#loginsubmit').css({display: 'none'});
+//$('#login').on('click', function(){
+//$("#loginresponse").empty();
+//$("#loginform .ui-btn").show();
+//});
+var form = $('#loginform');	
+						   
+$('#loginsubmitxx').on ("click", function () {
+    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
+        crossDomain: true,
+        data: form.serialize(),
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$("#loginresponse").empty();
+			var response= jQuery.parseJSON(response);
+			var res_pat_id=response.PatronID;
+			var valid_pat=response.ValidPatron;
+			var pat_barcode=response.Barcode;
+			
+			//$("#loginresponse").append(pat_barcode);
+			if(valid_pat==true){
+				login();
+			} else{
+			$("#loginresponse").append(valid_pat);
+			}
+			
+				
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+});
+});
+</script>
+
+<script>
+//Hold Request and/or Login
+$(document).ready(function(){						   
+
+$(document).on('click', '.hold_req a', function () {
+cont_num=$(this).attr("id");
+$('#cn_holdreq').val(cont_num);
+});
+
+
+
+$('#loginsubmit').on ("click", function () {
+var form = $('#loginform');
+//check if from hold req
+var hold;
+if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
+								 
+    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
+        crossDomain: true,
+        data: form.serialize(),
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+           
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var res_pat_id=response.PatronID;
+			var pat_barcode=response.PatronBarcode;
+			var valid_pat=response.ValidPatron;
+
+			
+			if(hold){putonhold(res_pat_id, cont_num, pat_barcode);
+			$('#cn_holdreq').val("");
+			}else{getholds(pat_barcode);}
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+});
+
+function putonhold(res_pat_id, cont_num, pat_barcode){
+	    
+		$.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=5",
+        crossDomain: true,
+        data: {ControlID: cont_num, PatronID: res_pat_id},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			//var response=response.Message;
+			//alert('ajax 5 is done!');
+			//$( "#loginresponse" ).append(response);
+			//this validates the Patron and returns the PatronID
+			getholds(pat_barcode);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    	}); 
+};//e putonhold function
+
+function getholds(pat_barcode){
+	//alert('this is' + pat_barcode + 'here');
+	searchitem1=pat_barcode;
+	searchitem2=$('#libpin').val();
+	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
+	$.mobile.changePage("#inside");
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('7 has a response');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_holds='';
+			var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_holds += key2 + ": " + value2 + "<br>";
+						}
+
+					if(key2=="HoldRequestID"){
+					hold_req_id=value2;
+					//alert("this is" + hold_req_id + "here");
+					}
+
+					}
+					}
+									   
+				});
+				my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
+				my_holds +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#loginresponse" ).append(my_holds);
+
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    }); 
+};//e getholds function
+
+//get items out function
+function getitemsout(pat_barcode){
+	//alert('this is' + pat_barcode + 'here');
+	searchitem1=pat_barcode;
+	searchitem2=$('#libpin').val();
+	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
+	$.mobile.changePage("#inside");
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=9",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('7 has a response');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_borrow='';
+			var hold_selection= ['Title', 'Author', 'DueDate', 'Barcode'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_borrow +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_borrow += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_borrow += key2 + ": " + value2 + "<br>";
+						}
+
+					if(key2=="HoldRequestID"){
+					hold_req_id=value2;
+					//alert("this is" + hold_req_id + "here");
+					}
+
+					}
+					}
+									   
+				});
+				my_borrow +="<p class='extend_item'><a id=" + hold_req_id + " href='#inside'>Do something</a></p>";
+				my_borrow +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#borrowed" ).append(my_borrow);
+
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    }); 
+};//e get items out function
+});
+</script>
+
+<script>
+//Cancel Hold
+$(document).on('click', '.hold_cancel a', function () {
+hold_id=$(this).attr("id");	
+//alert('hold_id is' + hold_id + 'here');
+//$( "#loginresponse" ).empty();
+//$("#loginform .ui-btn").hide();
+var form = $('#loginform');
+
+    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
+        crossDomain: true,
+        data: form.serialize(),
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var PatronID= response.PatronID;
+			var pat_barcode=response.PatronBarcode;
+			//alert('hello from Ajax');
+			//$( "#loginresponse" ).append(response);
+			//this validates the Patron and returns the PatronID
+			cancelhold(PatronID, pat_barcode, hold_id);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+
+function cancelhold(PatronID, pat_barcode, hold_id){
+	//alert('this is cancelhold ' + pat_barcode + hold_id + 'here');
+	searchitem1=$('#libpin').val();
+	searchitem2=hold_id;
+	searchitem3=pat_barcode;
+	
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=6",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem3, hold_id:searchitem2, libpin:searchitem1 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$( "#loginresponse" ).empty();
+			//var response= jQuery.parseJSON(response);
+			//var response=response.Message;
+			//$( "#loginresponse" ).append(response);
+			//this validates the Patron and returns the PatronID
+			getholds2(pat_barcode, hold_id) 
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    	}); 
+};//e getholds function
+
+function getholds2(pat_barcode, hold_id){
+	//alert('this is getholds' + hold_id + 'here');
+	searchitem1=pat_barcode;
+	searchitem2=$('#libpin').val();
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('7 has a response');
+			$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_holds='';
+			var hold_selection= ['Title', 'Author', 'StatusDescription'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_holds += key2 + ": " + value2 + "<br>";
+						}
+
+					}
+					}
+									   
+				});
+				my_holds +="<p class='hold_cancel'><a id=" + hold_id + "href='#inside'>Cancel Hold</a></p>";
+				my_holds +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#loginresponse" ).append(my_holds);
+
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    }); 
+};//e getholds2 function
+});
+</script>
+
+<script>
+//Flashlight
+$(document).ready(function(){
+$('#flashlight').on('click', function () {
+//alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
+window.plugins.flashlight.available(function(isAvailable) {
+  if (isAvailable) {
+
+    // switch on
+    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
+
+    // switch off after 5 seconds
+    setTimeout(function() {
+     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
+    $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+	}, 5000);
+	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+  } 
+ else {
+    alert("Flashlight not available on this device");
+  }
+});
+});
+});
+</script>
+
+<script>
+//get new publications
+$(document).on('click', '#thesearch', function () {
+//alert('SEARCH');
+//start_spin();
+  searchitem='x';
+  //searchitem= $('#search_item').val();
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=8",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
+			$( "#news" ).empty();
+
+			var myhtml='';
+			myhtml +='<H3>New Publications</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+						if(key2=="Title"){
+						myhtml += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						myhtml += key2 + ": " + value2 + "<br>";
+						}
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id='" + cont_no + "' href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#news" ).append(myhtml);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+
+});
+</script>
+
+<script>
+//change place
+//logged-in page
+function login(){
+	$.mobile.changePage("#inside");
+}
+</script>
+
+<script>
+//fastclick
+$(function() {
+    FastClick.attach(document.body);
+});
+</script>
+
+
+</head>
+<body>
+
+<div data-role="page" data-theme="a" id="pageone">
+        <div data-role="header" data-theme="a" data-position="fixed">
+        <img src="www/img/headerbar_app1000.jpg" width="100%">
+
+    </div>
+
+	<div data-role="ui-content" data-theme="a">
+	
+	<a href="#catalog_search" id="thesearch" class="ui-btn ui-icon-home ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
+    <a href="#login" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
+    <a href="#scanner" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
+    <a href="#contact" class="ui-btn ui-icon-info ui-btn-icon-left">Contact</a>
+    <a href="#direction" id="direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
+    <a href="#hours" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
+    <a href="#events" id="events_btn" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
+    <a href="#the_latest" class="ui-btn ui-icon-eye ui-btn-icon-left">The Latest...</a>
+    <a href="#" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
+    <div class="ui-grid-solo center">
+    <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
+    </div>
+
+    <div id="siteloader"></div>
+
+	</div>
+
+
+<div data-role="footer" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
+</div>
+
+<div data-role="page" id="catalog_search">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+ 
+<h3>Catalog Search</h3></div>
+
+<div data-role="ui-content" id="catalog_search_content">	
+
+<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" />
+
+<div id="blist"></div>
+
+<div id="news"></div>
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="bib_detail">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>Bibliographical Detail</h3></div>
+<div data-role="ui-content" id="bib_detail">	
+
+<div id="bdetail"></div>
+
+</div>
+</div>
+
+</div>
+
+<div data-role="page" id="login">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>Login to your MAIN account</h3></div>
+<div data-role="ui-content" id="login_field">	
+
+<div data-role="fieldcontain">
+<form method="post" id="loginform" action="">
+	         <label for="libcard">Library Card #:</label>
+	         <input type="text" name="libcard" id="libcard" value=""  data-clear-btn="true"/><br />
+             <label for="libpin">PIN #:</label>
+	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" /><br />
+             <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
+             <input name="loginsubmit" type="button" id="loginsubmit" value="submit">
+</form>
+		
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div data-role="page" id="inside">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>Your MAIN account</h3></div>
+
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently borrowed</h4>
+   			<div id="borrowed"></div>
+			</div>
+<div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
+   			<h4>Items currently on hold</h4>
+<div id="loginresponse"></div>   			
+            </div>
+
+</div>
+
+
+<div data-role="page" id="hours">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h3>Hours</h3></div>
+<div data-role="ui-content" id="hours_content">	
+<p>Jefferson Township Public Library<br /> 
+1031 Weldon Rd. Oak Ridge, NJ 07438<br />
+Phone: 973-208-6244<br />
+Fax: 973-697-7051<br />
+</p>
+<h4>Opening Hours:</h4>
+<table>
+<tr><td width="143">Monday-Friday</td><td width="212">9:30-9:00</td></tr>
+<tr><td>Saturday</td><td>9:30-6:00</td></tr>
+<tr><td>Sunday</td><td>1-5</td></tr>
+</table>
+</p>
+<h4>Closing Days 2015:</h4>
+<table>
+<tr><td width="143">New Year's Day</td>	<td width="212">1-Jan</td></tr>
+<tr><td>President's Day</td><td>16-Feb</td></tr>
+<tr><td>Good Friday</td><td>3-Apr</td></tr>
+<tr><td>Easter Saturday</td><td>4-Apr</td></tr>
+<tr><td>Easter Sunday</td><td>5-Apr</td></tr>
+<tr><td>Mother's Day</td><td>10-May</td></tr>
+<tr><td>Memorial Day</td><td>25-May</td></tr>
+<tr><td>Father's Day</td><td>21-Jun</td></tr>
+<tr><td>Federal Holiday</td><td>3-Jul</td></tr>
+<tr><td>Independence Day</td><td>4-Jul</td></tr>
+<tr><td>Jefferson Day</td><td>July 11, open at 1:00 p.m.</td></tr>
+<tr><td>Labor Day</td><td>September 7</td></tr>
+<tr><td>Wednesday</td><td>November 25, close at 2:00 p.m.</td></tr>
+<tr><td>Thanksgiving Day</td><td>26-Nov   Friday	27-Nov</td></tr>
+<tr><td>Christmas Eve</td><td>24-Dec</td></tr>
+<tr><td>Christmas Day</td><td>25-Dec</td></tr>
+<tr><td>New Year's Eve</td><td>December 31, close at 1 p.m.</td></tr>
+<tr><td>New Year's Day</td><td>1-Jan-16</td></tr>
+</table>
+</ul>
+</p>
+</div>
+</div>
+
+<div data-role="page" id="contact">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h3>Contact</h3></div>
+<div data-role="ui-content" id="contact_content">
+<p>Jefferson Township Public Library<br /> 
+1031 Weldon Rd. Oak Ridge, NJ 07438<br />
+Phone: <a href="tel:19732086244">973-208-6244</a><br />
+Fax: 973-697-7051<br />
+</p>
+<p><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Seth1_80.jpg" align="left" height="80" hspace="5" width="80" />Library Director: Seth Stephens<br />Phone: 973-208-6244&nbsp; Ext. 207<br /><a href="mailto:seth.stephens@jeffersonlibrary.net">Seth.Stephens@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Sandy_80.jpg" align="left" height="80" hspace="5" width="80" />Assistant Director and &nbsp;ILL Services:&nbsp;Sandy Cale<br /><a href="tel:+19732086244">Phone: 973-208-6244&nbsp; Ext. 204</a><br /><a href="mailto:Sandy.Cale@JeffersonLibrary.net">Sandy.Cale@JeffersonLibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Chris-O'Brien_80.jpg" align="left" height="80" hspace="5" width="80" />Adult Services and Reference: Christine O&rsquo;Brien<br />Phone: 973-208-6244&nbsp; Ext. 202<br /><a href="mailto:Chris.Obrien@Jeffersonlibrary.net">Chris.Obrien@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Pat1_80.jpg" align="left" height="80" hspace="5" width="80" />Main Desk Supervisor: Pat McGraw<br />Phone: 973-208-6244&nbsp; Ext.201<br /><a href="mailto:pat.mcgraw@jeffersonlibrary.net">Pat.Mcgraw@Jeffersonlibrary.net</a></p><p><br /><img src="http://www.jeffersonlibrary.net/uploads/uploads2/Chris-Kabshura_80.jpg" align="left" height="80" hspace="5" width="80" />Children&rsquo;s Services: Christine Kabshura<br />Phone: 973-208-6244&nbsp; Ext. 206<br /><a href="mailto:christine.kabshura@jeffersonlibrary.net">christine.kabshura@jeffersonlibrary.net</a></p>
+</div>
+</div>
+
+<div data-role="page" id="direction">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h3>Directions</h3></div>
+<div data-role="ui-content" id="contact_direction">
+
+
+<h4>Directions</h4>
+<div id="map_canvas"></div>	
+<p><font color="#ff0000" size="3">From Route 80</font>, take exit 34B for Route 15 North.&nbsp;Continue traveling North on Route 15 until the exit for Weldon Road, Oak Ridge, Milton. Follow Weldon Road through the Mahlon Dickerson Park Reservation.&nbsp; As you come out of the Reservation you will see the Jefferson Middle School on the right, followed by the Jefferson High School. The Library is the second driveway on the left after the High School. </p><p><font color="#ff0000" size="3">From Route 23</font>,&nbsp;exit at Oak Ridge Road in West Milford. Oak Ridge Road will become Berkshire Valley Road. At the first traffic light on Oak Ridge Road turn right on to Ridge Road.&nbsp; Follow Ridge Road for about 3 miles and turn left on to Russia Road.&nbsp; There will be signs for the Jefferson Township Municipal Complex.&nbsp;Follow Russia Road until it ends into Weldon Road. Turn right on to Weldon Road and travel about a half mile. The library is the next driveway on the right, once you pass Wiegand Farms.</p>
+<div><input type="button" id="dir_start" value="Let my Smart Phone show me the way to JTPL!"></div>
+
+</div>
+</div>
+
+<div data-role="page" id="events">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>Library Events</h3></div>
+<div data-role="ui-content" id="event_content">
+
+<iframe id="events_frame" frameborder="0" src="http://jeffersonlibrary.net/forms/eventsprobe_all_m.php"></iframe>
+
+</div>
+</div>
+
+<div data-role="page" id="the_latest">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>Library Events</h3></div>
+<div data-role="ui-content" id="the_latest_content">
+
+<iframe id="the_latest_frame" frameborder="0" src="http://jeffersonlibrary.net/incl_m/blog_m.php"></iframe>
+
+</div>
+</div>
+
+
+<div data-role="page" id="scanner">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
+<h3>ISBN Scanner</h3></div>
+<div data-role="ui-content" id="scanner">
+
+        <div class="app">
+            <h3>ISBN Barcode Scanner</h3>
+            <div id="deviceready" class="blink">
+
+            </div>
+            <a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN ISBN CODE</a>
+
+
+          <p>Title in Library:</p>
+          <p id="bcode"></p>
+
+        </div>  
+
+		<script type="text/javascript">
+          app.initialize();
+        </script>
+
+
+</div>
+</div>
+
+</body>
+</html>
+
