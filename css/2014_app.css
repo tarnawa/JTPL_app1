@@ -76,6 +76,9 @@ width: 100%;
 .ui-btn{
 	font-family: "Droid Sans", Arial, Helvetica, sans-serif;
 	text-align: left;
+	background-color: #9F0;
+	margin-top: 1px;
+	margin-bottom: 1px;
 }
 
 
