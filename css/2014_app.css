@@ -74,11 +74,11 @@ width: 100%;
 }
 
 .ui-btn{
-font-family: "Droid Sans", Arial, Helvetica, sans-serif;
-}
-.ui-btn{
+	font-family: "Droid Sans", Arial, Helvetica, sans-serif;
 	text-align: left;
-	}
+	height: 17px;
+}
+
 
 .ui-navbar{
 	margin-top: 10px;
