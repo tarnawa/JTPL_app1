@@ -24,7 +24,7 @@
 <script type='application/javascript' src='js/fastclick.js'></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="js/jtpl_app.min.js"></script>
+<script type="text/javascript" src="js/jtpl_app.js"></script>
 
 <script>
 document.addEventListener('deviceready', function() {
@@ -39,7 +39,6 @@ document.addEventListener('deviceready', function() {
 <div data-role="page" data-theme="a" id="pageone">
         <div data-role="header" data-theme="a" data-position="fixed">
         <img src="img/headerbar_app1000.jpg" width="100%">
-
     </div>
 
 	<div data-role="ui-content" data-theme="a">
@@ -54,7 +53,7 @@ document.addEventListener('deviceready', function() {
     <a href="#the_latest" data-transition="turn" class="ui-btn ui-icon-home ui-btn-icon-left">The Latest...</a>
     <a href="#" data-transition="turn" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
     <div class="ui-grid-solo center">
-    <div class="flash"><input type="button" id="flashlight" value="Need some light? Touch here."></div>
+    <div class="flash"><input type="button" id="flashlight" value="Need a reading light? Touch here."></div>
     </div>
 
     <div id="siteloader"></div>
@@ -62,7 +61,7 @@ document.addEventListener('deviceready', function() {
 	</div>
 
 
-<div data-role="footer" id=#pageonefooter" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
+<div data-role="footer" data-theme="a">&copy; Jefferson Township Public Library.<br />App design by Wolf</div><!-- /footer -->
 </div>
 
 <div data-role="page" id="catalog_search">
@@ -85,7 +84,7 @@ document.addEventListener('deviceready', function() {
 <div data-role="page" id="bib_detail">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
 <span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
-<h3>Bibliographical Detail</h3></div>
+<h3>Detail</h3></div>
 <div data-role="ui-content" id="bib_detail">	
 
 <div id="bdetail"></div>
@@ -97,7 +96,7 @@ document.addEventListener('deviceready', function() {
 <div data-role="page" id="login">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
 <span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
-<h3>Login to your MAIN account</h3></div>
+<h3>Login</h3></div>
 <div data-role="ui-content" id="login_field">	
 
 <div data-role="fieldcontain">
@@ -120,7 +119,7 @@ document.addEventListener('deviceready', function() {
 <div data-role="page" id="inside">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
 <span class="home"><a href="#pageone" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
-<h3>Your MAIN account</h3></div>
+<h3>MAIN Account</h3></div>
 
 <div data-role="collapsible" data-theme="e" data-content-theme="c" data-mini="true">
    			<h4>Items currently borrowed</h4>

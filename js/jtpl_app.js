@@ -1,3 +1,13 @@
+//device detection
+$(window).load(function() {
+var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
+//alert(deviceType);
+//alert('hello world');
+if(deviceType!='NULL'){
+	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
+}
+});
+
 //testquery
 //run a blind query
 $(window).load(function() {
