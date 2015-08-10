@@ -6,6 +6,11 @@ var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" 
 if(deviceType!='NULL'){
 	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
+
+var model = device.model;
+if(model=='iphone4,1'){
+	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
+}
 });
 
 //testquery
