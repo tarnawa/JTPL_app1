@@ -8,7 +8,7 @@ if(deviceType!='NULL'){
 }
 
 var model = device.model;
-if(model=='iphone4,1'){
+if(model=='iPhone4,1'){
 	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
 });
