@@ -10,11 +10,11 @@
     <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="plugins.cordova.io" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="com.phonegap.plugin.statusbar" />
-	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="plugins.cordova.io" />
 	<feature name="StatusBar">
 	 <param name="ios-package" value="CDVStatusBar" onload="true" />
 	 </feature>

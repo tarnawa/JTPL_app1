@@ -71,14 +71,17 @@ launchnavigator.navigate(
   [41.0204913,-74.5491630],
   null,
   function(){
-     //stop_spin(); //alert("Plugin success");
+    alert("Plugin success");
   },
   function(error){
-      alert("Directions can not be generated."+ error);
-  });
-
+    alert("Plugin error: "+ error);
+  },
+  {
+    preferGoogleMaps: true,
+    enableDebug: true,
+    disableAutoGeolocation: true
 });
-
+});
 //BARCODE SCANNER
 function getData(barcode){
 
