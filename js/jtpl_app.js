@@ -8,8 +8,8 @@ if(deviceType!='NULL'){
 }
 
 var model = device.model;
-if(model=='iPhone4,1'){
-	alert('this is an iphone 4s');
+if(model=='iPhone7,1'){
+	//alert('this is an iphone 4s');
 	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
 });
