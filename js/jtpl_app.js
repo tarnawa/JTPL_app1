@@ -66,12 +66,12 @@ var map;
 $(document).ready(function(){
 //navigator
 $('#dir_start').on ("tap", function () {
-start_spin();									   
+//start_spin();									   
 launchnavigator.navigate(
   [41.0204913,-74.5491630],
   null,
   function(){
-     stop_spin(); //alert("Plugin success");
+     //stop_spin(); //alert("Plugin success");
   },
   function(error){
       alert("Directions can not be generated."+ error);
