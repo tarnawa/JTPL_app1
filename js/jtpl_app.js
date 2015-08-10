@@ -71,7 +71,7 @@ launchnavigator.navigate(
   [41.0204913,-74.5491630],
   null,
   function(){
-    alert("Plugin success");
+    //alert("Plugin success");
   },
   function(error){
     alert("Plugin error: "+ error);
