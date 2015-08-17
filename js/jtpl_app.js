@@ -1,8 +1,11 @@
-//device detection
-$(window).load(function() {
+//device detection and homepage size
+$(document).ready(function(){
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
-//alert('hello world');
+alert('hello world');
 if(deviceType!='NULL'){
 	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
@@ -12,23 +15,24 @@ if(model=='iPhone7,1'){
 	//alert('this is an iphone 4s');
 	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
+}
 });
 
 //testquery
 //run a blind query
-$(window).load(function() {
+$(document).ready(function(){
 $.ajax({
         type       : "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
         crossDomain: true,
-        data: {val: 'X'},
+        data: {val:'K'},
 		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			//alert('hello');
+			//alert('hello4');
 		//$( "#blist" ).append(response);
         },
         error      : function() {
@@ -38,8 +42,133 @@ $.ajax({
     });     
 });
 
+//run an ajax query direct
+$(document).ready(function(){
+$('#onlinebtn').on('click', function () {						   
+
+var thedate=(new Date()).toUTCString();
+//var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B";
+
+$.ajax({
+        type       : "POST",
+		//headers: {'PolarisDate': thedate, 'Authorization': 'code', 'Content-Type':'application/json', 'Accept': 'application/json'  },
+	    url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {uri: searchitem, rdate: thedate},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+		getit(code,searchitem,thedate);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+    });
+
+
+function getit(code,searchitem,thedate){
+
+$.ajax({
+        type: 'GET',
+		url: "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B",
+		headers: {'PolarisDate': thedate,'Authorization': 'PWS ' +code,'Content-Type':'application/json'},
+		//headers: {'Access-Control-Allow-Origin': '*','PolarisDate':''+thedate+'','Authorization':'PWS '+code+'','Content-Type':'application/json', 'Accept': 'application/json'},
+        crossDomain: true,
+		//data: 'B',
+		dataType   : 'json',
+        //processData: false,
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+					alert(response);
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSONP(response);
+
+				$( "#showme" ).append(response);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+}
+
+});
+});
+
+
+//draft for file write/read
+$(document).ready(function(){	
+/*	var returnSuccess='success';
+    var SettingsFileName='abc.xml';
+    var SettingsDownloadUrl='http://jeffersonlibrary.net/app.xml';
+	var base='http://jeffersonlibrary.net/';
+    //or 
+   // var base='www/xml/';
+    var success = function(result) { 
+                console.log("SUCCESS: \r\n"+result );  
+				alert('success');
+            };
+
+    var error = function(error) { 
+                      console.error("ERROR: \r\n"+error );
+					  alert('no success');
+                };
+   FilePlugin.callNativeFunction(success, error,{'result':returnSuccess,'file':SettingsFileName,'downloadurl':SettingsDownloadUrl,'base_path':base} ); 
+*/
+});
+
+$(document).ready(function(){
+
+//function media material conversion
+function matconv(val2){
+switch(val2){
+case 1:	var val2="Book"; break;
+case 2: var val2="Printed or Manuscript Music"; break;
+case 3: var val2="Cartographic Material"; break; 
+case 4:	var val2="Visual Materials"; break; 
+case 5: var val2="Sound Recording"; break; 
+case 6:	var val2="Electronic Resources"; break; 
+case 7:	var val2="Archival Mixed Materials"; break; 
+case 8:	var val2="Serial"; break; 
+case 9:	var val2="Printed Music"; break; 
+case 10: var val2="Manuscript Music"; break; 
+case 11: var val2="Printed Cartographic Material"; break; 
+case 12: var val2="Manuscript Cartographic Material"; break; 
+case 13: var val2="Map"; break; 
+case 14: var val2="Globe"; break; 
+case 15: var val2="Manuscript Material"; break; 
+case 16: var val2="Projected Medium"; break; 
+case 17: var val2="Motion Picture"; break; 
+case 18: var val2="Video Recording"; break; 
+case 19: var val2="Two Dimensional Non-projected Graphic"; break; 
+case 20: var val2="Three Dimensional Object"; break; 
+case 21: var val2="Musical Sound Recording"; break; 
+case 22: var val2="Nonmusical Sound Recording"; break; 
+case 23: var val2="Kit"; break; 
+case 24: var val2="Periodical"; break; 
+case 25: var val2="Newspaper"; break; 
+case 26: var val2="Microform"; break; 
+case 27: var val2="Large Print"; break; 
+case 28: var val2="Braille"; break; 
+case 33: var val2="DVD"; break; 
+case 34: var val2="Videotape"; break; 
+case 35: var val2="Music CD"; break; 
+case 36: var val2="eBook"; break; 
+case 37: var val2="Audio Book"; break; 
+}
+return val2;
+}
+
 //google map
-$(window).load(function(){
+
 var map;
     $(document).on("pageshow", "#direction", function () {
 
@@ -67,9 +196,7 @@ var map;
         }
       });
 });
-});
 
-$(document).ready(function(){
 //navigator
 $('#dir_start').on ("tap", function () {
 //start_spin();									   
@@ -88,6 +215,7 @@ launchnavigator.navigate(
     disableAutoGeolocation: true
 });
 });
+
 //BARCODE SCANNER
 function getData(barcode){
 
@@ -145,22 +273,38 @@ $('#search_item').on ("keyup", function () {
             //console.error(JSON.stringify(response));
 			var response= jQuery.parseJSON(response);
 			//console.error(jQuery.parseJSON(response));
-			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
+			var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 			$( "#blist" ).empty();
 
 			var myhtml='';
 				$.each(response.BibSearchRows, function(key, value) {
 					cont_no=value.ControlNumber;
 					ISBN=value.ISBN;
+			
 					//$( "#blist" ).append('');
 					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
 					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 				$.each(value, function(key2, value2) {
-					if(value2!=''){
+								   
+				   
+					//if(value2!='' || value2>=0){
 					if(jQuery.inArray( key2, selection )!== -1){
+					
+					switch(key2){
+						case "PublicationDate":
+						key2="Publication Date";
+						break;
+						case "PrimaryTypeOfMaterial":
+						key2="Media Type";
+						value2=matconv(value2);
+						break;
+					}
+					
+					
+					
 					myhtml += key2 + ": " + value2 + "<br>";
 					}
-					}
+					//}
 				});
 				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
 				myhtml +="</td></tr></table>";
@@ -197,7 +341,7 @@ $.ajax({
 			
 			var response= jQuery.parseJSON(response);
 			//console.error(jQuery.parseJSON(response));
-			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
 			$( "#bdetail" ).empty();
 
 			var mybib_detail='';
@@ -209,11 +353,31 @@ $.ajax({
 					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
 					mybib_detail +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 				$.each(value, function(key2, value2) {
-					if(value2!=''){
+					//if(value2!=''){
 					if(jQuery.inArray( key2, selection )!== -1){
+					
+					switch(key2){
+						case "PublicationDate":
+						key2="Publication Date";
+						break;
+						case "LocalItemsTotal":
+						key2="Local Items Total";
+						break;
+						case "LocalItemsIn":
+						key2="Local Items In";
+						break;
+						case "CurrentHoldRequests":
+						key2="Current Hold Requests";
+						break;
+						case "PrimaryTypeOfMaterial":
+						key2="Media Tyoe";
+						value2=matconv(value2);
+						break;
+					}
+					
 					mybib_detail += key2 + ": " + value2 + "<br>";
 					}
-					}
+					//}
 				});
 				mybib_detail +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
 				mybib_detail +="</td></tr></table>";
@@ -364,7 +528,7 @@ function getholds(pat_barcode){
 			//$( "#loginresponse" ).empty();
 			var response= jQuery.parseJSON(response);
 			var my_holds='';
-			var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID'];
+			var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
 			$( "#loginresponse" ).empty();
 
 			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
@@ -507,6 +671,7 @@ var form = $('#loginform');
         }
     });     
 });
+
 //cancelhold2
 function cancelhold(PatronID, pat_barcode, hold_id){
 	//alert('this is cancelhold ' + pat_barcode + hold_id + 'here');

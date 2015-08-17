@@ -24,6 +24,7 @@
 <script type='application/javascript' src='js/fastclick.js'></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/FilePlugin.js"></script>
 <script type="text/javascript" src="js/jtpl_app.js"></script>
 
 <script>
@@ -51,7 +52,7 @@ document.addEventListener('deviceready', function() {
     <a href="#hours" data-transition="turn" class="ui-btn ui-icon-clock ui-btn-icon-left">Hours & Closing Days</a>
     <a href="#events" data-transition="turn" id="events_btn" class="ui-btn ui-icon-calendar ui-btn-icon-left">Events</a>
     <a href="#the_latest" data-transition="turn" class="ui-btn ui-icon-home ui-btn-icon-left">The Latest...</a>
-    <a href="#" data-transition="turn" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
+    <a href="#online" data-transition="turn" id="onlinebtn" class="ui-btn ui-icon-cloud ui-btn-icon-left">Online Media</a>
     <div class="ui-grid-solo center">
     <div class="flash"><input type="button" id="flashlight" value="Need a reading light? Touch here."></div>
     </div>
@@ -174,6 +175,25 @@ Fax: 973-697-7051<br />
 </p>
 </div>
 </div>
+
+<div data-role="page" id="online">
+<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<h3>Online Media</h3></div>
+<div data-role="ui-content" id="contact_content">
+<div class="frame">Jefferson Township Public Library<br /> 
+1031 Weldon Rd. Oak Ridge, NJ 07438<br />
+Phone: <a href="tel:19732086244">973-208-6244</a><br />
+Fax: 973-697-7051<br />
+</div>
+
+<div id="showme">Test:</div>
+
+</div>
+</div>
+
+
+
+
 
 <div data-role="page" id="contact">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
