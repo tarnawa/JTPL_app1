@@ -47,7 +47,7 @@ $(document).ready(function(){
 $('#onlinebtn').on('click', function () {						   
 
 var thedate=(new Date()).toUTCString();
-//var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B";
+var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B";
 
 $.ajax({
         type       : "POST",
@@ -74,13 +74,10 @@ function getit(code,searchitem,thedate){
 
 $.ajax({
         type: 'GET',
-		url: "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B",
-		headers: {'PolarisDate': thedate,'Authorization': 'PWS ' +code,'Content-Type':'application/json'},
-		//headers: {'Access-Control-Allow-Origin': '*','PolarisDate':''+thedate+'','Authorization':'PWS '+code+'','Content-Type':'application/json', 'Accept': 'application/json'},
-        crossDomain: true,
-		//data: 'B',
+		headers: {'PolarisDate': thedate,'Authorization': 'PWS ' +code,'Content-Type':'application/json','Accept': 'application/json'},
+		url: searchitem,
+	    crossDomain: true,
 		dataType   : 'json',
-        //processData: false,
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
