@@ -48,7 +48,7 @@ $('#onlinebtn').on('click', function () {
 
 var thedate=(new Date()).toUTCString();
 var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B";
-
+//alert('beginning');
 $.ajax({
         type       : "POST",
 		//headers: {'PolarisDate': thedate, 'Authorization': 'code', 'Content-Type':'application/json', 'Accept': 'application/json'  },
@@ -61,6 +61,7 @@ $.ajax({
 		cache: false,
         success : function(response) {
 			var code=response;
+			
 		getit(code,searchitem,thedate);
         },
         error      : function() {
@@ -72,31 +73,25 @@ $.ajax({
 
 function getit(code,searchitem,thedate){
 
-$.ajax({
-        type: 'GET',
-		headers: {'PolarisDate': thedate,'Authorization': 'PWS ' +code,'Content-Type':'application/json','Accept': 'application/json'},
-		url: searchitem,
-	    crossDomain: true,
-		dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-					alert(response);
-            //console.error(JSON.stringify(response));
-			var response= jQuery.parseJSONP(response);
-
-				$( "#showme" ).append(response);
-			//stop_spin();
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    });
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+searchitem+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
 }
 
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  alert(response);
+  $( "#showme" ).append(response);
+});
+
+}
 });
 });
 
