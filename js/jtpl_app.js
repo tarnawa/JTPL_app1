@@ -87,9 +87,11 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-  console.log(response);
+   var response= jQuery.parseJSON(response);
+  //console.log(response);
   alert(response);
-  
+  var response=JSON.stringify(response);
+  alert(response);
   var response= jQuery.parseJSON(response);
   $.each(response.BibSearchRows, function(key, value) {
   $.each(value, function(key2, value2) {
