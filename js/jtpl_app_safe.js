@@ -281,88 +281,70 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-//AJAX to Book Search (Direct)
+//AJAX to Book Search
 $('#search_item').on ("keyup", function () {
-
+//start_spin();
   searchitem=0;
   searchitem= $('#search_item').val();
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-//alert('beginning');
-$.ajax({
+    $.ajax({
         type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate},
+        data: {val: searchitem},
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			var code=response;
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+			$( "#blist" ).empty();
+
+			var myhtml='';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
 			
-		getit(code,reqstring,thedate);
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+								   
+				   
+					//if(value2!='' || value2>=0){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+					switch(key2){
+						case "PublicationDate":
+						key2="Publication Date";
+						break;
+						case "PrimaryTypeOfMaterial":
+						key2="Media Type";
+						value2=matconv(value2);
+						break;
+					}
+					
+					
+					
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					//}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#blist" ).append(myhtml);
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
     });
 
-function getit(code,reqstring,thedate){
-
-var blist_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-$( "#blist" ).empty();
-var blist_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-	switch(key2){
-		case "PublicationDate":
-		key2="Publication Date";
-		break;
-		case "PrimaryTypeOfMaterial":
-		key2="Media Type";
-		value2=matconv(value2);
-		break;
-	}
-	blist_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-blist_html +="</td></tr></table>";
-});
- 
-$( "#blist" ).append(blist_html);
-});
-}
 });
 
 //AJAX to Book Detail
@@ -833,85 +815,58 @@ window.plugins.flashlight.available(function(isAvailable) {
 
 //get new publications
 $(document).on('click', '#thesearch', function () {
-  //searchitem=0;
+//alert('SEARCH');
+//start_spin();
+  searchitem='x';
   //searchitem= $('#search_item').val();
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10";
-//alert('beginning');
-$.ajax({
+    $.ajax({
         type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=8",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate},
+        data: {val: searchitem},
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			var code=response;
-			
-		getit(code,reqstring,thedate);
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
+			$( "#news" ).empty();
+
+			var myhtml='';
+			myhtml +='<H3>New Publications</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+						if(key2=="Title"){
+						myhtml += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						myhtml += key2 + ": " + value2 + "<br>";
+						}
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id='" + cont_no + "' href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#news" ).append(myhtml);
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
     });
-
-function getit(code,reqstring,thedate){
-
-var np_list_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-$( "#news" ).empty();
-var np_list_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-np_list_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-	switch(key2){
-		case "PublicationDate":
-		key2="Publication Date";
-		break;
-		case "PrimaryTypeOfMaterial":
-		key2="Media Type";
-		value2=matconv(value2);
-		break;
-	}
-	np_list_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-np_list_html +="</td></tr></table>";
-});
- 
-$( "#news" ).append(np_list_html);
-});
-}
 
 });
 
