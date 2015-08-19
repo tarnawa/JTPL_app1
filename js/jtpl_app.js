@@ -623,7 +623,7 @@ $.ajax({
         success : function(response) {
 		var code=response;
 
-		checklogin(code,reqstring,thedate,hold);
+		checklogin(code,reqstring,thedate,hold,p_pin);
         },
         error      : function() {
             console.error("error");
@@ -632,7 +632,7 @@ $.ajax({
     });
 });
 
-function checklogin(code,reqstring,thedate,hold){
+function checklogin(code,reqstring,thedate,hold,p_pin){
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -654,7 +654,7 @@ var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 
 
-if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
+if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode,p_pin);
 $('#cn_holdreq').val("");
 }else{getholds(pat_barcode);}
 
@@ -664,7 +664,7 @@ $('#cn_holdreq').val("");
 }
 
 //function putonhold
-function putonhold(res_pat_id, cont_num, pat_barcode){
+function putonhold(res_pat_id, cont_num, pat_barcode,p_pin){
 alert('start putonhold'); 	   
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
