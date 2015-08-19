@@ -605,13 +605,15 @@ var form = $('#loginform');
 //check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
-								 
-var p_barcode=("#libcard").val();
-var p_pin=("#libpin").val();
+//alert(hold);								 
+p_barcode=$("#libcard").val();
+p_pin=$("#libpin").val();
+//alert(p_barcode);
+//alert(p_pin);
 
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
+//alert(reqstring);
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
