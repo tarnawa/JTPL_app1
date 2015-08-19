@@ -89,17 +89,18 @@ var settings = {
 $.ajax(settings).done(function (response) {
    //var response= jQuery.parseJSON(response);
   //console.log(response);
- alert(JSON.stringify(response));
+ //alert(JSON.stringify(response));
  //alert(response);
  // var response2=JSON.stringify(response);
 //  alert(response2);
 //  var response3= jQuery.parseJSON(response);
-//  $.each(response.BibSearchRows, function(key, value) {
-//  $.each(value, function(key2, value2) {
-//	mytesthtml += key2 + ": " + value2 + "<br>";
-//});
+  $.each(response.BibSearchRows, function(key, value) {
+	mytesthtml += key + ": " + value + "<br>";									  
+  $.each(value, function(key2, value2) {
+	mytesthtml += key2 + ": " + value2 + "<br>";
+});
   
-//});
+});
   $( "#showme" ).append(response);
 });
 
