@@ -623,7 +623,10 @@ $.ajax({
 		cache: false,
         success : function(response) {
 		var code=response;
-			
+		alert(p_barcode);
+		alert(p_pin);
+		alert(hold);
+		
 		checklogin(code,reqstring,thedate,hold);
         },
         error      : function() {
@@ -634,7 +637,7 @@ $.ajax({
 });
 
 function checklogin(code,reqstring,thedate,hold){
-
+alert(reqstring);
 var settings = {
   "async": true,
   "crossDomain": true,
