@@ -18,6 +18,46 @@ if(model=='iPhone7,1'){
 }
 });
 
+//function media material conversion
+function matconv(val2){
+switch(val2){
+case 1:	var val2="Book"; break;
+case 2: var val2="Printed or Manuscript Music"; break;
+case 3: var val2="Cartographic Material"; break; 
+case 4:	var val2="Visual Materials"; break; 
+case 5: var val2="Sound Recording"; break; 
+case 6:	var val2="Electronic Resources"; break; 
+case 7:	var val2="Archival Mixed Materials"; break; 
+case 8:	var val2="Serial"; break; 
+case 9:	var val2="Printed Music"; break; 
+case 10: var val2="Manuscript Music"; break; 
+case 11: var val2="Printed Cartographic Material"; break; 
+case 12: var val2="Manuscript Cartographic Material"; break; 
+case 13: var val2="Map"; break; 
+case 14: var val2="Globe"; break; 
+case 15: var val2="Manuscript Material"; break; 
+case 16: var val2="Projected Medium"; break; 
+case 17: var val2="Motion Picture"; break; 
+case 18: var val2="Video Recording"; break; 
+case 19: var val2="Two Dimensional Non-projected Graphic"; break; 
+case 20: var val2="Three Dimensional Object"; break; 
+case 21: var val2="Musical Sound Recording"; break; 
+case 22: var val2="Nonmusical Sound Recording"; break; 
+case 23: var val2="Kit"; break; 
+case 24: var val2="Periodical"; break; 
+case 25: var val2="Newspaper"; break; 
+case 26: var val2="Microform"; break; 
+case 27: var val2="Large Print"; break; 
+case 28: var val2="Braille"; break; 
+case 33: var val2="DVD"; break; 
+case 34: var val2="Videotape"; break; 
+case 35: var val2="Music CD"; break; 
+case 36: var val2="eBook"; break; 
+case 37: var val2="Audio Book"; break; 
+}
+return val2;
+}
+
 //testquery
 //run a blind query
 $(document).ready(function(){
@@ -87,20 +127,40 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-   //var response= jQuery.parseJSON(response);
-  //console.log(response);
- //alert(JSON.stringify(response));
- //alert(response);
+
   var response=JSON.stringify(response);
-//  alert(response2);
   var response= jQuery.parseJSON(response);
-  $.each(response.BibSearchRows, function(key, value) {
-	mytesthtml += key + ": " + value + "first batch<br>";									  
-  $.each(value, function(key2, value2) {
-	mytesthtml += key2 + ": " + value2 + "second batch<br>";
-});
+
+	var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+	$( "#showme" ).empty();
+
+	var mytesthtml='';
   
+  $.each(response.BibSearchRows, function(key, value) {
+		cont_no=value.ControlNumber;
+		ISBN=value.ISBN;
+		mytesthtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+								  
+  $.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+	switch(key2){
+		case "PublicationDate":
+		key2="Publication Date";
+		break;
+		case "PrimaryTypeOfMaterial":
+		key2="Media Type";
+		value2=matconv(value2);
+		break;
+	}
+	mytesthtml += key2 + ": " + value2 + "<br>";
+	}
+
 });
+	mytesthtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+	mytesthtml +="</td></tr></table>";
+});
+ 
   $( "#showme" ).append(mytesthtml);
 });
 
@@ -131,46 +191,6 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-
-//function media material conversion
-function matconv(val2){
-switch(val2){
-case 1:	var val2="Book"; break;
-case 2: var val2="Printed or Manuscript Music"; break;
-case 3: var val2="Cartographic Material"; break; 
-case 4:	var val2="Visual Materials"; break; 
-case 5: var val2="Sound Recording"; break; 
-case 6:	var val2="Electronic Resources"; break; 
-case 7:	var val2="Archival Mixed Materials"; break; 
-case 8:	var val2="Serial"; break; 
-case 9:	var val2="Printed Music"; break; 
-case 10: var val2="Manuscript Music"; break; 
-case 11: var val2="Printed Cartographic Material"; break; 
-case 12: var val2="Manuscript Cartographic Material"; break; 
-case 13: var val2="Map"; break; 
-case 14: var val2="Globe"; break; 
-case 15: var val2="Manuscript Material"; break; 
-case 16: var val2="Projected Medium"; break; 
-case 17: var val2="Motion Picture"; break; 
-case 18: var val2="Video Recording"; break; 
-case 19: var val2="Two Dimensional Non-projected Graphic"; break; 
-case 20: var val2="Three Dimensional Object"; break; 
-case 21: var val2="Musical Sound Recording"; break; 
-case 22: var val2="Nonmusical Sound Recording"; break; 
-case 23: var val2="Kit"; break; 
-case 24: var val2="Periodical"; break; 
-case 25: var val2="Newspaper"; break; 
-case 26: var val2="Microform"; break; 
-case 27: var val2="Large Print"; break; 
-case 28: var val2="Braille"; break; 
-case 33: var val2="DVD"; break; 
-case 34: var val2="Videotape"; break; 
-case 35: var val2="Music CD"; break; 
-case 36: var val2="eBook"; break; 
-case 37: var val2="Audio Book"; break; 
-}
-return val2;
-}
 
 //google map
 
