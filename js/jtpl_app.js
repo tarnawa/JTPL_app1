@@ -87,9 +87,10 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-   var response= jQuery.parseJSON(response);
+   //var response= jQuery.parseJSON(response);
   //console.log(response);
-  alert(response);
+ alert(JSON.stringify(response));
+ //alert(response);
  // var response2=JSON.stringify(response);
 //  alert(response2);
 //  var response3= jQuery.parseJSON(response);
