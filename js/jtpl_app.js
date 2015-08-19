@@ -88,12 +88,12 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
   console.log(response);
-  //alert(response);
+  alert(response);
   
   var response= jQuery.parseJSON(response);
   $.each(response.BibSearchRows, function(key, value) {
   $.each(value, function(key2, value2) {
-	myhtesttml += key2 + ": " + value2 + "<br>";
+	mytesthtml += key2 + ": " + value2 + "<br>";
 });
   
 });
