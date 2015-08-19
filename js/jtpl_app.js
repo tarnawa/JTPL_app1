@@ -84,16 +84,20 @@ $.ajax({
 
 //run an ajax query direct here
 $(document).ready(function(){
-$('#onlinebtn').on('click', function () {						   
+//$('#onlinebtn').on('click', function () {	
+$('#search_item2').on ("keyup", function () {
+
+  searchitem=0;
+  searchitem= $('#search_item2').val();
 
 var thedate=(new Date()).toUTCString();
-var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {uri: searchitem, rdate: thedate},
+        data: {uri: reqstring, rdate: thedate},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
@@ -101,7 +105,7 @@ $.ajax({
         success : function(response) {
 			var code=response;
 			
-		getit(code,searchitem,thedate);
+		getit(code,reqstring,thedate);
         },
         error      : function() {
             console.error("error");
@@ -110,14 +114,14 @@ $.ajax({
     });
 
 
-function getit(code,searchitem,thedate){
+function getit(code,reqstring,thedate){
 
 var mytesthtml='';
 
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": ""+searchitem+"",
+  "url": ""+reqstring+"",
   "method": "GET",
   "headers": {
     "polarisdate": ""+thedate+"",
@@ -128,20 +132,19 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-  var response=JSON.stringify(response);
-  var response= jQuery.parseJSON(response);
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
 
-	var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-	$( "#showme" ).empty();
-
-	var mytesthtml='';
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+$( "#showme" ).empty();
+var mytesthtml='';
   
-  $.each(response.BibSearchRows, function(key, value) {
-		cont_no=value.ControlNumber;
-		ISBN=value.ISBN;
-		mytesthtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+ISBN=value.ISBN;
+mytesthtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 								  
-  $.each(value, function(key2, value2) {
+$.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
 	switch(key2){
@@ -157,11 +160,11 @@ $.ajax(settings).done(function (response) {
 	}
 
 });
-	mytesthtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-	mytesthtml +="</td></tr></table>";
+mytesthtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+mytesthtml +="</td></tr></table>";
 });
  
-  $( "#showme" ).append(mytesthtml);
+$( "#showme" ).append(mytesthtml);
 });
 
 }
