@@ -1,8 +1,7 @@
 //device detection and homepage size
-//$(document).ready(function(){
-    document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
-    function onDeviceReady() {
+function onDeviceReady() {
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
 alert('hello world');
@@ -10,13 +9,12 @@ if(deviceType!='NULL'){
 	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
 
-//var model = device.model;
-//if(model=='iPhone7,1'){
-	//alert('this is an iphone 4s');
-	//$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
-//}
+var model = device.model;
+if(model=='iPhone7,1'){
+	//alert('this is an iphone 6plus');
+	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
-//});
+}
 
 //function media material conversion
 function matconv(val2){
