@@ -87,40 +87,21 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-	var response=JSON.stringify(response);
-	var response= jQuery.parseJSON(response);							
-	var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-	$( "#showme" ).empty();
-
-	var mytesthtml='';
-	$.each(response.BibSearchRows, function(key, value) {
-	cont_no=value.ControlNumber;
-	ISBN=value.ISBN;
-
-	mytesthtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-	$.each(value, function(key2, value2) {
-
-	if(jQuery.inArray( key2, selection )!== -1){
-					
-					switch(key2){
-						case "PublicationDate":
-						key2="Publication Date";
-						break;
-						case "PrimaryTypeOfMaterial":
-						key2="Media Type";
-						value2=matconv(value2);
-						break;
-					}
-				
-					mytesthtml += key2 + ": " + value2 + "<br>";
-					}
-					//}
-				});
-				mytesthtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-				mytesthtml +="</td></tr></table>";
-				});
-				$( "#showme" ).append(mytesthtml);
-
+   //var response= jQuery.parseJSON(response);
+  //console.log(response);
+ //alert(JSON.stringify(response));
+ //alert(response);
+  var response=JSON.stringify(response);
+//  alert(response2);
+  var response= jQuery.parseJSON(response);
+  $.each(response.BibSearchRows, function(key, value) {
+	mytesthtml += key + ": " + value + "first batch<br>";									  
+  $.each(value, function(key2, value2) {
+	mytesthtml += key2 + ": " + value2 + "second batch<br>";
+});
+  
+});
+  $( "#showme" ).append(mytesthtml);
 });
 
 }
