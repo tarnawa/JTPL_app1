@@ -680,7 +680,8 @@ $.ajax({
 		cache: false,
         success : function(response) {
 		var code=response;
-		createhold(res_pat_id,cont_num,code,reqstring,thedate,hold,pat_barcode);
+		alert('putonhold done - ready for createhold');
+		createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode);
         },
         error      : function() {
             console.error("error");
@@ -690,7 +691,8 @@ $.ajax({
 };
 
 //function createhold
-function createhold(res_pat_id,cont_num,code,reqstring,thedate,hold,pat_barcode){
+function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
+alert('createhold has started');
 alert('start createhold'+cont_num+'here');	
  var settings = {
   "async": true,
