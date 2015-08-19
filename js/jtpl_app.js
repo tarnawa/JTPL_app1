@@ -693,7 +693,11 @@ $.ajax({
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
 alert('createhold has started');
-alert('start createhold'+cont_num+'here');	
+alert(thedate);	
+alert(code);	
+alert(regstring);	
+alert(res_pat_id);
+alert(cont_num);
  var settings = {
   "async": true,
   "crossDomain": true,
@@ -705,7 +709,7 @@ alert('start createhold'+cont_num+'here');
     "content-type": "application/json"
   },
   "data": {
-"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""
+"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"Date(2015-08-18T00:00:00.00)","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""
 }
 }
 
