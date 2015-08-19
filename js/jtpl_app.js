@@ -42,7 +42,7 @@ $.ajax({
     });     
 });
 
-//run an ajax query direct
+//run an ajax query direct here
 $(document).ready(function(){
 $('#onlinebtn').on('click', function () {						   
 
