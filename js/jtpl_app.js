@@ -51,8 +51,7 @@ var searchitem="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/10
 //alert('beginning');
 $.ajax({
         type       : "POST",
-		//headers: {'PolarisDate': thedate, 'Authorization': 'code', 'Content-Type':'application/json', 'Accept': 'application/json'  },
-	    url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
         data: {uri: searchitem, rdate: thedate},
 		error: function(jqXHR,text_status,strError){
@@ -73,6 +72,8 @@ $.ajax({
 
 function getit(code,searchitem,thedate){
 
+var mytesthtml='';
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -87,8 +88,16 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
   console.log(response);
-  alert(response);
-  $( "#showme" ).append(response);
+  //alert(response);
+  
+  var response= jQuery.parseJSON(response);
+  $.each(response.BibSearchRows, function(key, value) {
+  $.each(value, function(key2, value2) {
+	myhtesttml += key2 + ": " + value2 + "<br>";
+});
+  
+});
+  $( "#showme" ).append(mytesthtml);
 });
 
 }
