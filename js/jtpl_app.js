@@ -91,9 +91,9 @@ $.ajax(settings).done(function (response) {
   //console.log(response);
  //alert(JSON.stringify(response));
  //alert(response);
- // var response2=JSON.stringify(response);
+  var response=JSON.stringify(response);
 //  alert(response2);
-//  var response3= jQuery.parseJSON(response);
+  var response= jQuery.parseJSON(response);
   $.each(response.BibSearchRows, function(key, value) {
 	mytesthtml += key + ": " + value + "<br>";									  
   $.each(value, function(key2, value2) {
@@ -101,7 +101,7 @@ $.ajax(settings).done(function (response) {
 });
   
 });
-  $( "#showme" ).append(response);
+  $( "#showme" ).append(mytesthtml);
 });
 
 }
