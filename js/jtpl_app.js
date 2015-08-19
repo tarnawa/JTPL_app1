@@ -535,8 +535,7 @@ $( "#news" ).append(np_list_html);
 }
 });
 
-
-//AJAX to Patron Login (new direct)
+//Nuked - AJAX to Patron Login (new direct)
 /*$('#loginsubmitxx').on ("click", function () {
 
 var p_barcode=("#libcard").val();
@@ -591,7 +590,6 @@ alert(response);
 //end checklogin
 }*/
 
-
 //Hold Request and/or Login (new direct)
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
@@ -608,12 +606,11 @@ if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
 //alert(hold);								 
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-//alert(p_barcode);
-//alert(p_pin);
+
 
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-//alert(reqstring);
+
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
@@ -625,10 +622,7 @@ $.ajax({
 		cache: false,
         success : function(response) {
 		var code=response;
-		alert(p_barcode);
-		alert(p_pin);
-		alert(hold);
-		
+
 		checklogin(code,reqstring,thedate,hold);
         },
         error      : function() {
@@ -639,7 +633,6 @@ $.ajax({
 });
 
 function checklogin(code,reqstring,thedate,hold){
-alert(reqstring);
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -655,15 +648,11 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-alert(response);
-
+//response is a json object
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 
-alert(res_pat_id);
-alert(pat_barcode);
-alert(valid_pat);
 
 if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
 $('#cn_holdreq').val("");
@@ -674,39 +663,63 @@ $('#cn_holdreq').val("");
 //end checklogin
 }
 
-	
-
-
-//putonhold
+//function putonhold
 function putonhold(res_pat_id, cont_num, pat_barcode){
-	    
-		$.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=5",
+alert('start putonhold'); 	   
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
+
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {ControlID: cont_num, PatronID: res_pat_id},
-		//dataType   : 'json',
+        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"POST"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			//$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			//alert('ajax 5 is done!');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			getholds(pat_barcode);
+		var code=response;
+		createhold(res_pat_id,cont_num,code,reqstring,thedate,hold,pat_barcode);
         },
         error      : function() {
             console.error("error");
-            alert('Not working!');                  
+            alert('Not working1!');                  
         }
-    	}); 
-};//e putonhold function
+    });
+};
+
+//function createhold
+function createhold(res_pat_id,cont_num,code,reqstring,thedate,hold,pat_barcode){
+alert('start createhold'+cont_num+'here');	
+ var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "POST",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  },
+  "data": {
+"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""
+}
+}
+
+
+$.ajax(settings).done(function (response) { 
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+alert('we did it');
+getholds(pat_barcode);
+//response is a json object
+//var res_pat_id=response.PatronID;
+//var pat_barcode=response.PatronBarcode;
+//var valid_pat=response.ValidPatron;							
+});
+};
+
 
 //getholds
 function getholds(pat_barcode){
