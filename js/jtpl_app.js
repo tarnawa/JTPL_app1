@@ -535,42 +535,6 @@ $( "#news" ).append(np_list_html);
 }
 });
 
-//AJAX to Patron Login (old)
-/*$('#loginsubmitxx').on ("click", function () {
-    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
-        crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$("#loginresponse").empty();
-			var response= jQuery.parseJSON(response);
-			var res_pat_id=response.PatronID;
-			var valid_pat=response.ValidPatron;
-			var pat_barcode=response.Barcode;
-			
-			//$("#loginresponse").append(pat_barcode);
-			if(valid_pat==true){
-				login();
-			} else{
-			$("#loginresponse").append(valid_pat);
-			}
-			
-				
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    });     
-});*/
 
 //AJAX to Patron Login (new direct)
 $('#loginsubmitxx').on ("click", function () {
@@ -628,7 +592,7 @@ alert(response);
 }
 
 
-//Hold Request and/or Login
+//Hold Request and/or Login (new direct)
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
@@ -637,39 +601,76 @@ $('#cn_holdreq').val(cont_num);
 
 $('#loginsubmit').on ("click", function () {
 var form = $('#loginform');
+
 //check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
 								 
-    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
+var p_barcode=("#libcard").val();
+var p_pin=("#libpin").val(); ;
+
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
+
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
+        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-           
-			//$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var res_pat_id=response.PatronID;
-			var pat_barcode=response.PatronBarcode;
-			var valid_pat=response.ValidPatron;
-
+		var code=response;
 			
-			if(hold){putonhold(res_pat_id, cont_num, pat_barcode);
-			$('#cn_holdreq').val("");
-			}else{getholds(pat_barcode);}
+		checklogin(code,reqstring,thedate,hold);
         },
         error      : function() {
             console.error("error");
-            alert('Not working!');                  
+            alert('Not working1!');                  
         }
-    });     
+    });
 });
+
+function checklogin(code,reqstring,thedate,hold){
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+alert(response);
+
+var res_pat_id=response.PatronID;
+var pat_barcode=response.PatronBarcode;
+var valid_pat=response.ValidPatron;
+
+alert(res_pat_id);
+alert(pat_barcode);
+alert(valid_pat);
+
+if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
+$('#cn_holdreq').val("");
+}else{getholds(pat_barcode);}
+
+//end ajax
+});
+//end checklogin
+}
+
+	
+
 
 //putonhold
 function putonhold(res_pat_id, cont_num, pat_barcode){
