@@ -537,7 +537,7 @@ $( "#news" ).append(np_list_html);
 
 
 //AJAX to Patron Login (new direct)
-$('#loginsubmitxx').on ("click", function () {
+/*$('#loginsubmitxx').on ("click", function () {
 
 var p_barcode=("#libcard").val();
 var p_pin=("#libpin").val(); ;
@@ -589,7 +589,7 @@ alert(response);
 //end ajax
 });
 //end checklogin
-}
+}*/
 
 
 //Hold Request and/or Login (new direct)
