@@ -10,11 +10,11 @@ if(deviceType!='NULL'){
 	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
 
-var model = device.model;
-if(model=='iPhone7,1'){
+//var model = device.model;
+//if(model=='iPhone7,1'){
 	//alert('this is an iphone 4s');
-	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
-}
+	//$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
+//}
 }
 });
 
@@ -365,7 +365,7 @@ $( "#blist" ).append(blist_html);
 }
 });
 
-//AJAX to Book Detail
+//AJAX to Book Detail (direct)
 $(document).on('click', '.trail a', function () {
 searchitem=$(this).attr("id");
 
@@ -458,7 +458,6 @@ $( "#bdetail" ).append(detlist_html);
 });
 }
 });
-
 
 //AJAX to Patron Login
 $('#loginsubmitxx').on ("click", function () {
