@@ -1,5 +1,5 @@
 //device detection and homepage size
-$(document).ready(function(){
+//$(document).ready(function(){
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
@@ -16,7 +16,7 @@ if(deviceType!='NULL'){
 	//$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 //}
 }
-});
+//});
 
 //function media material conversion
 function matconv(val2){
