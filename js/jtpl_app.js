@@ -607,7 +607,7 @@ var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
 								 
 var p_barcode=("#libcard").val();
-var p_pin=("#libpin").val(); ;
+var p_pin=("#libpin").val();
 
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
