@@ -708,8 +708,9 @@ alert(cont_num);
     "authorization": ""+code+"",
     "content-type": "application/json"
   },
-  "data": 
-  {"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}
+  "data": {
+"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"Date(2015-08-18T00:00:00.00)","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""
+}
 }
 
 

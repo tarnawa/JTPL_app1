@@ -1,19 +1,22 @@
 //device detection and homepage size
-document.addEventListener("deviceready", onDeviceReady, false);
+$(document).ready(function(){
+    document.addEventListener("deviceready", onDeviceReady, false);
 
-function onDeviceReady() {
+    function onDeviceReady() {
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
+alert('hello world');
 if(deviceType!='NULL'){
 	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
 
 var model = device.model;
 if(model=='iPhone7,1'){
-	//alert('this is an iphone 6plus');
+	//alert('this is an iphone 4s');
 	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
 }
+});
 
 //function media material conversion
 function matconv(val2){
@@ -94,7 +97,7 @@ $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
+        data: {uri: reqstring, rdate: thedate},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
@@ -278,319 +281,184 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-//AJAX to Book Search (Direct)
+//AJAX to Book Search
 $('#search_item').on ("keyup", function () {
-
+//start_spin();
   searchitem=0;
   searchitem= $('#search_item').val();
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-//alert('beginning');
-$.ajax({
+    $.ajax({
         type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
+        data: {val: searchitem},
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			var code=response;
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+			$( "#blist" ).empty();
+
+			var myhtml='';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
 			
-		getit(code,reqstring,thedate);
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+								   
+				   
+					//if(value2!='' || value2>=0){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+					switch(key2){
+						case "PublicationDate":
+						key2="Publication Date";
+						break;
+						case "PrimaryTypeOfMaterial":
+						key2="Media Type";
+						value2=matconv(value2);
+						break;
+					}
+					
+					
+					
+					myhtml += key2 + ": " + value2 + "<br>";
+					}
+					//}
+				});
+				myhtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#blist" ).append(myhtml);
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
     });
 
-function getit(code,reqstring,thedate){
-
-var blist_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-$( "#blist" ).empty();
-var blist_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-	switch(key2){
-		case "PublicationDate":
-		key2="Publication Date";
-		break;
-		case "PrimaryTypeOfMaterial":
-		key2="Media Type";
-		value2=matconv(value2);
-		break;
-	}
-	blist_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-blist_html +="</td></tr></table>";
-});
- 
-$( "#blist" ).append(blist_html);
-});
-}
 });
 
-//AJAX to Book Detail (direct)
+//AJAX to Book Detail
 $(document).on('click', '.trail a', function () {
 searchitem=$(this).attr("id");
+ //searchitem=2557;
+ // alert('this is' + contid + 'here');
+var mybib_detail='';
 
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+searchitem+"";
-//alert('beginning');
 $.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        type : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=3",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
+        data: {val: searchitem},
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			var code=response;
 			
-		getit(code,reqstring,thedate);
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+			$( "#bdetail" ).empty();
+
+			var mybib_detail='';
+			mybib_detail +='<H3>Title Detail</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					mybib_detail +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					//if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+					switch(key2){
+						case "PublicationDate":
+						key2="Publication Date";
+						break;
+						case "LocalItemsTotal":
+						key2="Local Items Total";
+						break;
+						case "LocalItemsIn":
+						key2="Local Items In";
+						break;
+						case "CurrentHoldRequests":
+						key2="Current Hold Requests";
+						break;
+						case "PrimaryTypeOfMaterial":
+						key2="Media Tyoe";
+						value2=matconv(value2);
+						break;
+					}
+					
+					mybib_detail += key2 + ": " + value2 + "<br>";
+					}
+					//}
+				});
+				mybib_detail +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+				mybib_detail +="</td></tr></table>";
+				
+				});
+				$( "#bdetail" ).append(mybib_detail);
+			//stop_spin();
+			
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
-    });
+    });     
+});     
 
-function getit(code,reqstring,thedate){
-
-var detlist_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
-$( "#bdetail" ).empty();
-
-var detlist_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-		switch(key2){
-			case "PublicationDate":
-			key2="Publication Date";
-			break;
-			case "LocalItemsTotal":
-			key2="Local Items Total";
-			break;
-			case "LocalItemsIn":
-			key2="Local Items In";
-			break;
-			case "CurrentHoldRequests":
-			key2="Current Hold Requests";
-			break;
-			case "PrimaryTypeOfMaterial":
-			key2="Media Tyoe";
-			value2=matconv(value2);
-			break;
-		}
-	detlist_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
-detlist_html +="</td></tr></table>";
-});
- 
-$( "#bdetail" ).append(detlist_html);
-});
-}
-});
-
-//get new publications (direct)
-$(document).on('click', '#thesearch', function () {
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10";
-//alert('beginning');
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+//AJAX to Patron Login
+$('#loginsubmitxx').on ("click", function () {
+    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
+        data: form.serialize(),
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			var code=response;
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			$("#loginresponse").empty();
+			var response= jQuery.parseJSON(response);
+			var res_pat_id=response.PatronID;
+			var valid_pat=response.ValidPatron;
+			var pat_barcode=response.Barcode;
 			
-		getit(code,reqstring,thedate);
+			//$("#loginresponse").append(pat_barcode);
+			if(valid_pat==true){
+				login();
+			} else{
+			$("#loginresponse").append(valid_pat);
+			}
+			
+				
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
-    });
-
-function getit(code,reqstring,thedate){
-
-var np_list_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
-$( "#news" ).empty();
-var np_list_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-np_list_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-	switch(key2){
-		case "PublicationDate":
-		key2="Publication Date";
-		break;
-		case "PrimaryTypeOfMaterial":
-		key2="Media Type";
-		value2=matconv(value2);
-		break;
-	}
-	np_list_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
-np_list_html +="</td></tr></table>";
-});
- 
-$( "#news" ).append(np_list_html);
-});
-}
+    });     
 });
 
-//Nuked - AJAX to Patron Login (new direct)
-/*$('#loginsubmitxx').on ("click", function () {
-
-var p_barcode=("#libcard").val();
-var p_pin=("#libpin").val(); ;
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			
-		checklogin(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
-});
-
-function checklogin(code,reqstring,thedate){
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-//var response= jQuery.parseJSON(response);
-alert(response);
-
-//end ajax
-});
-//end checklogin
-}*/
-
-//Hold Request and/or Login (new direct)
+//Hold Request and/or Login
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
@@ -599,132 +467,69 @@ $('#cn_holdreq').val(cont_num);
 
 $('#loginsubmit').on ("click", function () {
 var form = $('#loginform');
-
 //check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
-//alert(hold);								 
-p_barcode=$("#libcard").val();
-p_pin=$("#libpin").val();
-
-
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+								 
+    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
         crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
+        data: form.serialize(),
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-		var code=response;
-
-		checklogin(code,reqstring,thedate,hold,p_pin);
+           
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var res_pat_id=response.PatronID;
+			var pat_barcode=response.PatronBarcode;
+			var valid_pat=response.ValidPatron;
+			
+			if(hold){putonhold(res_pat_id, cont_num, pat_barcode);
+			$('#cn_holdreq').val("");
+			}else{getholds(pat_barcode);}
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
-    });
+    });     
 });
 
-function checklogin(code,reqstring,thedate,hold,p_pin){
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-//response is a json object
-var res_pat_id=response.PatronID;
-var pat_barcode=response.PatronBarcode;
-var valid_pat=response.ValidPatron;
-
-
-if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode,p_pin);
-$('#cn_holdreq').val("");
-}else{getholds(pat_barcode);}
-
-//end ajax
-});
-//end checklogin
-}
-
-//function putonhold
-function putonhold(res_pat_id, cont_num, pat_barcode,p_pin){
-alert('start putonhold'); 	   
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+//putonhold
+function putonhold(res_pat_id, cont_num, pat_barcode){
+	    
+		$.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=5",
         crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"POST"},
+        data: {ControlID: cont_num, PatronID: res_pat_id},
+		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-		var code=response;
-		alert('putonhold done - ready for createhold');
-		createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode);
+            //console.error(JSON.stringify(response));
+            //alert('Works!');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			//var response=response.Message;
+			//alert('ajax 5 is done!');
+			//$( "#loginresponse" ).append(response);
+			//this validates the Patron and returns the PatronID
+			getholds(pat_barcode);
         },
         error      : function() {
             console.error("error");
-            alert('Not working1!');                  
+            alert('Not working!');                  
         }
-    });
-};
-
-//function createhold
-function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-alert('createhold has started');
-alert(thedate);	
-alert(code);	
-alert(regstring);	
-alert(res_pat_id);
-alert(cont_num);
- var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "POST",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  },
-  "data": 
-  {"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}
-}
-
-
-$.ajax(settings).done(function (response) { 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-alert('we did it');
-getholds(pat_barcode);
-//response is a json object
-//var res_pat_id=response.PatronID;
-//var pat_barcode=response.PatronBarcode;
-//var valid_pat=response.ValidPatron;							
-});
-};
-
+    	}); 
+};//e putonhold function
 
 //getholds
 function getholds(pat_barcode){
@@ -1005,6 +810,63 @@ window.plugins.flashlight.available(function(isAvailable) {
     alert("Flashlight not available on this device");
   }
 });
+});
+
+//get new publications
+$(document).on('click', '#thesearch', function () {
+//alert('SEARCH');
+//start_spin();
+  searchitem='x';
+  //searchitem= $('#search_item').val();
+    $.ajax({
+        type       : "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=8",
+        crossDomain: true,
+        data: {val: searchitem},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+			var response= jQuery.parseJSON(response);
+			//console.error(jQuery.parseJSON(response));
+			var selection= ['Title', 'Author', 'PublicationDate', 'LocalItemsIn', 'CurrentHoldRequests'];
+			$( "#news" ).empty();
+
+			var myhtml='';
+			myhtml +='<H3>New Publications</H3>';
+				$.each(response.BibSearchRows, function(key, value) {
+					cont_no=value.ControlNumber;
+					ISBN=value.ISBN;
+					//$( "#blist" ).append('');
+					//$( "#blist" ).append('<img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /><br />');
+					myhtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, selection )!== -1){
+					
+						if(key2=="Title"){
+						myhtml += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						myhtml += key2 + ": " + value2 + "<br>";
+						}
+					}
+					}
+				});
+				myhtml +="<p class='trail'><a id='" + cont_no + "' href='#bib_detail'>Detail</a></p>";
+				myhtml +="</td></tr></table>";
+				});
+				$( "#news" ).append(myhtml);
+			//stop_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    });
+
 });
 
 //change page
