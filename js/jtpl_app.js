@@ -698,7 +698,7 @@ alert(code);
 //alert(regstring);	
 //alert(res_pat_id);
 //alert(cont_num);
- var settings = {
+var settings = {
   "async": true,
   "crossDomain": true,
   "url": ""+reqstring+"",
@@ -706,24 +706,21 @@ alert(code);
   "headers": {
     "polarisdate": ""+thedate+"",
     "authorization": ""+code+"",
-    "content-type": "application/json"
+    "content-type": "application/json",
+    "accept": "application/json"
   },
-  "data": 
-  {"PatronID":""+res_pat_id+"","BibID":""+cont_num+"","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}
+  "processData": false,
+  "data": "{\"PatronID\":\"128\",\"BibID\":\"2557\",\"ItemBarcode\":\"\",\"VolumeNumber\":\"\",\"Designation\":\"\",\"PickupOrgID\":\"3\",\"IsBorrowByMail\":0,\"PatronNotes\":\"\",\"ActivationDate\":\"\\/Date(2015-08-18T00:00:00.00)\\/\",\"Answer\":\"\",\"RequestID\":\"\",\"WorkstationID\":1,\"UserID\":1,\"RequestingOrgID\":1,\"TargetGUID\":\"\"}"
 }
 
-
-$.ajax(settings).done(function (response) { 
+$.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 alert('we did it');
 getholds(pat_barcode);
-//response is a json object
-//var res_pat_id=response.PatronID;
-//var pat_barcode=response.PatronBarcode;
-//var valid_pat=response.ValidPatron;							
 });
 };
+
 
 
 //getholds
