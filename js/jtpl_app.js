@@ -692,12 +692,12 @@ $.ajax({
 
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-alert('createhold has started');
+//alert('createhold has started');
 alert(thedate);	
 alert(code);	
-alert(regstring);	
-alert(res_pat_id);
-alert(cont_num);
+//alert(regstring);	
+//alert(res_pat_id);
+//alert(cont_num);
  var settings = {
   "async": true,
   "crossDomain": true,
