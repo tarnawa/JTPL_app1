@@ -714,7 +714,8 @@ var settings = {
     "accept": "application/json"
   },
   "processData": false,
-  "data": {"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}
+  "data": "{\"PatronID\":\"128\",\"BibID\":\"2557\",\"ItemBarcode\":\"\",\"VolumeNumber\":\"\",\"Designation\":\"\",\"PickupOrgID\":\"3\",\"IsBorrowByMail\":0,\"PatronNotes\":\"\",\"ActivationDate\":\"\\/Date(2015-08-18T00:00:00.00)\\/\",\"Answer\":\"\",\"RequestID\":\"\",\"WorkstationID\":1,\"UserID\":1,\"RequestingOrgID\":1,\"TargetGUID\":\"\"}"
+
 }
 
 $.ajax(settings).done(function (response) {
