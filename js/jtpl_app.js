@@ -699,7 +699,8 @@ alert(code);
 //alert(res_pat_id);
 //alert(cont_num);
 
-var jstring=JSON.stringify({"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""});
+//var jstring=JSON.stringify({"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""});
+
 alert(jstring);
 var settings = {
   "async": true,
@@ -713,7 +714,7 @@ var settings = {
     "accept": "application/json"
   },
   "processData": false,
-  "data": ""+jstring+""
+  "data": {"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}
 }
 
 $.ajax(settings).done(function (response) {
