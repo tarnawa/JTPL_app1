@@ -695,40 +695,24 @@ $.ajax({
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
 alert('createhold starts');
-var data = JSON.stringify({
-  "PatronID": "128",
-  "BibID": "2557",
-  "ItemBarcode": "",
-  "VolumeNumber": "",
-  "Designation": "",
-  "PickupOrgID": "3",
-  "IsBorrowByMail": 0,
-  "PatronNotes": "",
-  "ActivationDate": "/Date(2015-08-18T00:00:00.00)/",
-  "Answer": "",
-  "RequestID": "",
-  "WorkstationID": 1,
-  "UserID": 1,
-  "RequestingOrgID": 1,
-  "TargetGUID": ""
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest",
+  "method": "POST",
+  "headers": {
+    "polarisdate": "Fri, 21 August 2015 13:20:11 GMT",
+    "authorization": "PWS MORR1706WVONBISTRAMPDN:OzBXBs26HgMMaMz97xadFZ/zbrE=",
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": '{"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}',
+}
+
+$.ajax(settings).done(function (response) {
+  alert('createhold - it works');
+  console.log(response);
 });
-
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-  if (this.readyState === this.DONE) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("POST", "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest");
-xhr.setRequestHeader("polarisdate", "Fri, 21 August 2015 115946 GMT");
-xhr.setRequestHeader("authorization", "PWS MORR1706WVONBISTRAMPDN/YV+n8Pp1P+0l2F/glN2VKkif4U=");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.setRequestHeader("accept", "application/json");
-
-xhr.send(data);
 
 }
 
