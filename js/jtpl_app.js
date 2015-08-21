@@ -694,48 +694,27 @@ $.ajax({
 
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-//alert('createhold has started');
-alert('start create hold');	
-//alert(regstring);	
-//alert(res_pat_id);
-//alert(cont_num);
+alert('createhold starts');
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest",
+  "method": "POST",
+  "headers": {
+    "polarisdate": "Fri, 21 August 2015 115946 GMT",
+    "authorization": "PWS MORR1706WVONBISTRAMPDN/YV+n8Pp1P+0l2F/glN2VKkif4U=",
+    "content-type": "application/json",
+    "accept": "application/json"
+  },
+  "processData": false,
+  "data": "{\"PatronID\":\"128\",\"BibID\":\"2557\",\"ItemBarcode\":\"\",\"VolumeNumber\":\"\",\"Designation\":\"\",\"PickupOrgID\":\"3\",\"IsBorrowByMail\":0,\"PatronNotes\":\"\",\"ActivationDate\":\"\\/Date(2015-08-18T00:00:00.00)\\/\",\"Answer\":\"\",\"RequestID\":\"\",\"WorkstationID\":1,\"UserID\":1,\"RequestingOrgID\":1,\"TargetGUID\":\"\"}"
+}
 
-//var jstring=JSON.stringify({"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""});
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  alert('createhold is working');
+});
 
-//alert(jstring);
-
-$.ajax({
-        type: "POST",
-        url: ""+reqstring+"",
-        crossDomain: true,
-		headers: {
-		  "polarisdate": ""+thedate+"",
-		  "authorization": ""+code+"",
-		  "content-type": "application/json",
-		  "accept": "application/json"
-		  },
-        data: {"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""},
-		dataType   : "json",
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            alert('Works!');
-			//$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			//alert('ajax 5 is done!');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			getholds(pat_barcode);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	}); 
 }
 
 
