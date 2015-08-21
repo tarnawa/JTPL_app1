@@ -623,7 +623,7 @@ $.ajax({
         success : function(response) {
 		var code=response;
 
-		checklogin(code,reqstring,thedate,hold,p_pin);
+		checklogin(code,reqstring,thedate,hold);
         },
         error      : function() {
             console.error("error");
@@ -632,7 +632,7 @@ $.ajax({
     });
 });
 
-function checklogin(code,reqstring,thedate,hold,p_pin){
+function checklogin(code,reqstring,thedate,hold){
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -654,7 +654,7 @@ var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 
 
-if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode,p_pin);
+if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
 $('#cn_holdreq').val("");
 }else{getholds(pat_barcode);}
 
@@ -664,8 +664,9 @@ $('#cn_holdreq').val("");
 }
 
 //function putonhold
-function putonhold(res_pat_id, cont_num, pat_barcode,p_pin){
-alert('start putonhold'); 	   
+function putonhold(res_pat_id, cont_num, pat_barcode){
+alert(res_pat_id);
+alert(pat_barcode);
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
 
@@ -673,14 +674,15 @@ $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"POST"},
+        data: {uri: reqstring, rdate:thedate, method:"POST"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
 		var code=response;
-		alert('putonhold done - ready for createhold');
+		alert(res_pat_id);
+		alert(pat_barcode);
 		createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode);
         },
         error      : function() {
@@ -693,38 +695,48 @@ $.ajax({
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
 //alert('createhold has started');
-alert(thedate);	
-alert(code);	
+alert('start create hold');	
 //alert(regstring);	
 //alert(res_pat_id);
 //alert(cont_num);
 
 //var jstring=JSON.stringify({"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""});
 
-alert(jstring);
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "POST",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json",
-    "accept": "application/json"
-  },
-  "processData": false,
-  "data": "{\"PatronID\":\"128\",\"BibID\":\"2557\",\"ItemBarcode\":\"\",\"VolumeNumber\":\"\",\"Designation\":\"\",\"PickupOrgID\":\"3\",\"IsBorrowByMail\":0,\"PatronNotes\":\"\",\"ActivationDate\":\"\\/Date(2015-08-18T00:00:00.00)\\/\",\"Answer\":\"\",\"RequestID\":\"\",\"WorkstationID\":1,\"UserID\":1,\"RequestingOrgID\":1,\"TargetGUID\":\"\"}"
+//alert(jstring);
 
+$.ajax({
+        type: "POST",
+        url: ""+reqstring+"",
+        crossDomain: true,
+		headers: {
+		  "polarisdate": ""+thedate+"",
+		  "authorization": ""+code+"",
+		  "content-type": "application/json",
+		  "accept": "application/json"
+		  },
+        data: {"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""},
+		dataType   : "json",
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            alert('Works!');
+			//$( "#loginresponse" ).empty();
+			//var response= jQuery.parseJSON(response);
+			//var response=response.Message;
+			//alert('ajax 5 is done!');
+			//$( "#loginresponse" ).append(response);
+			//this validates the Patron and returns the PatronID
+			getholds(pat_barcode);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    	}); 
 }
-
-$.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-alert('we did it');
-//getholds(pat_barcode);
-});
-};
 
 
 
