@@ -665,8 +665,8 @@ $('#cn_holdreq').val("");
 
 //function putonhold
 function putonhold(res_pat_id, cont_num, pat_barcode){
-alert(res_pat_id);
-alert(pat_barcode);
+//alert(res_pat_id);
+//alert(pat_barcode);
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
 
@@ -681,8 +681,8 @@ $.ajax({
 		cache: false,
         success : function(response) {
 		var code=response;
-		alert(res_pat_id);
-		alert(pat_barcode);
+		//alert(res_pat_id);
+		//alert(pat_barcode);
 		createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode);
         },
         error      : function() {
@@ -698,19 +698,20 @@ alert('createhold starts');
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest",
+  "url": ""+reqstring+"",
   "method": "POST",
   "headers": {
-    "polarisdate": "Fri, 21 August 2015 13:20:11 GMT",
-    "authorization": "PWS MORR1706WVONBISTRAMPDN:OzBXBs26HgMMaMz97xadFZ/zbrE=",
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"128","BibID":"2557","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}',
 }
 
 $.ajax(settings).done(function (response) {
   alert('createhold - it works');
+  alert(response);
   console.log(response);
 });
 
