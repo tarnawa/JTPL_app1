@@ -55,31 +55,51 @@ case 37: var val2="Audio Book"; break;
 return val2;
 }
 
-//testquery
-//run a blind query
+//run a warmup query
 $(document).ready(function(){
+  searchitem=0;
+  searchitem='y';
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+//alert('beginning');
 $.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=2",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {val:'K'},
-		//dataType   : 'json',
+        data: {uri: reqstring, rdate: thedate, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			//alert('hello4');
-		//$( "#blist" ).append(response);
+			var code=response;
+		getit_t(code,reqstring,thedate);
         },
         error      : function() {
             console.error("error");
-            alert('Not working!');                  
+            alert('Not working1!');                  
         }
-    });     
 });
 
-//Book Search Direct Ajax
+function getit_t(code,reqstring,thedate){
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+});
+};
+});
+
+//Test on inline media Book Search Direct Ajax
 $(document).ready(function(){
 //$('#onlinebtn').on('click', function () {	
 $('#search_item2').on ("keyup", function () {
@@ -278,7 +298,7 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-//AJAX to Book Search (Direct)
+//AJAX to Book Search (direct)
 $('#search_item').on ("keyup", function () {
 
   searchitem=0;
@@ -590,23 +610,21 @@ alert(response);
 //end checklogin
 }*/
 
+
 //Hold Request and/or Login (new direct)
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
 });
 
-
 $('#loginsubmit').on ("click", function () {
 var form = $('#loginform');
-
 //check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
 //alert(hold);								 
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-
 
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
@@ -631,7 +649,7 @@ $.ajax({
         }
     });
 });
-
+//check login credentials and go putonhold or getholds
 function checklogin(code,reqstring,thedate,hold){
 var settings = {
   "async": true,
@@ -653,20 +671,15 @@ var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 
-
 if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
 $('#cn_holdreq').val("");
 }else{getholds(pat_barcode);}
-
 //end ajax
 });
 //end checklogin
 }
-
-//function putonhold
+//function putonhold (get credentials)
 function putonhold(res_pat_id, cont_num, pat_barcode){
-//alert(res_pat_id);
-//alert(pat_barcode);
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
 
@@ -691,10 +704,8 @@ $.ajax({
         }
     });
 };
-
 //function createhold
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-alert('createhold starts');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -710,22 +721,111 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-  alert('createhold - it works');
-  alert(response);
+alert('your request has been processed');
+getholds (pat_barcode);
   console.log(response);
 });
-
 }
 
 
+//prep_getholds and go to getholds
+function prep_getholds(pat_barcode){
+	//alert('this is' + pat_barcode + 'here');
+	//searchitem1=pat_barcode;
+	var pwd=$('#libpin').val();
+	
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/all";	
+
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {uri:reqstring, rdate: thedate, method:"GET", patron_pin:pwd},
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+			getholds(reqstring,thedate,code) 
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    	});
+//end prep_getholds
+}
 
 //getholds
-function getholds(pat_barcode){
-	//alert('this is' + pat_barcode + 'here');
+function getholds(reqstring,thedate,code){	
+
+$.mobile.changePage("#inside");
+	
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+var my_holds='';
+var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
+
+$( "#loginresponse" ).empty();
+
+$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+		if(value.StatusDescription!="Cancelled"){													
+															
+		my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+			$.each(value, function(key2, value2) {
+				if(value2!=''){
+				if(jQuery.inArray( key2, hold_selection )!== -1){
+				
+					if(key2=="Title"){
+					my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+					}else{
+					my_holds += key2 + ": " + value2 + "<br>";
+					}
+
+				if(key2=="HoldRequestID"){
+				hold_req_id=value2;
+				//alert("this is" + hold_req_id + "here");
+				}
+
+				}
+				}
+								   
+								   
+			});
+			my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
+			my_holds +="</td></tr></table>";
+		}//end screen out cancelled
+});
+								
+	$( "#loginresponse" ).append(my_holds);
+
+});//end ajax 
+};//end getholds function
+
+
+//getholds2
+function getholds2(pat_barcode, hold_id){
 	searchitem1=pat_barcode;
 	searchitem2=$('#libpin').val();
-	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
-	$.mobile.changePage("#inside");
 	    $.ajax({
         type: "POST",
         url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
@@ -739,10 +839,10 @@ function getholds(pat_barcode){
         success : function(response) {
             //console.error(JSON.stringify(response));
             //alert('7 has a response');
-			//$( "#loginresponse" ).empty();
+			$( "#loginresponse" ).empty();
 			var response= jQuery.parseJSON(response);
 			var my_holds='';
-			var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
+			var hold_selection= ['Title', 'Author', 'StatusDescription'];
 			$( "#loginresponse" ).empty();
 
 			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
@@ -760,16 +860,11 @@ function getholds(pat_barcode){
 						my_holds += key2 + ": " + value2 + "<br>";
 						}
 
-					if(key2=="HoldRequestID"){
-					hold_req_id=value2;
-					//alert("this is" + hold_req_id + "here");
-					}
-
 					}
 					}
 									   
 				});
-				my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
+				my_holds +="<p class='hold_cancel'><a id=" + hold_id + "href='#inside'>Cancel Hold</a></p>";
 				my_holds +="</td></tr></table>";
 			}//end screen out cancelled
 				});
@@ -782,7 +877,8 @@ function getholds(pat_barcode){
             alert('Not working!');                  
         }
     }); 
-};//e getholds function
+};//e getholds2 function
+
 
 //get items out function
 function getitemsout(pat_barcode){
@@ -849,133 +945,128 @@ function getitemsout(pat_barcode){
     }); 
 };//e get items out function
 
-//Cancel Hold - login part
+
+//Cancel Hold - take hold id and prep validate patron
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
-//alert('hold_id is' + hold_id + 'here');
-//$( "#loginresponse" ).empty();
-//$("#loginform .ui-btn").hide();
-var form = $('#loginform');
+p_barcode=$("#libcard").val();
+p_pin=$("#libpin").val();
+//var form = $('#loginform');
 
-    $.ajax({
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
+
+$.ajax({
         type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=4",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: form.serialize(),
-		//dataType   : 'json',
+        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var PatronID= response.PatronID;
-			var pat_barcode=response.PatronBarcode;
-			//alert('hello from Ajax');
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			cancelhold(PatronID, pat_barcode, hold_id);
+		var code=response;
+		validate_patron(reqstring,thedate,code,hold_id);
         },
         error      : function() {
             console.error("error");
-            alert('Not working!');                  
+            alert('Not working1!');                  
         }
-    });     
+    });
 });
 
-//cancelhold2
-function cancelhold(PatronID, pat_barcode, hold_id){
-	//alert('this is cancelhold ' + pat_barcode + hold_id + 'here');
-	searchitem1=$('#libpin').val();
-	searchitem2=hold_id;
-	searchitem3=pat_barcode;
+//validate patron and go to prep cancelhold
+function validate_patron(reqstring,thedate,code,hold_id){
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+//response is a json object
+//var res_pat_id=response.PatronID;
+var pat_barcode=response.PatronBarcode;
+var valid_pat=response.ValidPatron;
+
+if(valid_pat==true){prep_cancelhold(pat_barcode,hold_id);
+$('#cn_holdreq').val("");
+}else{
+alert('log in failed - please try again');
+}
+//end ajax
+});
+//validate patron
+}
+
+//prep_cancelhold and go to cancelhold
+function prep_cancelhold(pat_barcode,hold_id){
+
+	pwd=$('#libpin').val();
 	
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/"+hold_id+"/cancelled?wsid=1&userid=1";	
+
 	    $.ajax({
         type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=6",
+        url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {PatronBarcode:searchitem3, hold_id:searchitem2, libpin:searchitem1 },
+        data: {uri:reqstring, rdate: thedate, method:"PUT", patron_pin:pwd},
 		//dataType   : 'json',
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#loginresponse" ).empty();
-			//var response= jQuery.parseJSON(response);
-			//var response=response.Message;
-			//$( "#loginresponse" ).append(response);
-			//this validates the Patron and returns the PatronID
-			getholds2(pat_barcode, hold_id) 
+			var code=response;
+			cancelhold(reqstring,thedate,code) 
         },
         error      : function() {
             console.error("error");
             alert('Not working!');                  
         }
-    	}); 
-};//e getholds function
+    	});
+//end prep_cancelhold
+}
 
-//getholds2
-function getholds2(pat_barcode, hold_id){
-	searchitem1=pat_barcode;
-	searchitem2=$('#libpin').val();
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
-        crossDomain: true,
-        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('7 has a response');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var my_holds='';
-			var hold_selection= ['Title', 'Author', 'StatusDescription'];
-			$( "#loginresponse" ).empty();
+//cancelhold and go to prep_getholds
+function cancelhold(reqstring, thedate, code){
 
-			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
-																
-			if(value.StatusDescription!="Cancelled"){													
-																
-			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
-				$.each(value, function(key2, value2) {
-					if(value2!=''){
-					if(jQuery.inArray( key2, hold_selection )!== -1){
-					
-						if(key2=="Title"){
-						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
-						}else{
-						my_holds += key2 + ": " + value2 + "<br>";
-						}
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "PUT",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+//response is a json object
+var cancel_confirm=response.PAPIErrorCode;
 
-					}
-					}
-									   
-				});
-				my_holds +="<p class='hold_cancel'><a id=" + hold_id + "href='#inside'>Cancel Hold</a></p>";
-				my_holds +="</td></tr></table>";
-			}//end screen out cancelled
-				});
+if(cancel_confirm==0){
+prep_getholds(res_pat_id, cont_num, pat_barcode);
+}else{
+alert('your hold cancel request failed');
+}
+//end ajax
+});
+//end cancelhold
+}
 
-			$( "#loginresponse" ).append(my_holds);
-
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    }); 
-};//e getholds2 function
 
 //Flashlight
 $('#flashlight').on('click', function () {
