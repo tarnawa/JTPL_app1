@@ -673,7 +673,7 @@ var valid_pat=response.ValidPatron;
 
 if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
 $('#cn_holdreq').val("");
-}else{getholds(pat_barcode);}
+}else{prep_getholds(pat_barcode);}
 //end ajax
 });
 //end checklogin
@@ -722,7 +722,7 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 alert('your request has been processed');
-getholds (pat_barcode);
+prep_getholds (pat_barcode);
   console.log(response);
 });
 }
