@@ -761,9 +761,9 @@ var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/103
 
 //getholds
 function getholds(reqstring,thedate,code){	
-
+alert('getholds started');
 $.mobile.changePage("#inside");
-	
+var response='';	
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -785,7 +785,7 @@ var my_holds='';
 var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
 
 $( "#loginresponse" ).empty();
-
+alert('loginresponse should be empty now');
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 																
 		if(value.StatusDescription!="Cancelled"){													
@@ -820,64 +820,6 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
 });//end ajax 
 };//end getholds function
-
-
-//getholds2
-function getholds2(pat_barcode, hold_id){
-	searchitem1=pat_barcode;
-	searchitem2=$('#libpin').val();
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=7",
-        crossDomain: true,
-        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('7 has a response');
-			$( "#loginresponse" ).empty();
-			var response= jQuery.parseJSON(response);
-			var my_holds='';
-			var hold_selection= ['Title', 'Author', 'StatusDescription'];
-			$( "#loginresponse" ).empty();
-
-			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
-																
-			if(value.StatusDescription!="Cancelled"){													
-																
-			my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
-				$.each(value, function(key2, value2) {
-					if(value2!=''){
-					if(jQuery.inArray( key2, hold_selection )!== -1){
-					
-						if(key2=="Title"){
-						my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
-						}else{
-						my_holds += key2 + ": " + value2 + "<br>";
-						}
-
-					}
-					}
-									   
-				});
-				my_holds +="<p class='hold_cancel'><a id=" + hold_id + "href='#inside'>Cancel Hold</a></p>";
-				my_holds +="</td></tr></table>";
-			}//end screen out cancelled
-				});
-
-			$( "#loginresponse" ).append(my_holds);
-
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    }); 
-};//e getholds2 function
 
 
 //get items out function
