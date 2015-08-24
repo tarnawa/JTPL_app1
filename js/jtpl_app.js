@@ -720,7 +720,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-alert('your request has been processed');
+//alert('your request has been processed');
 prep_getholds (pat_barcode);
   console.log(response);
 });
@@ -947,7 +947,7 @@ var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/103
 
 //getholds
 function getholds(reqstring,thedate,code){	
-alert('getholds started');
+//alert('getholds started');
 $.mobile.changePage("#inside");
 //var response='';	
 var settings = {
@@ -971,7 +971,7 @@ var my_holds='';
 var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
 
 $( "#loginresponse" ).empty();
-alert('loginresponse should be empty now');
+//alert('loginresponse should be empty now');
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 																
 		if(value.StatusDescription!="Cancelled"){													
