@@ -797,7 +797,7 @@ hold_id=$(this).attr("id");
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 
-alert('start cancel hold - this is' + hold_id +'here');
+$( "#loginresponse" ).empty();
 //var form = $('#loginform');
 
 var thedate=(new Date()).toUTCString();
