@@ -796,6 +796,8 @@ $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
+
+alert('start cancel hold - this is' + hold_id +'here');
 //var form = $('#loginform');
 
 var thedate=(new Date()).toUTCString();
