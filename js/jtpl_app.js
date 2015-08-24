@@ -209,6 +209,29 @@ $(document).ready(function(){
 */
 });
 
+//Flashlight
+$('#flashlight').on('click', function () {
+//alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
+window.plugins.flashlight.available(function(isAvailable) {
+  if (isAvailable) {
+
+    // switch on
+    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
+
+    // switch off after 5 seconds
+    setTimeout(function() {
+     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
+    $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+	}, 5000);
+	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+  } 
+ else {
+    alert("Flashlight not available on this device");
+  }
+});
+});
+
 $(document).ready(function(){
 
 //google map
@@ -1007,28 +1030,7 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 });//end ajax 
 };//end getholds function
 
-//Flashlight
-$('#flashlight').on('click', function () {
-//alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
-window.plugins.flashlight.available(function(isAvailable) {
-  if (isAvailable) {
 
-    // switch on
-    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
-
-    // switch off after 5 seconds
-    setTimeout(function() {
-     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
-    $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
-	}, 5000);
-	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
-  } 
- else {
-    alert("Flashlight not available on this device");
-  }
-});
-});
 
 //change page
 function login(){
