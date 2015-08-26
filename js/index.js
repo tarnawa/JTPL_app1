@@ -68,9 +68,12 @@ var app = {
                 "text: " + result.text + "\n" +
                 "format: " + result.format + "\n" +
                 "cancelled: " + result.cancelled + "\n");
+		   
             document.getElementById("bcode").innerHTML = result.text;
 			
-			getData('hello world');
+			var input=result.text;
+			
+			getData(input);
 			
 			
 			//var barcode_on=result.text;
