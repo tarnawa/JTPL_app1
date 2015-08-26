@@ -212,7 +212,7 @@ $(document).ready(function(){
 //BARCODE SCANNER
 function getData(barcode){
 //alert('hello world');
-var barcode=barcode;
+var barcode=9780345528117;
 alert(barcode);
 
 searchitem=barcode;
@@ -261,10 +261,10 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
-$( "#bdetail" ).empty();
+//var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+//$( "#bdetail" ).empty();
 
-var detlist_html='';
+//var detlist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
@@ -304,6 +304,7 @@ $( "#bcode" ).append(detlist_html);
 });
 };
 };
+
 
 $(document).ready(function(){
 
