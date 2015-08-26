@@ -1091,7 +1091,7 @@ window.addEventListener('load', function() {
 //Flashlight
 $('#flashlight').on('click', function () {
 //alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#ffffff', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
