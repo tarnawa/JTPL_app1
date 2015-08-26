@@ -262,31 +262,97 @@ launchnavigator.navigate(
 
 //BARCODE SCANNER
 function getData(barcode){
+var barcode=barcode;
+alert(barcode);
 
-  //searchitem=0812927532;
-  searchitem=123456;
+searchitem=barcode;
 
-    $.ajax({
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+searchitem+"";
+//alert('beginning');
+$.ajax({
         type       : "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=1",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {val: searchitem},
-		//dataType   : 'json',
+        data: {uri: reqstring, rdate: thedate, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
-            //console.error(JSON.stringify(response));
-            //alert('Works!');
-			$( "#bcode" ).empty();
-			$( "#bcode" ).append(response);
+			var code=response;
+			
+		getit_bc(code,reqstring,thedate);
         },
         error      : function() {
             console.error("error");
-            alert('Not working!');                  
+            alert('Not working1!');                  
         }
-    });     
+    });
+
+function getit_bc(code,reqstring,thedate){
+
+var detlist_html='';
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+$( "#bdetail" ).empty();
+
+var detlist_html='';
+  
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+ISBN=value.ISBN;
+detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+								  
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+		switch(key2){
+			case "PublicationDate":
+			key2="Publication Date";
+			break;
+			case "LocalItemsTotal":
+			key2="Local Items Total";
+			break;
+			case "LocalItemsIn":
+			key2="Local Items In";
+			break;
+			case "CurrentHoldRequests":
+			key2="Current Hold Requests";
+			break;
+			case "PrimaryTypeOfMaterial":
+			key2="Media Tyoe";
+			value2=matconv(value2);
+			break;
+		}
+	detlist_html += key2 + ": " + value2 + "<br>";
+	}
+
+});
+detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+detlist_html +="</td></tr></table>";
+});
+ 
+$( "#bcode" ).append(detlist_html);
+});
+};
 };
 
 //spinner
