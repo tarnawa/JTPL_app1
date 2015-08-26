@@ -209,57 +209,6 @@ $(document).ready(function(){
 */
 });
 
-$(document).ready(function(){
-
-//google map
-
-var map;
-    $(document).on("pageshow", "#direction", function () {
-
-      map = new GMaps({
-        div: '#map_canvas',
-        lat: 41.0205399,
-        lng: -74.5490396,
-		width: '100%',
-        height: '250px',
-		zoom: 15,
-        zoomControl: true,
-        zoomControlOpt: {
-            style: 'SMALL',
-            position: 'TOP_LEFT'
-        },
-        panControl: false
-      });
-	  
-	    map.addMarker({
-        lat: 41.0205399,
-        lng: -74.5490396,
-        title: 'JTPL',
-        infoWindow: {
-          content: '<p>Jefferson Township Public Library, 1031 Weldon Road, Oak Ridge, NJ 07438</p>'
-        }
-      });
-});
-
-//navigator
-$('#dir_start').on ("tap", function () {
-//start_spin();									   
-launchnavigator.navigate(
-  [41.0204913,-74.5491630],
-  null,
-  function(){
-    //alert("Plugin success");
-  },
-  function(error){
-    alert("Plugin error: "+ error);
-  },
-  {
-    preferGoogleMaps: true,
-    enableDebug: true,
-    disableAutoGeolocation: true
-});
-});
-
 //BARCODE SCANNER
 function getData(){
 alert('hello world');
@@ -355,6 +304,59 @@ $( "#bcode" ).append(detlist_html);
 });
 };
 };
+
+$(document).ready(function(){
+
+//google map
+
+var map;
+    $(document).on("pageshow", "#direction", function () {
+
+      map = new GMaps({
+        div: '#map_canvas',
+        lat: 41.0205399,
+        lng: -74.5490396,
+		width: '100%',
+        height: '250px',
+		zoom: 15,
+        zoomControl: true,
+        zoomControlOpt: {
+            style: 'SMALL',
+            position: 'TOP_LEFT'
+        },
+        panControl: false
+      });
+	  
+	    map.addMarker({
+        lat: 41.0205399,
+        lng: -74.5490396,
+        title: 'JTPL',
+        infoWindow: {
+          content: '<p>Jefferson Township Public Library, 1031 Weldon Road, Oak Ridge, NJ 07438</p>'
+        }
+      });
+});
+
+//navigator
+$('#dir_start').on ("tap", function () {
+//start_spin();									   
+launchnavigator.navigate(
+  [41.0204913,-74.5491630],
+  null,
+  function(){
+    //alert("Plugin success");
+  },
+  function(error){
+    alert("Plugin error: "+ error);
+  },
+  {
+    preferGoogleMaps: true,
+    enableDebug: true,
+    disableAutoGeolocation: true
+});
+});
+
+
 
 //spinner
 function start_spin(){
