@@ -261,10 +261,10 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-//var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
-//$( "#bdetail" ).empty();
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+//$( "#bcode" ).empty();
 
-//var detlist_html='';
+var detlist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
