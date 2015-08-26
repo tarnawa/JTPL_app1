@@ -210,8 +210,8 @@ $(document).ready(function(){
 });
 
 //BARCODE SCANNER
-function getData(){
-alert('hello world');
+function getData(barcode){
+//alert('hello world');
 var barcode=barcode;
 alert(barcode);
 

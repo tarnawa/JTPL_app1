@@ -73,7 +73,7 @@ var app = {
 			
 			var input=result.text;
 			
-			getData();
+			getData(input);
 			
 			
 			//var barcode_on=result.text;
