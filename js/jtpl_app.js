@@ -261,7 +261,8 @@ launchnavigator.navigate(
 });
 
 //BARCODE SCANNER
-function getData(barcode){
+function getData(){
+alert('hello world');
 var barcode=barcode;
 alert(barcode);
 
