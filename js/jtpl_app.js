@@ -262,7 +262,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
-//$( "#bcode" ).empty();
+$( "#bcode" ).empty();
 
 var detlist_html='';
   
@@ -1090,8 +1090,8 @@ window.addEventListener('load', function() {
 
 //Flashlight
 $('#flashlight').on('click', function () {
-alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
+//alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#ffffff', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
