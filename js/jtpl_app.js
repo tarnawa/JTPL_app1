@@ -209,29 +209,6 @@ $(document).ready(function(){
 */
 });
 
-//Flashlight
-$('#flashlight').on('click', function () {
-//alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000'});
-window.plugins.flashlight.available(function(isAvailable) {
-  if (isAvailable) {
-
-    // switch on
-    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
-
-    // switch off after 5 seconds
-    setTimeout(function() {
-     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
-    $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
-	}, 5000);
-	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
-  } 
- else {
-    alert("Flashlight not available on this device");
-  }
-});
-});
-
 $(document).ready(function(){
 
 //google map
@@ -286,7 +263,8 @@ launchnavigator.navigate(
 //BARCODE SCANNER
 function getData(barcode){
 
-  searchitem=0812927532;
+  //searchitem=0812927532;
+  searchitem=123456;
 
     $.ajax({
         type       : "POST",
@@ -942,7 +920,7 @@ function prep_getholds(pat_barcode){
 	//alert('this is' + pat_barcode + 'here');
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
-alert(pwd);	
+//alert(pwd);	
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/all";	
 
@@ -1030,8 +1008,6 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 });//end ajax 
 };//end getholds function
 
-
-
 //change page
 function login(){
 	$.mobile.changePage("#inside");
@@ -1041,5 +1017,28 @@ function login(){
 window.addEventListener('load', function() {
     FastClick.attach(document.body);
 }, false);
+
+//Flashlight
+$('#flashlight').on('click', function () {
+alert('clicky');
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FDF000', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
+window.plugins.flashlight.available(function(isAvailable) {
+  if (isAvailable) {
+
+    // switch on
+    window.plugins.flashlight.switchOn(); // success/error callbacks may be passed
+
+    // switch off after 5 seconds
+    setTimeout(function() {
+     window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
+   $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FC3', 'background': '-webkit-radial-gradient(white 0%, yellow 0%)','background': '-o-radial-gradient(white 0%, yellow 0%)','background':' -moz-radial-gradient(white 0%, yellow 0%)',' background': 'radial-gradient(white 0%, yellow 0%)'});
+	}, 5000);
+	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
+  } 
+ else {
+    alert("Flashlight not available on this device");
+  }
+});
+});
 
 });

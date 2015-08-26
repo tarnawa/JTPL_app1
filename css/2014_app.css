@@ -33,6 +33,7 @@ margin-right: 10px;
 }
 
 #pageone{
+	>background-color: #d8d6b4;
 	background-color: #d8d6b4;
 }
 .flash .ui-btn{
@@ -41,11 +42,11 @@ margin-right: 10px;
 	text-align: center;
 }
 .ui-grid-solo .flash .ui-btn{
-	background-color: #FFF7B7;
-	  background: -webkit-radial-gradient(white 15%, yellow 85%); /* Safari 5.1-6.0 */
-  background: -o-radial-gradient(white 15%, yellow 85%); /* For Opera 11.6-12.0 */
-  background: -moz-radial-gradient(white 15%, yellow 85%); /* For Firefox 3.6-15 */
-  background: radial-gradient(white 15%, yellow 85%); /* Standard syntax */
+background-color: #FC3;
+  >background: -webkit-radial-gradient(white 15%, yellow 85%); /* Safari 5.1-6.0 */
+  >background: -o-radial-gradient(white 15%, yellow 85%); /* For Opera 11.6-12.0 */
+  >background: -moz-radial-gradient(white 15%, yellow 85%); /* For Firefox 3.6-15 */
+  >background: radial-gradient(white 15%, yellow 85%); /* Standard syntax */
 }
 
 
