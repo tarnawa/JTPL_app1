@@ -70,7 +70,7 @@ var app = {
                 "cancelled: " + result.cancelled + "\n");
             document.getElementById("bcode").innerHTML = result.text;
 			
-			getData(result.text);
+			getData('hello world');
 			
 			
 			//var barcode_on=result.text;
