@@ -55,49 +55,6 @@ case 37: var val2="Audio Book"; break;
 return val2;
 }
 
-//run a warmup query
-$(document).ready(function(){
-  searchitem=0;
-  searchitem='y';
-var thedate=(new Date()).toUTCString();
-var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-//alert('beginning');
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-		getit_t(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-});
-
-function getit_t(code,reqstring,thedate){
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-});
-};
-});
 
 //Test on inline media Book Search Direct Ajax
 $(document).ready(function(){
@@ -305,7 +262,6 @@ $( "#bcode" ).append(detlist_html);
 };
 };
 
-
 $(document).ready(function(){
 
 //google map
@@ -357,8 +313,6 @@ launchnavigator.navigate(
 });
 });
 
-
-
 //spinner
 function start_spin(){
 window.plugins.spinnerDialog.show();
@@ -368,6 +322,48 @@ function stop_spin(){
 window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
+
+//run a warmup query
+  searchitem=0;
+  searchitem='y';
+var thedate=(new Date()).toUTCString();
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+//alert('beginning');
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {uri: reqstring, rdate: thedate, method:"GET"},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+		getit_t(code,reqstring,thedate);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+
+function getit_t(code,reqstring,thedate){
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+});
+};
 
 //AJAX to Book Search (direct)
 $('#search_item').on ("keyup", function () {
@@ -546,7 +542,7 @@ $( "#bdetail" ).append(detlist_html);
 });
 
 //get new publications (direct)
-$(document).on('click', '#thesearch', function () {
+//$(document).on('click', '#thesearch', function () {
 
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10";
@@ -624,7 +620,7 @@ np_list_html +="</td></tr></table>";
 $( "#news" ).append(np_list_html);
 });
 }
-});
+//});
 
 //Nuked - AJAX to Patron Login (new direct)
 /*$('#loginsubmitxx').on ("click", function () {
@@ -1091,7 +1087,7 @@ window.addEventListener('load', function() {
 //Flashlight
 $('#flashlight').on('click', function () {
 //alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background-color': '', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FF0', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
