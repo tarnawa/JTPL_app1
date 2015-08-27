@@ -11,7 +11,7 @@
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="org.apache.cordova.device" />
-
+	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" version="2.1.0" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
