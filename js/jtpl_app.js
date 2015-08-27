@@ -55,7 +55,6 @@ case 37: var val2="Audio Book"; break;
 return val2;
 }
 
-
 //Test on inline media Book Search Direct Ajax
 $(document).ready(function(){
 //$('#onlinebtn').on('click', function () {	
@@ -170,7 +169,7 @@ $(document).ready(function(){
 function getData(barcode){
 //alert('hello world');
 var barcode=9780345528117;
-alert(barcode);
+//alert(barcode);
 
 searchitem=barcode;
 
@@ -324,7 +323,7 @@ window.plugins.spinnerDialog.hide();
 }
 
 //run a warmup query
-  searchitem=0;
+searchitem=0;
   searchitem='y';
 var thedate=(new Date()).toUTCString();
 var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
@@ -541,7 +540,7 @@ $( "#bdetail" ).append(detlist_html);
 }
 });
 
-//get new publications (direct)
+//get new publications (direct) on document load
 //$(document).on('click', '#thesearch', function () {
 
 var thedate=(new Date()).toUTCString();
@@ -616,11 +615,9 @@ $.each(value, function(key2, value2) {
 np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
 np_list_html +="</td></tr></table>";
 });
-alert('news list'); 
 $( "#news" ).append(np_list_html);
 });
-}
-//});
+};
 
 //Nuked - AJAX to Patron Login (new direct)
 /*$('#loginsubmitxx').on ("click", function () {
