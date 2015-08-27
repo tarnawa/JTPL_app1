@@ -616,7 +616,7 @@ $.each(value, function(key2, value2) {
 np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
 np_list_html +="</td></tr></table>";
 });
- 
+alert('news list'); 
 $( "#news" ).append(np_list_html);
 });
 }
