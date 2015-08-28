@@ -263,6 +263,10 @@ $( "#bcode" ).append(detlist_html);
 
 $(document).ready(function(){
 
+//open in app browser
+$('#onlinebtn').on('click', function () {
+window.open('http://ebook.3m.com/library/jtpl/Featured', '_blank', 'location=yes');
+});
 //google map
 
 var map;
