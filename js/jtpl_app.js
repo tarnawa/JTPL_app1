@@ -267,7 +267,7 @@ $(document).ready(function(){
 $('#3m_btn').on('click', function () {
 window.open('http://ebook.3m.com/library/jtpl/Featured', '_blank', 'location=yes');
 });
-$('#zinio').on('click', function () {
+$('#zinio_btn').on('click', function () {
 window.open('https://www.rbdigital.com/mainincnj/service/zinio/landing?', '_blank', 'location=yes');
 });
 $('#oneclick_btn').on('click', function () {
