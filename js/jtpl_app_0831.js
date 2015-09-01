@@ -336,66 +336,6 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-
-//p_validate
-function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
-if(p_pwd ==='undefined') p_pwd =0;
-if(p_cn ==='undefined') p_cn =0;
-if(p_bc ==='undefined') p_bc =0;
-
-var p_searchitem=p_searchitem;
-var p_barcode=p_barcode;
-var p_holdID=p_holdID;
-var method=p_method;
-
-switch(p_query){
-case 1:	var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+p_searchitem+""; break;
-case 2: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
-case 3: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10"; break;
-case 5: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+""; break;
-case 6: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest"; break;
-case 7: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
-case 8: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
-}
-
-var thedate=(new Date()).toUTCString();
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:""+p_method+""},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-		//getit_t(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-});
-
-switch(p_query){
-case 1:	var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 2: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 3: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 4: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 5: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 6: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 7: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-case 8: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};break;
-}
-
-return p_response;
-}
-
-
-
 //run a warmup query
 searchitem=0;
   searchitem='y';
@@ -509,7 +449,7 @@ $.each(value, function(key2, value2) {
 		value2=matconv(value2);
 		break;
 	}
-	blist_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
+	blist_html += key2 + ": " + value2 + "<br>";
 	}
 
 });
@@ -601,7 +541,7 @@ $.each(value, function(key2, value2) {
 			value2=matconv(value2);
 			break;
 		}
-	detlist_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
+	detlist_html += key2 + ": " + value2 + "<br>";
 	}
 
 });
