@@ -1,5 +1,5 @@
 //set global variable
-var dest="http://plato-r2.polarislibrary.com/PAPIService";
+var dest="https://catalog.mainlib.org/PAPIService";
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -446,7 +446,7 @@ $('#search_item').on ("keyup", function () {
 
 var thedate=(new Date()).toUTCString();
 var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-//alert('beginning');
+//alert(reqstring);
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
