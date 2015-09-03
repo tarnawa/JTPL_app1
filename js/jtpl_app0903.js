@@ -1,6 +1,3 @@
-//set global variable
-var dest="http://plato-r2.polarislibrary.com/PAPIService";
-
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -67,7 +64,7 @@ $('#search_item2').on ("keyup", function () {
   searchitem= $('#search_item2').val();
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -177,7 +174,7 @@ var barcode=9780345528117;
 searchitem=barcode;
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+searchitem+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -339,6 +336,7 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
+
 //p_validate
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 if(p_pwd ==='undefined') p_pwd =0;
@@ -351,14 +349,14 @@ var p_holdID=p_holdID;
 var method=p_method;
 
 switch(p_query){
-case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+p_searchitem+""; break;
-case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
-case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10"; break;
-case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+""; break;
-case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
-case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
-case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
+case 1:	var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+p_searchitem+""; break;
+case 2: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
+case 3: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
+case 4: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10"; break;
+case 5: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+""; break;
+case 6: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest"; break;
+case 7: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
+case 8: var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -396,11 +394,13 @@ case 8: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "theda
 return p_response;
 }
 
+
+
 //run a warmup query
 searchitem=0;
   searchitem='y';
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -445,7 +445,7 @@ $('#search_item').on ("keyup", function () {
   searchitem= $('#search_item').val();
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -527,7 +527,7 @@ $(document).on('click', '.trail a', function () {
 searchitem=$(this).attr("id");
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+searchitem+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+searchitem+"";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -618,7 +618,7 @@ $( "#bdetail" ).append(detlist_html);
 //$(document).on('click', '#thesearch', function () {
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10";
 //alert('beginning');
 $.ajax({
         type       : "POST",
@@ -700,7 +700,7 @@ var p_barcode=("#libcard").val();
 var p_pin=("#libpin").val(); ;
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
 
 $.ajax({
         type       : "POST",
@@ -764,7 +764,7 @@ p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
 
 $.ajax({
         type       : "POST",
@@ -818,7 +818,7 @@ $('#cn_holdreq').val("");
 //function putonhold (get credentials)
 function putonhold(res_pat_id, cont_num, pat_barcode){
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/holdrequest";
 
 $.ajax({
         type       : "POST",
@@ -863,6 +863,7 @@ prep_getholds (pat_barcode);
   console.log(response);
 });
 }
+
 //get items out function
 function getitemsout(pat_barcode){
 	//alert('this is' + pat_barcode + 'here');
@@ -938,7 +939,7 @@ $( "#loginresponse" ).empty();
 //var form = $('#loginform');
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
 
 $.ajax({
         type: "POST",
@@ -997,7 +998,7 @@ function prep_cancelhold(pat_barcode,hold_id){
 	pwd=$('#libpin').val();
 	
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/"+hold_id+"/cancelled?wsid=1&userid=1";	
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/"+hold_id+"/cancelled?wsid=1&userid=1";	
 
 	    $.ajax({
         type: "POST",
@@ -1058,7 +1059,7 @@ function prep_getholds(pat_barcode){
 	var pwd=$('#libpin').val();
 //alert(pwd);	
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/all";	
+var reqstring="http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/all";	
 
 	    $.ajax({
         type: "POST",
