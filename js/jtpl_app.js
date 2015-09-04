@@ -618,7 +618,7 @@ $( "#bdetail" ).append(detlist_html);
 //$(document).on('click', '#thesearch', function () {
 
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+CALL+PD/sort.descending&bibsperpage=10";
+var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+CALL/sort.descending&bibsperpage=10";
 //alert('beginning');
 $.ajax({
         type       : "POST",
