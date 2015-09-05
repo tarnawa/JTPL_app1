@@ -447,7 +447,7 @@ $('#search_item').on ("keyup", function () {
 
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/au?q="+searchitem+"";
+var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/RELEVANCE?q="+searchitem+"";
 //alert(reqstring);
 $.ajax({
         type       : "POST",
