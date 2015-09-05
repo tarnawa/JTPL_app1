@@ -396,8 +396,8 @@ case 8: var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "theda
 return p_response;
 }
 
-//run a warmup query
-searchitem=0;
+//run a warmup query (nuked)
+/*searchitem=0;
   searchitem='y';
 var thedate=(new Date()).toUTCString();
 var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
@@ -437,6 +437,7 @@ var settings = {
 $.ajax(settings).done(function (response) {
 });
 };
+*/
 
 //AJAX to Book Search (direct)
 $('#search_item').on ("keyup", function () {
@@ -614,10 +615,10 @@ $( "#bdetail" ).append(detlist_html);
 }
 });
 
-//get new publications (direct) on document load
+//get new publications (direct) on document load (nuked)
 //$(document).on('click', '#thesearch', function () {
 
-var thedate=(new Date()).toUTCString();
+/*var thedate=(new Date()).toUTCString();
 var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+CALL/sort.descending&bibsperpage=10";
 //alert('beginning');
 $.ajax({
@@ -692,6 +693,7 @@ np_list_html +="</td></tr></table>";
 $( "#news" ).append(np_list_html);
 });
 };
+/*
 
 //Nuked - AJAX to Patron Login (new direct)
 /*$('#loginsubmitxx').on ("click", function () {
