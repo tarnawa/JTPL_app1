@@ -139,7 +139,7 @@ window.plugins.spinnerDialog.hide();
 
 
 //AJAX to Book Search (direct)
-$('#search_item').on ("keyup", function () {
+$('#search_item').change(function () {
 
   searchitem=0;
   searchitem= $('#search_item').val();
