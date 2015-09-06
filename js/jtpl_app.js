@@ -141,7 +141,6 @@ window.plugins.spinnerDialog.hide();
 //AJAX to Book Search (direct) test
 $('#search_item').on('keyup',function () {
 
-window.getit=function(){return false;};
 //var counter;
 //counter++;
   searchitem=0;
@@ -149,7 +148,8 @@ window.getit=function(){return false;};
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
+//var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
+var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ti?q="+searchitem+"";
 //alert(reqstring);
 $.ajax({
         type       : "POST",
