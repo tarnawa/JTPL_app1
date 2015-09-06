@@ -141,12 +141,15 @@ window.plugins.spinnerDialog.hide();
 //AJAX to Book Search (direct) test
 $('#search_item').on('keyup',function () {
 
-  //searchitem=0;
+window.getit=function(){return false;};
+//var counter;
+//counter++;
+  searchitem=0;
   searchitem= $('#search_item').val();
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+MP/sort.descending";
+var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
 //alert(reqstring);
 $.ajax({
         type       : "POST",
@@ -155,7 +158,7 @@ $.ajax({
         data: {uri: reqstring, rdate: thedate, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
-		//timeout:60000,
+		timeout:60000,
 		cache: false,
         success : function(response) {
 			var code=response;
@@ -185,7 +188,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-alert('second ajax fires');
+//alert('second ajax fires');
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
