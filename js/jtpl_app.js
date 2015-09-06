@@ -141,7 +141,7 @@ window.plugins.spinnerDialog.hide();
 //AJAX to Book Search (direct)
 $('#search_item').on('keyup',function () {
 
-  searchitem=0;
+  //searchitem=0;
   searchitem= $('#search_item').val();
 alert(searchitem);
 var thedate=(new Date()).toUTCString();
@@ -155,7 +155,7 @@ $.ajax({
         data: {uri: reqstring, rdate: thedate, method:"GET"},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
-		timeout:60000,
+		//timeout:60000,
 		cache: false,
         success : function(response) {
 			var code=response;
