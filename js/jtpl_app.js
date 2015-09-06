@@ -143,7 +143,7 @@ $('#search_item').on('keyup',function () {
 
   //searchitem=0;
   searchitem= $('#search_item').val();
-alert(searchitem);
+//alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+MP/sort.descending";
@@ -185,7 +185,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
+alert('second ajax fires');
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
