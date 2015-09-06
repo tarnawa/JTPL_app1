@@ -138,7 +138,7 @@ window.plugins.spinnerDialog.hide();
 
 
 
-//AJAX to Book Search (direct)
+//AJAX to Book Search (direct) test
 $('#search_item').on('keyup',function () {
 
   //searchitem=0;
