@@ -178,7 +178,13 @@ $.ajax(settings).done(function (response) {
 //alert('second ajax fires');
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-$( "#blist" ).append(response);
+
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;										
+blist_html+="this is"+cont_no+"";
+});
+
+$( "#blist" ).append(blist_html);
 });
 };
 
