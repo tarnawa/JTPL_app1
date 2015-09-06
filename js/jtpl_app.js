@@ -139,11 +139,11 @@ window.plugins.spinnerDialog.hide();
 
 
 //AJAX to Book Search (direct)
-$('#search_item').on('change',function () {
+$('#search_item').on('keypress',function () {
 
   searchitem=0;
   searchitem= $('#search_item').val();
-
+//alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
 var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+MP/sort.descending";
