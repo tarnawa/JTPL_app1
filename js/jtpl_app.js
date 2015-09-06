@@ -134,8 +134,53 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
+//PRIME QUERY
+var thedate=(new Date()).toUTCString();
+var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {uri: reqstring, rdate: thedate, method:"GET"},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+			
+		getit1(code,reqstring,thedate);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+    });
 
+function getit1(code,reqstring,thedate){
+
+var blist_html='';
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+//alert('second ajax fires');
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+$( "#blist" ).append(response);
+});
+};
 
 
 //AJAX to Book Search (direct) test
