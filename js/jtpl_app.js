@@ -247,7 +247,7 @@ $.ajax({
         }
     });
 }
-
+}
 function getit(code,reqstring,thedate){
 
 var blist_html='';
@@ -301,7 +301,7 @@ blist_html +="</td></tr></table>";
 $( "#blist" ).append(blist_html);
 stop_spin();
 });
-}
+
 }
 });
 
