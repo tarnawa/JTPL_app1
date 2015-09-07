@@ -134,8 +134,8 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-//PRIME QUERY
-var thedate=(new Date()).toUTCString();
+//PRIME QUERY with 20K records
+/*var thedate=(new Date()).toUTCString();
 var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 
 $.ajax({
@@ -187,15 +187,22 @@ blist_html+="this is"+cont_no+"";
 $( "#blist" ).append(blist_html);
 });
 };
+*/
 
+
+//Clear Search Field Counter
+$('#search_item').on('click', '.ui-input-clear', function(e){
+var counter=0; 
+});
 
 //AJAX to Book Search (direct) test
 var counter=0;
 $('#search_item').on('keyup',function () {
-
 counter++;
 alert(counter);
   searchitem=0;
+  
+  if(counter>2){
   searchitem= $('#search_item').val();
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
@@ -223,6 +230,7 @@ $.ajax({
             alert('Not working1!');                  
         }
     });
+}
 
 function getit(code,reqstring,thedate){
 
