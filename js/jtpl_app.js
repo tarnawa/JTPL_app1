@@ -209,13 +209,21 @@ counter +=1;
 //alert(counter);
   searchitem=0;
   if(counter>2){
+
+var timeoutID;
+function delayedQuery() {
+  timeoutID = window.setTimeout(runquery, 300);
+}
+
+function runquery() {
+	
   searchitem= $('#search_item').val();
   searchitem=searchitem.replace(/\s+/g,"+");
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"&bibsperpage=20";
+//var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
-//var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
+var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 //alert(reqstring);
 start_spin();
@@ -293,6 +301,7 @@ blist_html +="</td></tr></table>";
 $( "#blist" ).append(blist_html);
 stop_spin();
 });
+}
 }
 });
 
