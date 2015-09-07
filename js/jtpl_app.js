@@ -218,6 +218,7 @@ var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searc
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 //alert(reqstring);
+start_spin();
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
@@ -290,6 +291,7 @@ blist_html +="</td></tr></table>";
 });
  
 $( "#blist" ).append(blist_html);
+stop_spin();
 });
 }
 });
