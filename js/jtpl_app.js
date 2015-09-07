@@ -191,24 +191,30 @@ $( "#blist" ).append(blist_html);
 
 
 //Clear Search Field Counter
-$('#search_item').on('click', '.ui-input-clear', function(e){
-var counter=0; 
-});
+
 
 //AJAX to Book Search (direct) test
+
 var counter=0;
+
+$(document).on("pagecreate", function () {
+  $(".ui-input-clear").on("click", function() {
+    counter=0;
+  });
+});
+
+
 $('#search_item').on('keyup',function () {
-counter++;
-alert(counter);
+counter +=1;
+//alert(counter);
   searchitem=0;
-  
   if(counter>2){
   searchitem= $('#search_item').val();
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/14/search/bibs/boolean?q="+searchitem+"&limit=TOM=bks";
-//var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
-var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
+var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
+//var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/1/1/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 //alert(reqstring);
 $.ajax({
@@ -260,7 +266,7 @@ var blist_html='';
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
-blist_html +='<table class="bibtbl"><tr><td class="picbox"></td ><td class="txtbox">';
+blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 								  
 $.each(value, function(key2, value2) {
 	
