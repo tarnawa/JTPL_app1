@@ -391,9 +391,10 @@ $.ajax({
 			var code=response;
 			var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			//alert('this is' + p_response.code +'');
+			stop_spin();
 			return p_response;
 			
-		stop_spin();
+		
 		//getit_t(code,reqstring,thedate);
         },
         error      : function() {
