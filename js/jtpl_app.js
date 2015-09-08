@@ -244,7 +244,7 @@ $.ajax({
 		cache: false,
         success : function(response) {
 			var code=response;
-			
+		stop_spin();	
 		getit(code,reqstring,thedate);
         },
         error      : function() {
@@ -272,7 +272,6 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-								stop_spin();
 //alert('second ajax fires');
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
