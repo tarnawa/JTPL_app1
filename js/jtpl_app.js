@@ -195,7 +195,7 @@ $( "#blist" ).append(blist_html);
 //delay query (while typing)
 function delayedQuery() {
 	//alert('delayedquery');
-  timeoutID = window.setTimeout(runquery,300);
+  timeoutID = window.setTimeout(runquery,0);
 }
 
 var counter=0;
