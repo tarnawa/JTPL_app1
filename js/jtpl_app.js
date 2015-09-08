@@ -190,40 +190,46 @@ $( "#blist" ).append(blist_html);
 */
 
 
-//Clear Search Field Counter
-
-
 //AJAX to Book Search (direct) test
+
+//delay query (while typing)
+function delayedQuery() {
+	//alert('delayedquery');
+  timeoutID = window.setTimeout(runquery,300);
+}
 
 var counter=0;
 
+//clear searchfield
 $(document).on("pagecreate", function () {
   $(".ui-input-clear").on("click", function() {
     counter=0;
   });
 });
 
-
+//don't strat query before 3 letters entered
 $('#search_item').on('keyup',function () {
 counter +=1;
 //alert(counter);
   searchitem=0;
-  if(counter>2){
+  	if(counter>2){
+	//alert('counter is > 2');
+	var timeoutID;
+	delayedQuery();
+	}
+});
 
-var timeoutID;
-function delayedQuery() {
-  timeoutID = window.setTimeout(runquery, 300);
-}
-
+//start query )ajaxcall to encryption
 function runquery() {
-	
+alert('running query');	
   searchitem= $('#search_item').val();
   searchitem=searchitem.replace(/\s+/g,"+");
 //alert(searchitem);
 var thedate=(new Date()).toUTCString();
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q="+searchitem+"+sortby+TI+AU";
-var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
+//var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+searchitem+"&limit=TOM=bks&bibsperpage=20";
+var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+searchitem+"&bibsperpage=20";
 //var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ti?q=*&limit=TOM=bks&bibsperpage=20000";
 //alert(reqstring);
 start_spin();
@@ -247,7 +253,8 @@ $.ajax({
         }
     });
 }
-}
+
+//ajax call to PAPI
 function getit(code,reqstring,thedate){
 
 var blist_html='';
@@ -303,7 +310,7 @@ stop_spin();
 });
 
 }
-});
+//});
 
 
 
