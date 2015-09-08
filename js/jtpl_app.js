@@ -272,6 +272,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
+								stop_spin();
 //alert('second ajax fires');
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
@@ -306,7 +307,7 @@ blist_html +="</td></tr></table>";
 });
  
 $( "#blist" ).append(blist_html);
-stop_spin();
+
 });
 }
 
