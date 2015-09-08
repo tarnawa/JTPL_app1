@@ -221,7 +221,7 @@ counter +=1;
 
 //start query )ajaxcall to encryption
 function runquery() {
-alert('running query');	
+//alert('running query');	
   searchitem= $('#search_item').val();
   searchitem=searchitem.replace(/\s+/g,"+");
 //alert(searchitem);
@@ -308,9 +308,8 @@ blist_html +="</td></tr></table>";
 $( "#blist" ).append(blist_html);
 stop_spin();
 });
-
 }
-//});
+
 
 
 
