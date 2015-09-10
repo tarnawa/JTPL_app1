@@ -449,6 +449,7 @@ var blist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
+alert(cont_no);
 ISBN=value.ISBN;
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 								  
