@@ -421,9 +421,9 @@ counter +=1;
 });
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-//alert(code);
+alert('get books running');
 //alert(reqstring);
-//alert(thedate);
+alert(thedate);
 var blist_html='';
 
 var settings = {
@@ -442,7 +442,7 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-
+alert(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
