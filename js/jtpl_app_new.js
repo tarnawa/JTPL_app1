@@ -441,7 +441,7 @@ var settings = {
 $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response= jQuery.parseJSON(response);
 alert(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
