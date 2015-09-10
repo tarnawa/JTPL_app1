@@ -442,7 +442,6 @@ var blist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
-alert(cont_no);
 ISBN=value.ISBN;
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 								  
@@ -473,7 +472,7 @@ $( "#blist" ).append(blist_html);
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
 p_searchitem=$(this).attr("id");
-p_validate(3,'p_searchitem','','','','GET','','');
+p_validate(3,''+p_searchitem+'','','','','GET','','');
 });
 //case 3 - get detail
 function get_detail(code,reqstring,thedate){
@@ -541,7 +540,7 @@ $( "#bdetail" ).append(detlist_html);
 };
 
 //case 4 - get new publication (encrypt)
-/*$(document).on('click', '#thesearch', function () {
+$(document).on('click', '#thesearch', function () {
 p_validate(4,'','','','','GET','','');
 });
 //case 4 - get news
@@ -595,7 +594,7 @@ np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
 });
-};*/
+};
 
 //AJAX to Patron Login (get encryption data)
 /*$('#loginsubmitxx').on ("click", function () {
