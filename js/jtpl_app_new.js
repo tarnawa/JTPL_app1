@@ -351,12 +351,13 @@ $(document).on("pagecreate", function () {
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 	
-if(p_pwd ==='undefined') p_pwd =0;
-if(p_cn ==='undefined') p_cn =0;
-if(p_bc ==='undefined') p_bc =0;
-if(p_type ==='undefined') p_type =0;
-if(p_holdID ==='undefined') p_holdID =0;
-if(p_searchitem ==='undefined') p_searchitem =0;
+if(p_pwd ==='undefined') p_pwd ='';
+if(p_cn ==='undefined') p_cn ='';
+if(p_bc ==='undefined') p_bc ='';
+if(p_type ==='undefined') p_type ='';
+if(p_holdID ==='undefined') p_holdID ='';
+if(p_searchitem ==='undefined') p_searchitem ='';
+
 
 switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
@@ -371,13 +372,12 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/h
 
 var thedate=(new Date()).toUTCString();
 
-start_spin();
-
-var the_ajax= $.ajax({
+//start_spin();
+$.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:p_method, patron_pin:p_pwd},
+        data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
@@ -385,10 +385,11 @@ var the_ajax= $.ajax({
         success : function(response) {
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			
+			//alert(reqstring);
+
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
-			case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
+			case 2: getit_bc(code,reqstring,thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type); break;
@@ -396,11 +397,8 @@ var the_ajax= $.ajax({
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
 			case 8: getholds(reqstring,thedate,code); break;
-			
-			
-			
 			}
-			stop_spin();
+			//stop_spin();
         },
         error      : function() {
             console.error("error");
@@ -421,9 +419,9 @@ counter +=1;
 });
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-//alert(code);
-//alert(reqstring);
-//alert(thedate);
+alert(code);
+alert(reqstring);
+alert(thedate);
 var blist_html='';
 
 var settings = {
