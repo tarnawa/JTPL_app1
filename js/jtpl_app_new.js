@@ -385,7 +385,9 @@ $.ajax({
         success : function(response) {
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			//alert(reqstring);
+			//alert(p_response.code);
+			//alert(p_response.reqstring);
+			//alert(p_response.thedate);
 
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
@@ -545,7 +547,7 @@ $( "#bdetail" ).append(detlist_html);
 };
 
 //case 4 - get new publication (encrypt)
-$(document).on('click', '#thesearch', function () {
+/*$(document).on('click', '#thesearch', function () {
 p_validate(4,'','','','','GET','','');
 });
 //case 4 - get news
@@ -599,7 +601,7 @@ np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
 });
-};
+};*/
 
 //AJAX to Patron Login (get encryption data)
 /*$('#loginsubmitxx').on ("click", function () {
