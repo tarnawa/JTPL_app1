@@ -419,9 +419,9 @@ counter +=1;
 });
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-alert(code);
-alert(reqstring);
-alert(thedate);
+//alert(code);
+//alert(reqstring);
+//alert(thedate);
 var blist_html='';
 
 var settings = {
