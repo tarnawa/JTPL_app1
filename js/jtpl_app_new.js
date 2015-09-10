@@ -358,7 +358,6 @@ if(p_type ==='undefined') p_type ='';
 if(p_holdID ==='undefined') p_holdID ='';
 if(p_searchitem ==='undefined') p_searchitem ='';
 
-
 switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
@@ -371,7 +370,8 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/h
 }
 
 var thedate=(new Date()).toUTCString();
-
+alert(p_searchitem);
+alert("uri:"+reqstring+", rdate: "+thedate+", method:"+p_method+", patron_pin:"+p_pwd+"");
 //start_spin();
 $.ajax({
         type       : "POST",
@@ -385,9 +385,7 @@ $.ajax({
         success : function(response) {
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			//alert(p_response.code);
-			//alert(p_response.reqstring);
-			//alert(p_response.thedate);
+
 
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
@@ -416,7 +414,7 @@ counter +=1;
   	if(counter>2){
   		searchitem= $('#search_item').val();
   		p_searchitem=searchitem.replace(/\s+/g,"+");
-	p_validate(1,'p_searchitem','','','','GET','','');
+	p_validate(1,''+p_searchitem+'','','','','GET','','');
 	}
 });
 //case 1 - get books
@@ -441,7 +439,7 @@ var settings = {
 $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
-//var response= jQuery.parseJSON(response);
+var response= jQuery.parseJSON(response);
 alert(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
