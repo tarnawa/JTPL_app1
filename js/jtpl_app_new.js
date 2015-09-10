@@ -1,5 +1,7 @@
 //set global variable
 var dest="https://catalog.mainlib.org/PAPIService";
+var counter=0;
+//var p_response=0;
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -338,7 +340,6 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-var counter=0;
 
 //clear searchfield
 $(document).on("pagecreate", function () {
@@ -355,15 +356,10 @@ if(p_cn ==='undefined') p_cn =0;
 if(p_bc ==='undefined') p_bc =0;
 if(p_type ==='undefined') p_type =0;
 if(p_holdID ==='undefined') p_holdID =0;
-
-
-var p_searchitem=p_searchitem;
-var p_barcode=p_barcode;
-var p_holdID=p_holdID;
-var method=p_method;
+if(p_searchitem ==='undefined') p_searchitem =0;
 
 switch(p_query){
-case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+searchitem+"&bibsperpage=20"; break;
+case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
 case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10"; break;
@@ -373,29 +369,38 @@ case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/h
 case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
 }
 
-
 var thedate=(new Date()).toUTCString();
 
 start_spin();
 
-$.ajax({
+var the_ajax= $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:""+p_method+""},
+        data: {uri: reqstring, rdate: thedate, method:p_method, patron_pin:p_pwd},
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},
 		timeout:60000,
 		cache: false,
         success : function(response) {
 			var code=response;
-			var p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			//alert('this is' + p_response.code +'');
-			stop_spin();
-			return p_response;
+			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			
-		
-		//getit_t(code,reqstring,thedate);
+			switch(p_query){
+			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
+			case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
+			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
+			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
+			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type); break;
+			case 6: createhold(res_pat_id,cont_num,code,reqstring,thedate,p_bc); break;
+			case 7: cancelhold(reqstring,thedate,code); break;
+			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
+			case 8: getholds(reqstring,thedate,code); break;
+			
+			
+			
+			}
+			stop_spin();
         },
         error      : function() {
             console.error("error");
@@ -404,26 +409,21 @@ $.ajax({
 });
 }
 
-
-//AJAX to Book Search (direct)
-//ENTRY SEARCHITEM - don't strat query before 3 letters entered
+//case 1 - book search reqstring (get encryption data)
 $('#search_item').on('keyup',function () {
 counter +=1;
-//alert(counter);
   searchitem=0;
   	if(counter>2){
   		searchitem= $('#search_item').val();
   		p_searchitem=searchitem.replace(/\s+/g,"+");
-	
-	p_return=p_validate(1,'p_searchitem','','','','GET','','');
-	getit(p_response.code,p_response.reqstring,p_response.thedate)
-	//alert(p_response.code);
+	p_validate(1,'p_searchitem','','','','GET','','');
 	}
 });
-
-
-function getit(code,reqstring,thedate){
-
+//case 1 - get books
+function get_books(code,reqstring,thedate){
+//alert(code);
+//alert(reqstring);
+//alert(thedate);
 var blist_html='';
 
 var settings = {
@@ -476,35 +476,13 @@ $( "#blist" ).append(blist_html);
 });
 }
 
-
-//AJAX to Book Detail (direct)
+//case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
-searchitem=$(this).attr("id");
-
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+searchitem+"";
-//alert('beginning');
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			
-		getit(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
-
-function getit(code,reqstring,thedate){
+p_searchitem=$(this).attr("id");
+p_validate(3,'p_searchitem','','','','GET','','');
+});
+//case 3 - get detail
+function get_detail(code,reqstring,thedate){
 
 var detlist_html='';
 
@@ -566,37 +544,14 @@ detlist_html +="</td></tr></table>";
  
 $( "#bdetail" ).append(detlist_html);
 });
-}
+};
+
+//case 4 - get new publication (encrypt)
+$(document).on('click', '#thesearch', function () {
+p_validate(4,'','','','','GET','','');
 });
-
-//get new publications (direct) on document load (nuked)
-//$(document).on('click', '#thesearch', function () {
-
-/*var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+CALL/sort.descending&bibsperpage=10";
-//alert('beginning');
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			
-		getit(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
-
-function getit(code,reqstring,thedate){
-
+//case 4 - get news
+function get_news(code,reqstring,thedate){
 var np_list_html='';
 
 var settings = {
@@ -647,38 +602,16 @@ np_list_html +="</td></tr></table>";
 $( "#news" ).append(np_list_html);
 });
 };
-/*
 
-//Nuked - AJAX to Patron Login (new direct)
+//AJAX to Patron Login (get encryption data)
 /*$('#loginsubmitxx').on ("click", function () {
-
 var p_barcode=("#libcard").val();
 var p_pin=("#libpin").val(); ;
-
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			
-		checklogin(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
+p_validate(5,'','p_barcode','','p_pin','GET','','');
 });
-
+*/
+/*
+//AJAX Patron Login
 function checklogin(code,reqstring,thedate){
 
 var settings = {
@@ -694,55 +627,29 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
 var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 alert(response);
-
-//end ajax
 });
-//end checklogin
-}*/
+}
+*/
 
-//Hold Request and/or Login (new direct)
+//case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
 });
-
+//Login
 $('#loginsubmit').on ("click", function () {
 var form = $('#loginform');
 //check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
-//alert(hold);								 
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-		var code=response;
-
-		checklogin(code,reqstring,thedate,hold);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
+p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
-//check login credentials and go putonhold or getholds
+//case 5 - login with indicator for hold or no hold (-> to putonhold or prepgetholds)
 function checklogin(code,reqstring,thedate,hold){
 var settings = {
   "async": true,
@@ -771,33 +678,12 @@ $('#cn_holdreq').val("");
 });
 //end checklogin
 }
-//function putonhold (get credentials)
-function putonhold(res_pat_id, cont_num, pat_barcode){
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest";
 
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, method:"POST"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-		var code=response;
-		//alert(res_pat_id);
-		//alert(pat_barcode);
-		createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
+//case 6 - function putonhold (get encryption)
+function putonhold(res_pat_id, cont_num, pat_barcode){
+p_validate(6,'','',''+cont_num+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
-//function createhold
+//case 6 - function createhold & -> prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
 var settings = {
   "async": true,
@@ -819,7 +705,8 @@ prep_getholds (pat_barcode);
   console.log(response);
 });
 }
-//get items out function
+
+//case 6 - function list hold items
 function getitemsout(pat_barcode){
 	//alert('this is' + pat_barcode + 'here');
 	searchitem1=pat_barcode;
@@ -884,40 +771,17 @@ function getitemsout(pat_barcode){
     }); 
 };//e get items out function
 
-//Cancel Hold - take hold id and prep validate patron
+//case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-
 $( "#loginresponse" ).empty();
-//var form = $('#loginform');
-
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"";
-
-$.ajax({
-        type: "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate:thedate, patron_pin:p_pin, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-		var code=response;
-		validate_patron(reqstring,thedate,code,hold_id);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
+p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 });
 
-//validate patron and go to prep cancelhold
-function validate_patron(reqstring,thedate,code,hold_id){
+//case 7 - validate patron and go to prep cancelhold
+/*function validate_patron(reqstring,thedate,code,hold_id){
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -946,38 +810,17 @@ alert('log in failed - please try again');
 });
 //validate patron
 }
+*/
 
-//prep_cancelhold and go to cancelhold
-function prep_cancelhold(pat_barcode,hold_id){
+//case 7 - prep_cancelhold and go to cancelhold
+/*function prep_cancelhold(pat_barcode,hold_id){
 
 	pwd=$('#libpin').val();
-	
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/"+hold_id+"/cancelled?wsid=1&userid=1";	
 
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri:reqstring, rdate: thedate, method:"PUT", patron_pin:pwd},
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			cancelhold(reqstring,thedate,code) 
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	});
-//end prep_cancelhold
-}
+p_validate(9,'',''+pwd+'','',''+p_barcode+'','PUT','',''+hold_id+'');
+};*/
 
-//cancelhold and go to prep_getholds
+//case 7 - cancelhold and -> prep_getholds
 function cancelhold(reqstring, thedate, code){
 
 var settings = {
@@ -1007,38 +850,15 @@ alert('your hold cancel request failed');
 //end cancelhold
 }
 
-//prep_getholds and go to getholds
+//case 8 - prep_getholds and -> getholds
 function prep_getholds(pat_barcode){
 	//alert('this is' + pat_barcode + 'here');
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
-//alert(pwd);	
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+pat_barcode+"/holdrequests/all";	
-
-	    $.ajax({
-        type: "POST",
-        url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri:reqstring, rdate: thedate, method:"GET", patron_pin:pwd},
-		//dataType   : 'json',
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			getholds(reqstring,thedate,code) 
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working!');                  
-        }
-    	});
-//end prep_getholds
-}
-
-//getholds
+	
+p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
+};
+//case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
 //alert('getholds started');
 $.mobile.changePage("#inside");
