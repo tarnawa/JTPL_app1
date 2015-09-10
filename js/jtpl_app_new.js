@@ -370,8 +370,6 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/h
 }
 
 var thedate=(new Date()).toUTCString();
-alert(p_searchitem);
-alert("uri:"+reqstring+", rdate: "+thedate+", method:"+p_method+", patron_pin:"+p_pwd+"");
 //start_spin();
 $.ajax({
         type       : "POST",
@@ -419,9 +417,7 @@ counter +=1;
 });
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-alert('get books running');
 //alert(reqstring);
-alert(thedate);
 var blist_html='';
 
 var settings = {
@@ -440,7 +436,6 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-alert(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
