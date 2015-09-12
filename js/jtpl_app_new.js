@@ -634,17 +634,20 @@ alert(response);
 
 //case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
+var cont_num;
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
 });
 //Login
 $('#loginsubmit').on ("click", function () {
-var form = $('#loginform');
+//var form = $('#loginform');
 //check if from hold req
 var hold;
-if($('#cn_holdreq').val()){hold=true;}else{hold=false;}
+if($('#cn_holdreq').val()){hold=true;cont_num=$('#cn_holdreq').val();}else{	hold=false;cont_num='';}
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
+
+
 p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - login with indicator for hold or no hold (-> to putonhold or prepgetholds)
