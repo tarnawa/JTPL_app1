@@ -340,7 +340,6 @@ window.plugins.spinnerDialog.hide();
 //alert('stopspin');
 }
 
-
 //clear searchfield
 $(document).on("pagecreate", function () {
   $(".ui-input-clear").on("click", function() {
@@ -362,11 +361,14 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending+CN&bibsperpage=10"; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
 case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
+case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/all"; break;
+case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/overdue"; break;
+case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/"+p_holdID+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -381,10 +383,10 @@ $.ajax({
 		timeout:60000,
 		cache: false,
         success : function(response) {
+			//stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-
-
+			
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(code,reqstring,thedate); break;
@@ -395,8 +397,11 @@ $.ajax({
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
 			case 8: getholds(reqstring,thedate,code); break;
+			case 9: items_out_all(reqstring,thedate,code); break;
+			case 10: items_out_over(reqstring,thedate,code); break;
+			case 11: item_renew(reqstring,thedate,code,hold_id); break;
 			}
-			//stop_spin();
+			
         },
         error      : function() {
             console.error("error");
@@ -540,7 +545,7 @@ $( "#bdetail" ).append(detlist_html);
 };
 
 //case 4 - get new publication (encrypt)
-$(document).on('click', '#thesearch', function () {
+/*$(document).on('click', '#thesearch', function () {
 p_validate(4,'','','','','GET','','');
 });
 //case 4 - get news
@@ -594,7 +599,7 @@ np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
 });
-};
+};*/
 
 //AJAX to Patron Login (get encryption data)
 /*$('#loginsubmitxx').on ("click", function () {
@@ -849,7 +854,8 @@ function prep_getholds(pat_barcode){
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
 	
-p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
+p_validate(8,'','','',''+pat_barcode+'','GET','','');
+p_validate(9,'','','',''+pat_barcode+'','GET','','');
 };
 //case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
@@ -897,10 +903,8 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 				hold_req_id=value2;
 				//alert("this is" + hold_req_id + "here");
 				}
-
 				}
 				}
-								   
 								   
 			});
 			my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
@@ -912,6 +916,67 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
 });//end ajax 
 };//end getholds function
+
+//case 9 - items out all
+function items_out_all(reqstring,thedate,code){	
+//alert('items_out_all started');
+//$.mobile.changePage("#inside");
+//var response='';	
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+var my_outs='';
+var out_selection= ['ItemID', 'Barcode', 'BibID', 'FormatID', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
+
+$( "#borrowed" ).empty();
+//alert('loginresponse should be empty now');
+$.each(response.PatronItemsOutGetRows, function(key, value) {
+																
+		//if(value.StatusDescription!="Cancelled"){													
+															
+		my_outs +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+			$.each(value, function(key2, value2) {
+				if(value2!=''){
+				if(jQuery.inArray( key2, out_selection )!== -1){
+				
+					if(key2=="Title"){
+					my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+					}else{
+					my_outs += key2 + ": " + value2 + "<br>";
+					}
+
+				if(key2=="BibID"){
+				out_req_id=value2;
+				//alert("this is" + hold_req_id + "here");
+				}
+				}
+				}
+								   
+			});
+			my_outs +="<p class='hold_cancel'><a id=" + out_req_id + " href='#inside'>Extend Item</a></p>";
+			my_outs +="</td></tr></table>";
+		//}//end screen out cancelled
+});
+								
+	$( "#borrowed" ).append(my_outs);
+
+});//end ajax 
+};//end items_out_all function
+
 
 //change page
 function login(){
