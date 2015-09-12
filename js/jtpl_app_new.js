@@ -882,6 +882,7 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
+alert('ajax get_holds done');
 
 var my_holds='';
 var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
@@ -942,6 +943,7 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
+alert('ajax items_out done');
 
 var my_outs='';
 var out_selection= ['ItemID', 'Barcode', 'BibID', 'FormatID', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
