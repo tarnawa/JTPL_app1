@@ -359,16 +359,16 @@ if(p_searchitem ==='undefined') p_searchitem ='';
 
 switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
-case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
-case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
-case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+""; break;
-case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
-case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
-case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/holdrequests/all"; break;
-case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/all"; break;
-case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/overdue"; break;
-case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_barcode+"/itemsout/"+p_holdID+""; break;
+case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
+case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
+case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+""; break;
+case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/13/holdrequest"; break;
+case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
+case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/holdrequests/all"; break;
+case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/all"; break;
+case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/overdue"; break;
+case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/"+p_holdID+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -649,6 +649,7 @@ p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - login with indicator for hold or no hold (-> to putonhold or prepgetholds)
 function checklogin(code,reqstring,thedate,hold){
+alert('checklogin started');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -668,7 +669,7 @@ var response= jQuery.parseJSON(response);
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-
+alert('checklogin ajax done');
 if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
 $('#cn_holdreq').val("");
 }else{prep_getholds(pat_barcode);}
@@ -850,7 +851,7 @@ alert('your hold cancel request failed');
 
 //case 8 - prep_getholds and -> getholds
 function prep_getholds(pat_barcode){
-	//alert('this is' + pat_barcode + 'here');
+	alert('prep gethold started this is' + pat_barcode + 'here');
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
 	
@@ -859,7 +860,7 @@ p_validate(9,'','','',''+pat_barcode+'','GET','','');
 };
 //case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
-//alert('getholds started');
+alert('getholds started');
 $.mobile.changePage("#inside");
 //var response='';	
 var settings = {
