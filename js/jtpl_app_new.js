@@ -858,7 +858,7 @@ function prep_getholds(pat_barcode){
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
 	
-p_validate(8,'','','',''+pat_barcode+'','GET','','');
+p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 //p_validate(9,'','','',''+pat_barcode+'','GET','','');
 };
 //case 8 getholds (list)
