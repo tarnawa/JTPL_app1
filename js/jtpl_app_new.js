@@ -568,9 +568,9 @@ prep_getholds (pat_barcode);
 //case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
-alert('first reaction is '+hold_id+' ');
+//alert('first reaction is '+hold_id+' ');
 //insert confirmation dialog...
-$("#cancel_hold_conf").on('click', function(){
+//$("#cancel_hold_conf").on('click', function(){
 
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
@@ -578,7 +578,7 @@ p_pin=$("#libpin").val();
 alert('we are ready to cancel the hold for '+hold_id+'');
 //p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 //modal
-});
+//});
 });
 //case 7 - cancelhold and -> prep_getholds
 function cancelhold(reqstring, thedate, code){
