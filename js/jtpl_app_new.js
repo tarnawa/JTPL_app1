@@ -569,19 +569,14 @@ prep_getholds (pat_barcode);
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
 });
-//alert('first reaction is '+hold_id+' ');
-//insert confirmation dialog...
-
+//modal dialog
 $("#cancel_hold_conf").on('click', function(){
-
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-//$( "#loginresponse" ).empty();
-alert('we are ready to cancel the hold for '+hold_id+'');
-//p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
-//modal
+$( "#loginresponse" ).empty();
+p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 });
-//});
+
 //case 7 - cancelhold and -> prep_getholds
 function cancelhold(reqstring, thedate, code){
 
@@ -669,19 +664,18 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 				}
 								   
 			});
-			
-			
-			my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#popupDialog_cancelhold' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Cancel Hold...</a></p>";
-		
-			
-			my_holds +="</td></tr></table>";
-		}//end screen out cancelled
+
+my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#popupDialog_cancelhold' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Cancel Hold...</a></p>";
+
+my_holds +="</td></tr></table>";
+}//end screen out cancelled
 });
 								
 	$( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
 };//end getholds function
+
 //case 9 - items out all
 function items_out_all(reqstring,thedate,code){	
 //alert('items_out_all started');
@@ -732,25 +726,28 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				}
 								   
 			});
-			my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#inside'>Extend Item</a></p>";
-			my_outs +="</td></tr></table>";
-		//}//end screen out cancelled
+my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_extend' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Extend Item...</a></p>";
+			
+my_outs +="</td></tr></table>";
+//}//end screen out cancelled
 });
 								
-	$( "#borrowed" ).append(my_outs);
+$( "#borrowed" ).append(my_outs);
 
 });//end ajax 
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
 $(document).on('click', '.out_extend a', function () {
-//insert confirmation dialog...
-
-extend_id=$(this).attr("id");	
+extend_id=$(this).attr("id");
+});
+//modal dialog
+$("#extend_out_conf").on('click', function(){
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-$( "#borrowed" ).empty();
-p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
+alert('ready to extend'+extend_id+'');
+//$( "#borrowed" ).empty();
+//p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code, pat_barcode){
