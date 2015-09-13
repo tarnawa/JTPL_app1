@@ -746,8 +746,8 @@ $("#extend_out_conf").on('click', function(){
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 alert('ready to extend'+extend_id+'');
-//$( "#borrowed" ).empty();
-//p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
+$( "#borrowed" ).empty();
+p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code, pat_barcode){
@@ -769,6 +769,7 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 //alert('your request has been processed');
+//what if it can't be extended? Feedback needs to be here...
 prep_getholds (pat_barcode);
   console.log(response);
 });
