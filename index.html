@@ -44,7 +44,7 @@ document.addEventListener('deviceready', function() {
 	<div data-role="ui-content" data-theme="a">
 	
 	<a href="#catalog_search" data-transition="turn" id="thesearch" class="ui-btn ui-icon-eye ui-btn-icon-left ui-btn-icon-right ui-icon-carat-r">Catalog Search</a>
-    <a href="#login" data-transition="turn" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
+    <a href="#login" id="main_login" data-transition="turn" class="ui-btn ui-icon-user ui-btn-icon-left">My MAIN Account</a>
     <a href="#scanner" data-transition="turn" class="ui-btn ui-icon-heart ui-btn-icon-left">ISBN Barcode Scanner</a>
     <a href="#contact" data-transition="turn" class="ui-btn ui-icon-info ui-btn-icon-left">Contact</a>
     <a href="#direction" data-transition="turn" id="direction" class="ui-btn ui-icon-location ui-btn-icon-left">Directions</a>
@@ -132,8 +132,8 @@ document.addEventListener('deviceready', function() {
     <div role="main" class="ui-content">
         <h3 class="ui-title">Are you sure you want to extend this item?</h3>
     <p></p>
-        <a href="extend_out_conf" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Extend Item</a>
-        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Don't Extend</a>
+        <a href="extend_out_conf" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Extend</a>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">back</a>
     </div>
 </div>
             

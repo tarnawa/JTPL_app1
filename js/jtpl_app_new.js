@@ -237,6 +237,11 @@ $(document).on("pagecreate", function () {
   });
 });
 
+//Clean the hidden hold field upon entering main account page
+$('#main_login').on('click', function () {
+$('#cn_holdreq').val("");								   
+});
+
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 	
@@ -282,7 +287,7 @@ $.ajax({
 			case 2: getit_bc(code,reqstring,thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
-			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type); break;
+			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
 			case 6: createhold(res_pat_id,cont_num,code,reqstring,thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
@@ -500,8 +505,6 @@ $('#cn_holdreq').val(cont_num);
 });
 //Login
 $('#loginsubmit').on ("click", function () {
-//var form = $('#loginform');
-//check if from hold req
 var hold;
 if($('#cn_holdreq').val()){hold=true;cont_num=$('#cn_holdreq').val();}else{	hold=false;cont_num='';}
 p_barcode=$("#libcard").val();
@@ -510,7 +513,7 @@ p_pin=$("#libpin").val();
 p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - check login with indicator for hold or no hold (-> to putonhold or prepgetholds)
-function checklogin(code,reqstring,thedate,hold){
+function checklogin(code,reqstring,thedate,hold,p_cn){
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -530,7 +533,7 @@ var response= jQuery.parseJSON(response);
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode);
+if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode,p_cn);
 $('#cn_holdreq').val("");
 }else{prep_getholds(pat_barcode);}
 //end ajax
@@ -560,6 +563,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 //alert('your request has been processed');
+//clean the control number from the request
+//$('#cn_holdreq').val()='';
 prep_getholds (pat_barcode);
   console.log(response);
 });
@@ -576,7 +581,6 @@ p_pin=$("#libpin").val();
 $( "#loginresponse" ).empty();
 p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 });
-
 //case 7 - cancelhold and -> prep_getholds
 function cancelhold(reqstring, thedate, code){
 
