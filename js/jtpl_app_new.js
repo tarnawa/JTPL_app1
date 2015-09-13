@@ -568,6 +568,7 @@ prep_getholds (pat_barcode);
 //case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
+alert('first reaction is '+hold_id+' ');
 //insert confirmation dialog...
 $("#cancel_hold_conf").on('click', function(){
 
