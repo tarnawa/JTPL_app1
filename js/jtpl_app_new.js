@@ -574,7 +574,7 @@ $("#cancel_hold_conf").on('click', function(){
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 $( "#loginresponse" ).empty();
-alert('we are ready to cancel the hold');
+alert('we are ready to cancel the hold for '+hold_id+'');
 //p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 //modal
 });
