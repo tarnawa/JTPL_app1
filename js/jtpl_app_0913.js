@@ -60,6 +60,116 @@ case 37: var val2="Audio Book"; break;
 return val2;
 }
 
+//Test on inline media Book Search Direct Ajax
+$(document).ready(function(){
+//$('#onlinebtn').on('click', function () {	
+$('#search_item2').on ("keyup", function () {
+
+  searchitem=0;
+  searchitem= $('#search_item2').val();
+
+var thedate=(new Date()).toUTCString();
+var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/boolean?q="+searchitem+"";
+//alert('beginning');
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {uri: reqstring, rdate: thedate, method:"GET"},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+			
+		getit(code,reqstring,thedate);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+    });
+
+
+function getit(code,reqstring,thedate){
+
+var mytesthtml='';
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+$( "#showme" ).empty();
+var mytesthtml='';
+  
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+ISBN=value.ISBN;
+mytesthtml +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+								  
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+	switch(key2){
+		case "PublicationDate":
+		key2="Publication Date";
+		break;
+		case "PrimaryTypeOfMaterial":
+		key2="Media Type";
+		value2=matconv(value2);
+		break;
+	}
+	mytesthtml += key2 + ": " + value2 + "<br>";
+	}
+
+});
+mytesthtml +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+mytesthtml +="</td></tr></table>";
+});
+ 
+$( "#showme" ).append(mytesthtml);
+});
+
+}
+});
+});
+
+//draft for file write/read
+$(document).ready(function(){	
+/*	var returnSuccess='success';
+    var SettingsFileName='abc.xml';
+    var SettingsDownloadUrl='http://jeffersonlibrary.net/app.xml';
+	var base='http://jeffersonlibrary.net/';
+    //or 
+   // var base='www/xml/';
+    var success = function(result) { 
+                console.log("SUCCESS: \r\n"+result );  
+				alert('success');
+            };
+
+    var error = function(error) { 
+                      console.error("ERROR: \r\n"+error );
+					  alert('no success');
+                };
+   FilePlugin.callNativeFunction(success, error,{'result':returnSuccess,'file':SettingsFileName,'downloadurl':SettingsDownloadUrl,'base_path':base} ); 
+*/
+});
+
 //BARCODE SCANNER
 function getData(barcode){
 //alert('hello world');
@@ -289,7 +399,7 @@ $.ajax({
 			case 8: getholds(reqstring,thedate,code); break;
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
-			case 11: item_renew(reqstring,thedate,code,p_bc); break;
+			case 11: item_renew(reqstring,thedate,code,hold_id); break;
 			}
 			
         },
@@ -491,6 +601,36 @@ $( "#news" ).append(np_list_html);
 });
 };*/
 
+//AJAX to Patron Login (get encryption data)
+/*$('#loginsubmitxx').on ("click", function () {
+var p_barcode=("#libcard").val();
+var p_pin=("#libpin").val(); ;
+p_validate(5,'','p_barcode','','p_pin','GET','','');
+});
+*/
+/*
+//AJAX Patron Login
+function checklogin(code,reqstring,thedate){
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
+alert(response);
+});
+}
+*/
 
 //case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
@@ -509,7 +649,7 @@ p_pin=$("#libpin").val();
 
 p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
-//case 5 - check login with indicator for hold or no hold (-> to putonhold or prepgetholds)
+//case 5 - login with indicator for hold or no hold (-> to putonhold or prepgetholds)
 function checklogin(code,reqstring,thedate,hold){
 var settings = {
   "async": true,
@@ -542,7 +682,7 @@ $('#cn_holdreq').val("");
 function putonhold(res_pat_id, cont_num, pat_barcode){
 p_validate(6,'','',''+cont_num+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
-//case 6 - function createhold & -> 8 prep getholds
+//case 6 - function createhold & -> prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
 var settings = {
   "async": true,
@@ -565,20 +705,120 @@ prep_getholds (pat_barcode);
 });
 }
 
+//case 6 - function list hold items
+function getitemsout(pat_barcode){
+	//alert('this is' + pat_barcode + 'here');
+	searchitem1=pat_barcode;
+	searchitem2=$('#libpin').val();
+	//alert('item1' + searchitem1 + 'item2 ' + searchitem2 + 'done');
+	$.mobile.changePage("#inside");
+	    $.ajax({
+        type: "POST",
+        url: "http://www.jeffersonlibrary.net/INTERMED.php?rq=9",
+        crossDomain: true,
+        data: {PatronBarcode:searchitem1, libpin:searchitem2 },
+		//dataType   : 'json',
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+            //console.error(JSON.stringify(response));
+            //alert('7 has a response');
+			//$( "#loginresponse" ).empty();
+			var response= jQuery.parseJSON(response);
+			var my_borrow='';
+			var hold_selection= ['Title', 'Author', 'DueDate', 'Barcode'];
+			$( "#loginresponse" ).empty();
+
+			$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+																
+			if(value.StatusDescription!="Cancelled"){													
+																
+			my_borrow +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
+				$.each(value, function(key2, value2) {
+					if(value2!=''){
+					if(jQuery.inArray( key2, hold_selection )!== -1){
+					
+						if(key2=="Title"){
+						my_borrow += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+						}else{
+						my_borrow += key2 + ": " + value2 + "<br>";
+						}
+
+					if(key2=="HoldRequestID"){
+					hold_req_id=value2;
+					//alert("this is" + hold_req_id + "here");
+					}
+
+					}
+					}
+									   
+				});
+				my_borrow +="<p class='extend_item'><a id=" + hold_req_id + " href='#inside'>Do something</a></p>";
+				my_borrow +="</td></tr></table>";
+			}//end screen out cancelled
+				});
+
+			$( "#borrowed" ).append(my_borrow);
+
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working!');                  
+        }
+    }); 
+};//e get items out function
+
 //case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
 hold_id=$(this).attr("id");	
-//insert confirmation dialog...
-$("#cancel_hold_conf").on('click', function(){
-
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 $( "#loginresponse" ).empty();
-alert('we are ready to cancel the hold');
-//p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
-//modal
+p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
 });
+
+//case 7 - validate patron and go to prep cancelhold
+/*function validate_patron(reqstring,thedate,code,hold_id){
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+//response is a json object
+//var res_pat_id=response.PatronID;
+var pat_barcode=response.PatronBarcode;
+var valid_pat=response.ValidPatron;
+
+if(valid_pat==true){prep_cancelhold(pat_barcode,hold_id);
+$('#cn_holdreq').val("");
+}else{
+alert('log in failed - please try again');
+}
+//end ajax
 });
+//validate patron
+}
+*/
+
+//case 7 - prep_cancelhold and go to cancelhold
+/*function prep_cancelhold(pat_barcode,hold_id){
+
+	pwd=$('#libpin').val();
+
+p_validate(9,'',''+pwd+'','',''+p_barcode+'','PUT','',''+hold_id+'');
+};*/
+
 //case 7 - cancelhold and -> prep_getholds
 function cancelhold(reqstring, thedate, code){
 
@@ -598,7 +838,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //response is a json object
 var cancel_confirm=response.PAPIErrorCode;
-//if error code =0
+
 if(cancel_confirm==0){
 prep_getholds(res_pat_id, cont_num, pat_barcode);
 }else{
@@ -609,7 +849,7 @@ alert('your hold cancel request failed');
 //end cancelhold
 }
 
-//case 8 - prep_getholds and -> 8 getholds or 9 items out all
+//case 8 - prep_getholds and -> getholds
 function prep_getholds(pat_barcode){
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
@@ -666,11 +906,7 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 				}
 								   
 			});
-			
-			
-			my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#popupDialog_cancelhold' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Cancel Hold...</a></p>";
-		
-			
+			my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#inside'>Cancel Hold</a></p>";
 			my_holds +="</td></tr></table>";
 		}//end screen out cancelled
 });
@@ -679,6 +915,7 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
 });//end ajax 
 };//end getholds function
+
 //case 9 - items out all
 function items_out_all(reqstring,thedate,code){	
 //alert('items_out_all started');
@@ -739,40 +976,17 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 });//end ajax 
 };//end items_out_all function
 
-//case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
+//case 11 - Extend (encrypt) - take out_extend id, validate patron and -> extend
 $(document).on('click', '.out_extend a', function () {
-//insert confirmation dialog...
-
 extend_id=$(this).attr("id");	
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 $( "#borrowed" ).empty();
 p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
-//case 11 - extend (ajax & go to prep_getholds)
-function item_renew(reqstring,thedate,code, pat_barcode){
 
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "PUT",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  },
-  "processData": false,
-  
-  "data": '{"Action":"renew", "LogonBranchID":13, "LogonUserID":1, "LogonWorkstationID":1, "RenewData":"", "IgnoreOverrideErrors":"true", "RenewData":""}',
-}
+//case 11 - extend
 
-$.ajax(settings).done(function (response) {
-//alert('your request has been processed');
-prep_getholds (pat_barcode);
-  console.log(response);
-});
-}
 
 //change page
 function login(){
