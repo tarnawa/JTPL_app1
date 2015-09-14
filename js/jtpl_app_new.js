@@ -729,19 +729,7 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
-				switch(key2){
-				case "BibID":
-				out_req_id=value2;
-				break;
-				case "CheckOutDate":
-				var CODate= new Date( parseFloat(CheckOutDate.substr(6 )));
-				key2=CODate.toDateString();
-				break;
-				case "DueDate":
-				var DDate= new Date( parseFloat(DueDate.substr(6 )));
-				key2=DDate.toDateString();
-				break;
-				}					
+					
 					
 				if(key2=="Title"){
 				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
@@ -749,10 +737,10 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				my_outs += key2 + ": " + value2 + "<br>";
 				}
 
-				//if(key2=="BibID"){
-				//out_req_id=value2;
+				if(key2=="BibID"){
+				out_req_id=value2;
 				//alert("this is" + hold_req_id + "here");
-				//}
+				}
 								
 				}
 				}
