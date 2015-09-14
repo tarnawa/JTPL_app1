@@ -396,7 +396,7 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bdetail" ).empty();
 
 var detlist_html='';
@@ -418,6 +418,9 @@ $.each(value, function(key2, value2) {
 			break;
 			case "LocalItemsIn":
 			key2="Local Items In";
+			break;
+			case "CallNumber":
+			key2="Call Number";
 			break;
 			case "CurrentHoldRequests":
 			key2="Current Hold Requests";
@@ -651,7 +654,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_holds='';
-var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatID'];
+var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatDescription'];
 
 $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
@@ -713,29 +716,43 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_outs='';
-var out_selection= ['ItemID', 'Barcode', 'BibID', 'FormatID', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
+var out_selection= ['Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit','FormatDescription'];
 
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
 $.each(response.PatronItemsOutGetRows, function(key, value) {
 																
 		//if(value.StatusDescription!="Cancelled"){													
-															
+		
 		my_outs +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
 			$.each(value, function(key2, value2) {
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
-					if(key2=="Title"){
-					my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
-					}else{
-					my_outs += key2 + ": " + value2 + "<br>";
-					}
-
-				if(key2=="BibID"){
+				switch(key2){
+				case "BibID":
 				out_req_id=value2;
-				//alert("this is" + hold_req_id + "here");
+				case "CheckOutDate":
+				var CODate= new Date( parseFloat(CheckOutDate.substr(6 )));
+				key2=CODate.toDateString();
+				break;
+				case "DueDate":
+				var DDate= new Date( parseFloat(DueDate.substr(6 )));
+				key2=DDate.toDateString();
+				break;
+				}					
+					
+				if(key2=="Title"){
+				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+				}else{
+				my_outs += key2 + ": " + value2 + "<br>";
 				}
+
+				//if(key2=="BibID"){
+				//out_req_id=value2;
+				//alert("this is" + hold_req_id + "here");
+				//}
+								
 				}
 				}
 								   
