@@ -716,7 +716,8 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-
+alert(response.BibID);
+alert(response.RenewalCount);
 var my_outs='';
 var out_selection= ['BibID', 'FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
 
