@@ -288,7 +288,7 @@ $.ajax({
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
-			case 6: createhold(res_pat_id,cont_num,code,reqstring,thedate,p_bc); break;
+			case 6: createhold(p_hold_id,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
 			case 8: getholds(reqstring,thedate,code); break;
