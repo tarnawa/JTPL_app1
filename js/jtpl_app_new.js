@@ -281,7 +281,7 @@ $.ajax({
 			stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
+			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(code,reqstring,thedate); break;
@@ -502,7 +502,7 @@ $(document).on('click', '.hold_req a', function () {
 var cont_num;
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
-alert(cont_num);
+//alert(cont_num);
 });
 //Login
 $('#loginsubmit').on ("click", function () {
@@ -510,7 +510,7 @@ var hold;
 if($('#cn_holdreq').val()){hold=true;cont_num=$('#cn_holdreq').val();}else{	hold=false;cont_num='';}
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-alert('hold is'+hold+' and cont_num is '+cont_num+'');
+//alert('hold is'+hold+' and cont_num is '+cont_num+'');
 p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - check login with indicator for hold or no hold (-> to putonhold or prepgetholds)
@@ -534,14 +534,14 @@ var response= jQuery.parseJSON(response);
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-alert('this is hold:'+hold+'');
+//alert('this is hold:'+hold+'');
 //var hold=hold;
 if(hold=='true'){
-	alert('hold is true and we go to putonhold with'+p_cn+'');
+	//alert('hold is true and we go to putonhold with'+p_cn+'');
 	putonhold(res_pat_id, pat_barcode,p_cn);
 $('#cn_holdreq').val("");
 }else{
-	alert('hold is not true and we go to getholds');
+	//alert('hold is not true and we go to getholds');
 	prep_getholds(pat_barcode);}
 //end ajax
 });
@@ -550,13 +550,13 @@ $('#cn_holdreq').val("");
 
 //case 6 - function putonhold (get encryption)
 function putonhold(res_pat_id,pat_barcode,p_cn){
-alert('putonhold: this is'+res_pat_id+'and'+pat_barcode+'and'+p_cn+'');
+//alert('putonhold: this is'+res_pat_id+'and'+pat_barcode+'and'+p_cn+'');
 p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-alert('begin createhold for'+res_pat_id+'');
-alert(cont_num);
+//alert('begin createhold for'+res_pat_id+'');
+//alert(cont_num);
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -572,7 +572,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-alert('your ajax request has been processed');
+//alert('your ajax request has been processed');
 //clean the control number from the request
 //$('#cn_holdreq').val()='';
 prep_getholds (pat_barcode);
