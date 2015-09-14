@@ -667,6 +667,8 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 				if(value2!=''){
 				if(jQuery.inArray( key2, hold_selection )!== -1){
 				
+
+
 					if(key2=="Title"){
 					my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
 					}else{
@@ -716,7 +718,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_outs='';
-var out_selection= ['ItemID', 'Barcode', 'BibID', 'FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
+var out_selection= ['BibID', 'FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
 
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
@@ -729,18 +731,29 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
-					
+				switch(key2){
+				case "BibID":
+				out_req_id=value2;
+				break;
+				case "CheckOutDate":
+				var CODate= new Date( parseFloat(value2.substr(6 )));
+				value2=CODate.toDateString();
+				break;
+				case "DueDate":
+				var DDate= new Date( parseFloat(value2.substr(6 )));
+				value2=DDate.toDateString();
+				break;
+				}	
 					
 				if(key2=="Title"){
 				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
 				}else{
 				my_outs += key2 + ": " + value2 + "<br>";
 				}
-
-				if(key2=="BibID"){
-				out_req_id=value2;
+				//if(key2=="BibID"){
+				//out_req_id=value2;
 				//alert("this is" + hold_req_id + "here");
-				}
+				//}
 								
 				}
 				}
