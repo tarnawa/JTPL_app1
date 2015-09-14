@@ -716,7 +716,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_outs='';
-var out_selection= ['Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit','FormatDescription'];
+var out_selection= ['ItemID', 'Barcode', 'BibID', 'FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
 
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
@@ -732,6 +732,7 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				switch(key2){
 				case "BibID":
 				out_req_id=value2;
+				break;
 				case "CheckOutDate":
 				var CODate= new Date( parseFloat(CheckOutDate.substr(6 )));
 				key2=CODate.toDateString();
