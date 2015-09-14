@@ -281,7 +281,7 @@ $.ajax({
 			stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			
+			alert('here:'+p_hold_id+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(code,reqstring,thedate); break;
