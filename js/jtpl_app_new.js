@@ -267,7 +267,7 @@ case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"
 }
 
 var thedate=(new Date()).toUTCString();
-//start_spin();
+start_spin();
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
@@ -278,7 +278,7 @@ $.ajax({
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			//stop_spin();
+			stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			
@@ -502,6 +502,7 @@ $(document).on('click', '.hold_req a', function () {
 var cont_num;
 cont_num=$(this).attr("id");
 $('#cn_holdreq').val(cont_num);
+alert(cont_num);
 });
 //Login
 $('#loginsubmit').on ("click", function () {
@@ -509,7 +510,7 @@ var hold;
 if($('#cn_holdreq').val()){hold=true;cont_num=$('#cn_holdreq').val();}else{	hold=false;cont_num='';}
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-
+alert('hold is'+hold+' and cont_num is '+cont_num+'');
 p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - check login with indicator for hold or no hold (-> to putonhold or prepgetholds)
@@ -533,17 +534,22 @@ var response= jQuery.parseJSON(response);
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-if(hold==true){putonhold(res_pat_id, cont_num, pat_barcode,p_cn);
+alert('this is hold:'+hold+'');
+if(hold==true){
+	alert('hold is true and we go to putonhold with'+p_cn+'');
+	putonhold(res_pat_id, pat_barcode,p_cn);
 $('#cn_holdreq').val("");
-}else{prep_getholds(pat_barcode);}
+}else{
+	alert('hold is not true and we go to getholds');
+	prep_getholds(pat_barcode);}
 //end ajax
 });
 //end checklogin
 }
 
 //case 6 - function putonhold (get encryption)
-function putonhold(res_pat_id, cont_num, pat_barcode){
-p_validate(6,'','',''+cont_num+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
+function putonhold(res_pat_id,pat_barcode,p_cn){
+p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
@@ -558,7 +564,7 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"3","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":1,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
 }
 
 $.ajax(settings).done(function (response) {
