@@ -550,10 +550,13 @@ $('#cn_holdreq').val("");
 
 //case 6 - function putonhold (get encryption)
 function putonhold(res_pat_id,pat_barcode,p_cn){
+
 p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
+alert('begin createhold for'+res_pat_id+'');
+alert(cont_num);
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -569,7 +572,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-//alert('your request has been processed');
+alert('your ajax request has been processed');
 //clean the control number from the request
 //$('#cn_holdreq').val()='';
 prep_getholds (pat_barcode);
