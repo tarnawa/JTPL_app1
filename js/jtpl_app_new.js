@@ -550,7 +550,7 @@ $('#cn_holdreq').val("");
 
 //case 6 - function putonhold (get encryption)
 function putonhold(res_pat_id,pat_barcode,p_cn){
-
+alert('putonhold: this is'+res_pat_id+'and'+pat_barcode+'and'+p_cn+'');
 p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
