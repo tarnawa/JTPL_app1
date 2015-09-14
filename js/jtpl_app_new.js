@@ -281,14 +281,14 @@ $.ajax({
 			stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			alert('here:'+p_hold_id+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
+			alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(code,reqstring,thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
-			case 6: createhold(p_hold_id,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
+			case 6: createhold(p_holdID,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
 			case 8: getholds(reqstring,thedate,code); break;
