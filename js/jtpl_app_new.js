@@ -62,37 +62,11 @@ return val2;
 
 //BARCODE SCANNER
 function getData(barcode){
-//alert('hello world');
-var barcode=9780345528117;
-//alert(barcode);
 
 searchitem=barcode;
-
-var thedate=(new Date()).toUTCString();
-var reqstring=""+dest+"/REST/public/v1/1033/100/1/search/bibs/keyword/ISBN?q="+searchitem+"";
-//alert('beginning');
-$.ajax({
-        type       : "POST",
-		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        crossDomain: true,
-        data: {uri: reqstring, rdate: thedate, method:"GET"},
-		error: function(jqXHR,text_status,strError){
-			alert("no connection");},
-		timeout:60000,
-		cache: false,
-        success : function(response) {
-			var code=response;
-			
-		getit_bc(code,reqstring,thedate);
-        },
-        error      : function() {
-            console.error("error");
-            alert('Not working1!');                  
-        }
-    });
+p_validate(2,''+p_searchitem+'','','','','GET','','');
 
 function getit_bc(code,reqstring,thedate){
-
 var detlist_html='';
 
 var settings = {
@@ -398,7 +372,7 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'Format', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bdetail" ).empty();
 
 var detlist_html='';
@@ -667,7 +641,6 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 		my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
 			$.each(value, function(key2, value2) {
 								   
-								   
 				if(key2=="HoldRequestID"){
 				hold_req_id=value2;
 				}				   
@@ -675,7 +648,14 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 				if(value2!=''){
 				if(jQuery.inArray( key2, hold_selection )!== -1){
 				
-
+				switch(key2){
+				case "StatusDescription":
+				key2="Status";
+				break;
+				case "FormatDescription":
+				key2="Media Type";
+				break;
+				}
 
 					if(key2=="Title"){
 					my_holds += "<strong>" + key2 + ": " + value2 + "</strong><br>";
@@ -683,11 +663,9 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 					my_holds += key2 + ": " + value2 + "<br>";
 					}
 
-
 				}
 				}
-								   
-			});
+		});
 
 my_holds +="<p class='hold_cancel'><a id=" + hold_req_id + " href='#popupDialog_cancelhold' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Cancel Hold...</a></p>";
 
@@ -695,7 +673,7 @@ my_holds +="</td></tr></table>";
 }//end screen out cancelled
 });
 								
-	$( "#loginresponse" ).append(my_holds);
+$( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
 };//end getholds function
