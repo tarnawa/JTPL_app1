@@ -63,7 +63,7 @@ return val2;
 //BARCODE SCANNER
 function getData(barcode){
 
-searchitem=barcode;
+p_searchitem=barcode;
 p_validate(2,''+p_searchitem+'','','','','GET','','');
 
 function getit_bc(code,reqstring,thedate){
