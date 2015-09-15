@@ -60,76 +60,6 @@ case 37: var val2="Audio Book"; break;
 return val2;
 }
 
-//BARCODE SCANNER
-function getData(barcode){
-
-p_searchitem=barcode;
-p_validate(2,''+p_searchitem+'','','','','GET','','');
-
-function getit_bc(code,reqstring,thedate){
-var detlist_html='';
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
-$( "#bcode" ).empty();
-
-var detlist_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-ISBN=value.ISBN;
-detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-		switch(key2){
-			case "PublicationDate":
-			key2="Publication Date";
-			break;
-			case "LocalItemsTotal":
-			key2="Local Items Total";
-			break;
-			case "LocalItemsIn":
-			key2="Local Items In";
-			break;
-			case "CurrentHoldRequests":
-			key2="Current Hold Requests";
-			break;
-			case "PrimaryTypeOfMaterial":
-			key2="Media Tyoe";
-			value2=matconv(value2);
-			break;
-		}
-	detlist_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
-detlist_html +="</td></tr></table>";
-});
- 
-$( "#bcode" ).append(detlist_html);
-});
-};
-};
-
 $(document).ready(function(){
 
 //open in app browser
@@ -260,7 +190,7 @@ $.ajax({
 			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
-			case 2: getit_bc(code,reqstring,thedate); break;
+			case 2: getit_bc(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
@@ -344,6 +274,76 @@ blist_html +="</td></tr></table>";
 $( "#blist" ).append(blist_html);
 });
 }
+
+//case2 - BARCODE SCANNER
+function getData(barcode){
+alert('getdata started');
+p_searchitem=barcode;
+p_validate(2,''+p_searchitem+'','','','','GET','','');
+
+function getit_bc(code,reqstring,thedate){
+var detlist_html='';
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+$( "#bcode" ).empty();
+
+var detlist_html='';
+  
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+ISBN=value.ISBN;
+detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+								  
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+		switch(key2){
+			case "PublicationDate":
+			key2="Publication Date";
+			break;
+			case "LocalItemsTotal":
+			key2="Local Items Total";
+			break;
+			case "LocalItemsIn":
+			key2="Local Items In";
+			break;
+			case "CurrentHoldRequests":
+			key2="Current Hold Requests";
+			break;
+			case "PrimaryTypeOfMaterial":
+			key2="Media Tyoe";
+			value2=matconv(value2);
+			break;
+		}
+	detlist_html += key2 + ": " + value2 + "<br>";
+	}
+
+});
+detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+detlist_html +="</td></tr></table>";
+});
+ 
+$( "#bcode" ).append(detlist_html);
+});
+};
+};
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
