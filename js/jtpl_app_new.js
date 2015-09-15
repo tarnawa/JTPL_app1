@@ -716,26 +716,27 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-alert(response.BibID);
-alert(response.RenewalCount);
+
 var my_outs='';
-var out_selection= ['BibID', 'FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
+var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
 
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
 $.each(response.PatronItemsOutGetRows, function(key, value) {
-																
+										
 		//if(value.StatusDescription!="Cancelled"){													
 		
 		my_outs +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
 			$.each(value, function(key2, value2) {
+				if(key2=="BibID"){
+				out_req_id=value2;
+				}
+				
+				//out_req_id=value2.BibID;				   
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
 				switch(key2){
-				case "BibID":
-				out_req_id=value2;
-				break;
 				case "CheckOutDate":
 				var CODate= new Date( parseFloat(value2.substr(6 )));
 				value2=CODate.toDateString();
@@ -751,10 +752,7 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				}else{
 				my_outs += key2 + ": " + value2 + "<br>";
 				}
-				//if(key2=="BibID"){
-				//out_req_id=value2;
-				//alert("this is" + hold_req_id + "here");
-				//}
+
 								
 				}
 				}
