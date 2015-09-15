@@ -71,9 +71,9 @@ var app = {
 		   
             document.getElementById("bcode").innerHTML = result.text;
 			
-			var input=result.text;
-			
-			getData(input);
+			var inputs=result.text;
+			alert('go to getData');
+			getData(inputs);
 			
 			
 			//var barcode_on=result.text;
