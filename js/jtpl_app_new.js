@@ -267,7 +267,9 @@ case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"
 }
 
 var thedate=(new Date()).toUTCString();
-start_spin();
+if(p_searchitem){
+	start_spin();
+}
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
@@ -654,7 +656,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_holds='';
-var hold_selection= ['Title', 'Author', 'StatusDescription', 'HoldRequestID', 'FormatDescription'];
+var hold_selection= ['Title', 'Author', 'StatusDescription', 'FormatDescription'];
 
 $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
@@ -664,6 +666,12 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 															
 		my_holds +='<table class="bibtbl"><tr><td class="picbox"></td><td class="txtbox">';
 			$.each(value, function(key2, value2) {
+								   
+								   
+				if(key2=="HoldRequestID"){
+				hold_req_id=value2;
+				}				   
+								   
 				if(value2!=''){
 				if(jQuery.inArray( key2, hold_selection )!== -1){
 				
@@ -675,10 +683,7 @@ $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 					my_holds += key2 + ": " + value2 + "<br>";
 					}
 
-				if(key2=="HoldRequestID"){
-				hold_req_id=value2;
-				//alert("this is" + hold_req_id + "here");
-				}
+
 				}
 				}
 								   
@@ -694,8 +699,7 @@ my_holds +="</td></tr></table>";
 
 });//end ajax 
 };//end getholds function
-
-//case 9 - items out all
+//case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
 //alert('items_out_all started');
 //$.mobile.changePage("#inside");
@@ -718,7 +722,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
 var my_outs='';
-var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount', 'RenewalLimit'];
+var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount'];
 
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
@@ -731,19 +735,28 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
-				
-				//out_req_id=value2.BibID;				   
+				if(key2=="RenewalCount"){
+					if(value2==''){
+						value2='none';
+					}
+				}
+				   
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
 				switch(key2){
-				case "CheckOutDate":
-				var CODate= new Date( parseFloat(value2.substr(6 )));
-				value2=CODate.toDateString();
+				case "RenewalCount":
+				key2="Renewals Left";
 				break;
 				case "DueDate":
 				var DDate= new Date( parseFloat(value2.substr(6 )));
 				value2=DDate.toDateString();
+				key2="Due Date";
+				break;
+				case "CheckOutDate":
+				var CODate= new Date( parseFloat(value2.substr(6 )));
+				value2=CODate.toDateString();
+				key2="Check Out Date";
 				break;
 				}	
 					
