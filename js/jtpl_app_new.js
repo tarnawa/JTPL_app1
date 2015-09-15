@@ -398,7 +398,7 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
+var selection= ['Title', 'Author', 'Format', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bdetail" ).empty();
 
 var detlist_html='';
@@ -428,7 +428,7 @@ $.each(value, function(key2, value2) {
 			key2="Current Hold Requests";
 			break;
 			case "PrimaryTypeOfMaterial":
-			key2="Media Tyoe";
+			key2="Media Type";
 			value2=matconv(value2);
 			break;
 		}
