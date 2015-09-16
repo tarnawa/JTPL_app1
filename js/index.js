@@ -72,7 +72,7 @@ var app = {
             document.getElementById("bcode").innerHTML = result.text;
 			
 			var inputs=result.text;
-			alert('go to getData');
+			alert(inputs);
 			getData(inputs);
 			
 			
