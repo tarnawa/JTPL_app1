@@ -65,6 +65,7 @@ function getData(barcode){
 alert('getdata started');
 p_searchitem=barcode;
 p_validate(2,''+p_searchitem+'','','','','GET','','');
+}
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
 var detlist_html='';
@@ -128,7 +129,7 @@ detlist_html +="</td></tr></table>";
 $( "#bcode" ).append(detlist_html);
 });
 };
-};
+
 
 
 
