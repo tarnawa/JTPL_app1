@@ -220,7 +220,7 @@ $('#cn_holdreq').val("");
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
-	
+alert('validate has started');	
 if(p_pwd ==='undefined') p_pwd ='';
 if(p_cn ==='undefined') p_cn ='';
 if(p_bc ==='undefined') p_bc ='';
