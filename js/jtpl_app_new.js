@@ -2,6 +2,7 @@
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 //var p_response=0;
+var p_validate;
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -61,11 +62,13 @@ return val2;
 }
 
 //case2 - BARCODE SCANNER
+
 function getData(barcode){
 alert('getdata started');
 p_searchitem=barcode;
 p_validate(2,''+p_searchitem+'','','','','GET','','');
 }
+
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
 var detlist_html='';
