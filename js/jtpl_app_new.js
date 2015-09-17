@@ -2,7 +2,7 @@
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 //var p_response=0;
-var p_validate;
+//var getData;
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -63,11 +63,9 @@ return val2;
 
 //case2 - BARCODE SCANNER
 
-function getData(barcode){
-alert('getdata started');
-p_searchitem=barcode;
-p_validate(2,''+p_searchitem+'','','','','GET','','');
-}
+//var barcode=9781440569722;
+getData(barcode);
+
 
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
@@ -136,7 +134,7 @@ $( "#bcode" ).append(detlist_html);
 
 
 
-$(document).ready(function(){
+//$(document).ready(function(){
 
 //open in app browser
 $('#3m_btn').on('click', function () {
@@ -352,6 +350,12 @@ $( "#blist" ).append(blist_html);
 }
 
 
+
+getData=function getData(barcode){
+alert('getdata started'+barcode+'');
+p_searchitem=barcode;
+p_validate(2,''+p_searchitem+'','','','','GET','','');
+}
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
@@ -839,4 +843,4 @@ window.plugins.flashlight.available(function(isAvailable) {
 });
 });
 
-});
+//});
