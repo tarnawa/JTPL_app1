@@ -63,12 +63,45 @@ return val2;
 
 //case2 - BARCODE SCANNER
 
+function getData(barcode){  
+alert('getdata started');
 //var barcode=9781440569722;
-getData(barcode);
+p_searchitem=barcode;
+alert(barcode);
+var thedate=(new Date()).toUTCString();
+var reqstring="https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+"";
+var p_method="GET";
 
+alert(reqstring);
+
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        crossDomain: true,
+        data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+""},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			stop_spin();
+			var code=response;
+			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
+			alert('ajax done');
+			getit_bc(p_response.code,p_response.reqstring,p_response.thedate);
+			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+
+}
 
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
+	alert('got getit started'); 
 var detlist_html='';
 
 var settings = {
@@ -134,7 +167,7 @@ $( "#bcode" ).append(detlist_html);
 
 
 
-//$(document).ready(function(){
+$(document).ready(function(){
 
 //open in app browser
 $('#3m_btn').on('click', function () {
@@ -351,11 +384,11 @@ $( "#blist" ).append(blist_html);
 
 
 
-getData=function getData(barcode){
-alert('getdata started'+barcode+'');
-p_searchitem=barcode;
-p_validate(2,''+p_searchitem+'','','','','GET','','');
-}
+
+//getData=function getData(barcode){
+//alert('getdata started'+barcode+'');
+//p_searchitem=barcode;
+//p_validate(2,''+p_searchitem+'','','','','GET','','');
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
@@ -843,4 +876,4 @@ window.plugins.flashlight.available(function(isAvailable) {
 });
 });
 
-//});
+});
