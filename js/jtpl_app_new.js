@@ -62,6 +62,7 @@ return val2;
 }
 
 //case2 - BARCODE SCANNER
+//getData(9781440569722);
 
 function getData(barcode){  
 alert('getdata started');
@@ -84,8 +85,9 @@ $.ajax({
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			stop_spin();
+			//stop_spin();
 			var code=response;
+			alert (response);
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			alert('ajax done');
 			getit_bc(p_response.code,p_response.reqstring,p_response.thedate);
