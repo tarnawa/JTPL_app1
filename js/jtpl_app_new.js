@@ -62,18 +62,12 @@ return val2;
 }
 
 //case2 - BARCODE SCANNER
-//getData(9781440569722);
-
 function getData(barcode){  
-alert('getdata started');
 //var barcode=9781440569722;
 p_searchitem=barcode;
-alert(barcode);
 var thedate=(new Date()).toUTCString();
 var reqstring="https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+"";
 var p_method="GET";
-
-alert(reqstring);
 
 $.ajax({
         type       : "POST",
@@ -87,23 +81,17 @@ $.ajax({
         success : function(response) {
 			//stop_spin();
 			var code=response;
-			alert (response);
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			alert('ajax done');
 			getit_bc(p_response.code,p_response.reqstring,p_response.thedate);
-			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
         },
         error      : function() {
             console.error("error");
             alert('Not working1!');                  
         }
 });
-
 }
-
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
-	alert('got getit started'); 
 var detlist_html='';
 
 var settings = {
@@ -165,9 +153,6 @@ detlist_html +="</td></tr></table>";
 $( "#bcode" ).append(detlist_html);
 });
 };
-
-
-
 
 $(document).ready(function(){
 
@@ -257,7 +242,6 @@ $('#cn_holdreq').val("");
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
-alert('validate has started');	
 if(p_pwd ==='undefined') p_pwd ='';
 if(p_cn ==='undefined') p_cn ='';
 if(p_bc ==='undefined') p_bc ='';
