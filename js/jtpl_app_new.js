@@ -1,8 +1,6 @@
-//set global variable
+//set global variables
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
-//var p_response=0;
-//var getData;
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -367,14 +365,6 @@ blist_html +="</td></tr></table>";
 $( "#blist" ).append(blist_html);
 });
 }
-
-
-
-
-//getData=function getData(barcode){
-//alert('getdata started'+barcode+'');
-//p_searchitem=barcode;
-//p_validate(2,''+p_searchitem+'','','','','GET','','');
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
