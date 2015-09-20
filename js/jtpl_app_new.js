@@ -238,6 +238,10 @@ $('#main_login').on('click', function () {
 $('#cn_holdreq').val("");								   
 });
 
+$('#clr_ifr').on('click', function () {
+ $('#events_frame').attr('src', '');
+});
+
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 if(p_pwd ==='undefined') p_pwd ='';
