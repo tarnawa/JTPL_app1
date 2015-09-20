@@ -239,7 +239,7 @@ $('#cn_holdreq').val("");
 });
 
 $('#clr_ifr').on('click', function () {
- $('#events_frame').attr('src', '');
+ $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_ap.php');
 });
 
 //ENCRYPTION/VALIDATION
