@@ -152,6 +152,8 @@ $( "#bcode" ).append(detlist_html);
 });
 };
 
+
+
 $(document).ready(function(){
 
 //open in app browser
@@ -241,6 +243,13 @@ $('#cn_holdreq').val("");
 $('#clr_ifr').on('click', function () {
  $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_ap.php');
 });
+
+$('[data-rel="back"]').on('click', function () {
+$('#events').focus();
+});
+
+
+//$('#events').find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){

@@ -34,6 +34,16 @@ document.addEventListener('deviceready', function() {
 });
 </script>
 
+
+
+<style type="text/css">
+<!--
+.ui-toolbar-back-btn{
+background-color: #0F0;
+}
+
+-->
+</style>
 </head>
 <body>
 
@@ -265,7 +275,8 @@ Fax: 973-697-7051<br />
 </div>
 
 <div data-role="page" id="events">
-<div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<div data-role="header" data-theme="a" data-position="fixed">
+<a href="#" data-rel="back" class="ui-btn ui-btn-left ui-corner-all ui-shadow ui-icon-carat-l ui-btn-icon-left">Back</a>
 <span class="home"><a href="#pageone" id="clr_ifr" class="ui-btn ui-shadow ui-corner-all ui-mini ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
 <h3>Library Events</h3></div>
 <div data-role="ui-content" id="event_content">
