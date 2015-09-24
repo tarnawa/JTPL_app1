@@ -1,6 +1,7 @@
 //set global variables
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
+var globalTimeout = null; 
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -245,21 +246,13 @@ $('#clr_ifr').on('click', function () {
 });
 
 $('[data-rel="back"]').on('click', function () {
-											 setTimeout(function(){
-					//alert('hello');
-					$('#events').focus();
-					},500);
-
-});
-
-$('#main_login').on('click', function () {
 setTimeout(function(){
-					alert('hello');
-					},2000);
+$('#events').focus();
+},2000);
 });
 
 
-					
+
 									   
 //$('#events').find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
 
@@ -327,18 +320,27 @@ $.ajax({
 });
 }
 
+
+
+
 //case 1 - book search reqstring (get encryption data)
 $('#search_item').on('keyup',function () {
+if (globalTimeout != null) {
+    clearTimeout(globalTimeout);
+  }
+  globalTimeout = setTimeout(function() {
+    globalTimeout = null;  
+
 counter +=1;
   searchitem=0;
   	if(counter>2){
-		
   		searchitem= $('#search_item').val();
   		p_searchitem=searchitem.replace(/\s+/g,"+");
-		setTimeout(function(){
 	p_validate(1,''+p_searchitem+'','','','','GET','','');
-							},1000);
 	}
+
+}, 300);  
+
 });
 
 //case 1 - get books
