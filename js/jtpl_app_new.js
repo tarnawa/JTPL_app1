@@ -248,15 +248,15 @@ $('[data-rel="back"]').on('click', function () {
 											 setTimeout(function(){
 					//alert('hello');
 					$('#events').focus();
-					},400);
+					},500);
 
 });
 
-//$('#main_login').on('click', function () {
-//setTimeout(function(){
-//					alert('hello');
-//					},2000);
-//});
+$('#main_login').on('click', function () {
+setTimeout(function(){
+					alert('hello');
+					},2000);
+});
 
 
 					
@@ -337,7 +337,7 @@ counter +=1;
   		p_searchitem=searchitem.replace(/\s+/g,"+");
 		setTimeout(function(){
 	p_validate(1,''+p_searchitem+'','','','','GET','','');
-							},400);
+							},1000);
 	}
 });
 
