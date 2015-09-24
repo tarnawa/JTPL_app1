@@ -1,7 +1,6 @@
 //set global variables
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
-var globalTimeout = null; 
 
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -248,8 +247,9 @@ $('#clr_ifr').on('click', function () {
 $('[data-rel="back"]').on('click', function () {
 setTimeout(function(){
 $('#events').focus();
-},2000);
+},1000);
 });
+
 
 
 
@@ -320,28 +320,28 @@ $.ajax({
 });
 }
 
-
-
-
+//setup before functions
+var typingTimer;                //timer identifier
+var doneTypingInterval = 500;  //time in ms, 5 second for example
 //case 1 - book search reqstring (get encryption data)
 $('#search_item').on('keyup',function () {
-if (globalTimeout != null) {
-    clearTimeout(globalTimeout);
-  }
-  globalTimeout = setTimeout(function() {
-    globalTimeout = null;  
-
 counter +=1;
   searchitem=0;
   	if(counter>2){
-  		searchitem= $('#search_item').val();
-  		p_searchitem=searchitem.replace(/\s+/g,"+");
-	p_validate(1,''+p_searchitem+'','','','','GET','','');
+	
+	clearTimeout(typingTimer);
+    if ($('#myInput').val) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
 	}
-
-}, 300);  
-
+	}
 });
+
+function doneTyping () {
+   searchitem= $('#search_item').val();
+  	p_searchitem=searchitem.replace(/\s+/g,"+");
+	p_validate(1,''+p_searchitem+'','','','','GET','','');
+}
+
 
 //case 1 - get books
 function get_books(code,reqstring,thedate){
