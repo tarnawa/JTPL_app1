@@ -863,7 +863,7 @@ window.addEventListener('load', function() {
 //Flashlight
 $('#flashlight').on('click', function () {
 //alert('clicky');
-$('.ui-grid-solo .flash .ui-btn').css({'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
+$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FF0', 'background': '-webkit-radial-gradient(white 15%, yellow 85%)','background': '-o-radial-gradient(white 15%, yellow 85%)','background':' -moz-radial-gradient(white 15%, yellow 85%)',' background': 'radial-gradient(white 15%, yellow 85%)'});
 window.plugins.flashlight.available(function(isAvailable) {
   if (isAvailable) {
 
@@ -873,7 +873,7 @@ window.plugins.flashlight.available(function(isAvailable) {
     // switch off after 5 seconds
     setTimeout(function() {
      window.plugins.flashlight.switchOff(); // success/error callbacks may be passed
-   $('.ui-grid-solo .flash .ui-btn').css({'background': '-webkit-radial-gradient(white 0%, yellow 0%)','background': '-o-radial-gradient(white 0%, yellow 0%)','background':' -moz-radial-gradient(white 0%, yellow 0%)',' background': 'radial-gradient(white 0%, yellow 0%)'});
+   $('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FC3', 'background': '-webkit-radial-gradient(white 0%, yellow 0%)','background': '-o-radial-gradient(white 0%, yellow 0%)','background':' -moz-radial-gradient(white 0%, yellow 0%)',' background': 'radial-gradient(white 0%, yellow 0%)'});
 	}, 5000);
 	//$('.ui-grid-solo .flash .ui-btn').css({'background-color': '#FFF7B7'});
   } 
