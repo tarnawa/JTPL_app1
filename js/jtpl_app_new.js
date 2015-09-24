@@ -244,12 +244,23 @@ $('#clr_ifr').on('click', function () {
  $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_ap.php');
 });
 
-$('[data-rel="back"]').on('click', function goback_btn () {
-$('#events').focus();
+$('[data-rel="back"]').on('click', function () {
+											 setTimeout(function(){
+					//alert('hello');
+					$('#events').focus();
+					},400);
+
 });
-setTimeout(goback_btn, 1000);
+
+//$('#main_login').on('click', function () {
+//setTimeout(function(){
+//					alert('hello');
+//					},2000);
+//});
 
 
+					
+									   
 //$('#events').find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
 
 //ENCRYPTION/VALIDATION
@@ -317,16 +328,19 @@ $.ajax({
 }
 
 //case 1 - book search reqstring (get encryption data)
-$('#search_item').on('keyup',function startsearch () {
+$('#search_item').on('keyup',function () {
 counter +=1;
   searchitem=0;
   	if(counter>2){
+		
   		searchitem= $('#search_item').val();
   		p_searchitem=searchitem.replace(/\s+/g,"+");
+		setTimeout(function(){
 	p_validate(1,''+p_searchitem+'','','','','GET','','');
+							},400);
 	}
 });
-setTimeout(startsearch, 500);
+
 //case 1 - get books
 function get_books(code,reqstring,thedate){
 //alert(reqstring);
