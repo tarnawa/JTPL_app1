@@ -54,7 +54,9 @@ case 33: var val2="DVD"; break;
 case 34: var val2="Videotape"; break; 
 case 35: var val2="Music CD"; break; 
 case 36: var val2="eBook"; break; 
-case 37: var val2="Audio Book"; break; 
+case 37: var val2="Audio Book"; break;
+case 40: var val2="DVD/Blue-Ray"; break;
+default: var val2="other media format"; break;
 }
 return val2;
 }
@@ -372,6 +374,9 @@ $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
 media=value.PrimaryTypeOfMaterial;
+if(media==35){
+blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
+}
 if(media==35){
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
 }
