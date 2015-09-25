@@ -324,7 +324,7 @@ $.ajax({
 
 //setup before functions
 var typingTimer;                //timer identifier
-var doneTypingInterval = 700;  //time in ms, 5 second for example
+var doneTypingInterval = 650;  //time in ms, 5 second for example
 //case 1 - book search reqstring (get encryption data)
 $('#search_item').on('keyup',function () {
 counter +=1;
@@ -377,8 +377,8 @@ media=value.PrimaryTypeOfMaterial;
 if(media==35){
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
 }
-if(media==35){
-blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
+else if(media==40){
+blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">';
 }
 else{
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
