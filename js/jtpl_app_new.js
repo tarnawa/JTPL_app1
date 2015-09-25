@@ -706,7 +706,7 @@ switch(media){
 	case 35: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
 	case 33: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
-	default: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="" /></td ><td class="txtbox">'; break;
+	default: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/book_icon.png" /></td ><td class="txtbox">'; break;
 }													
 
 			$.each(value, function(key2, value2) {
@@ -775,13 +775,13 @@ var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'Due
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
 $.each(response.PatronItemsOutGetRows, function(key, value) {
-								
+ISBN=value.ISBN;								
 media=value.FormatID;
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
 	case 33: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
-	default: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="">'; break;
+	default: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">'; break;
 }										
 	
 			$.each(value, function(key2, value2) {
