@@ -572,8 +572,6 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-
-if(response){
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //response is a json object
@@ -592,9 +590,8 @@ var valid_pat=response.ValidPatron;
 //alert('Login information not valid. Please try again');
 //}
 //end ajax
-}else{
-alert('about to go to checklogin');
-}
+}).fail(function() {
+	alert ('this did not return anything');
 });
 //end checklogin
 }
