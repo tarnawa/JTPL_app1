@@ -322,7 +322,7 @@ $.ajax({
 
 //setup before functions
 var typingTimer;                //timer identifier
-var doneTypingInterval = 500;  //time in ms, 5 second for example
+var doneTypingInterval = 700;  //time in ms, 5 second for example
 //case 1 - book search reqstring (get encryption data)
 $('#search_item').on('keyup',function () {
 counter +=1;
@@ -371,23 +371,24 @@ var blist_html='';
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
+media=value.PrimaryTypeOfMaterial;
+if(media==35){
+blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
+}
+else{
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
+}
 $.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
-	
-	
-	
+		
 	switch(key2){
 		case "PublicationDate":
 		key2="Publication Date";
 		break;
 		case "PrimaryTypeOfMaterial":
 		key2="Media Type";
-		if(value2=='35'){$(".picbox img").attr("src","img/logo_old.png");}
 		value2=matconv(value2);
-		
 		break;
 	}
 	
