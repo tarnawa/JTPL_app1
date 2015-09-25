@@ -55,7 +55,7 @@ case 34: var val2="Videotape"; break;
 case 35: var val2="Music CD"; break; 
 case 36: var val2="eBook"; break; 
 case 37: var val2="Audio Book"; break;
-case 40: var val2="DVD/Blue-Ray"; break;
+case 40: var val2="Blue-Ray DVD"; break;
 default: var val2="other media format"; break;
 }
 return val2;
@@ -377,7 +377,7 @@ media=value.PrimaryTypeOfMaterial;
 if(media==35){
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">';
 }
-else if(media==40){
+else if(media==40||media==33 ){
 blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">';
 }
 else{
