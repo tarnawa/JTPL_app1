@@ -255,6 +255,7 @@ $('#events').focus();
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
+	alert('p_validate started');
 if(p_pwd ==='undefined') p_pwd ='';
 if(p_cn ==='undefined') p_cn ='';
 if(p_bc ==='undefined') p_bc ='';
@@ -291,6 +292,7 @@ $.ajax({
 		cache: false,
         success : function(response) {
 			stop_spin();
+			alert('we have response');
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
@@ -299,7 +301,7 @@ $.ajax({
 			case 2: getit_bc(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
-			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
+			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); alert('about to go to checklogin');break;
 			case 6: createhold(p_holdID,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
@@ -557,6 +559,7 @@ p_validate(5,'',''+p_pin+'',''+cont_num+'',''+p_barcode+'','GET',''+hold+'','');
 });
 //case 5 - check login with indicator for hold or no hold (-> to putonhold or prepgetholds)
 function checklogin(code,reqstring,thedate,hold,p_cn){
+alert('checklogin started');
 var settings = {
   "async": true,
   "crossDomain": true,
