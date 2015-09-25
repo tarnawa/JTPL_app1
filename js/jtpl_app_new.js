@@ -301,7 +301,7 @@ $.ajax({
 			case 2: getit_bc(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 3: get_detail(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 4: get_news(p_response.code,p_response.reqstring,p_response.thedate); break;
-			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); alert('about to go to checklogin');break;
+			case 5: alert('about to go to checklogin');checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
 			case 6: createhold(p_holdID,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
 			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
@@ -572,9 +572,8 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-if(!response){
-	alert('Your login failed. Try again.');
-} else{
+
+if(response){
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //response is a json object
@@ -593,6 +592,8 @@ var valid_pat=response.ValidPatron;
 //alert('Login information not valid. Please try again');
 //}
 //end ajax
+}else{
+alert('about to go to checklogin');
 }
 });
 //end checklogin
