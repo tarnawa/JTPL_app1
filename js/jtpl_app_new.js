@@ -267,13 +267,13 @@ case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/k
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
 case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
-case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+""; break;
+case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/13/holdrequest"; break;
-case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
-case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/holdrequests/all"; break;
-case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/all"; break;
-case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/overdue"; break;
-case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_barcode+"/itemsout/"+p_holdID+""; break;
+case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
+case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdrequests/all"; break;
+case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
+case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
+case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
