@@ -251,7 +251,7 @@ $('#events').focus();
 });
 
 //$("#blist img").attr("src","img/logo_old.png");
-
+//$("#blist img").attr("src","img/logo_old.png");
 
 									   
 //$('#events').find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
@@ -377,14 +377,17 @@ $.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
 	
+	
+	
 	switch(key2){
 		case "PublicationDate":
 		key2="Publication Date";
 		break;
 		case "PrimaryTypeOfMaterial":
 		key2="Media Type";
-		$(".picbox img").attr("src","img/logo_old.png");
+		if(value2=='35'){$(".picbox img").attr("src","img/logo_old.png");}
 		value2=matconv(value2);
+		
 		break;
 	}
 	
