@@ -371,18 +371,19 @@ var blist_html='';
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
-blist_html +='<table class="bibtbl"><tr><td class="picbox"><img class="bcover" src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 								  
 $.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
-	if(key2==35){$(".bcover").attr("src","img/logo_old.png");} 
+	
 	switch(key2){
 		case "PublicationDate":
 		key2="Publication Date";
 		break;
 		case "PrimaryTypeOfMaterial":
 		key2="Media Type";
+		$(".picbox img").attr("src","img/logo_old.png");
 		value2=matconv(value2);
 		break;
 	}
