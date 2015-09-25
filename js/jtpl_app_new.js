@@ -569,14 +569,16 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-
+if(!response){
+	alert('Your login failed. Try again.');
+} else{
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //response is a json object
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-alert(valid_pat);
+//alert(valid_pat);
 //if(valid_pat=='true'){
 	if(hold=='true'){
 	putonhold(res_pat_id, pat_barcode,p_cn);
@@ -588,6 +590,7 @@ alert(valid_pat);
 //alert('Login information not valid. Please try again');
 //}
 //end ajax
+}
 });
 //end checklogin
 }
