@@ -576,15 +576,17 @@ var response= jQuery.parseJSON(response);
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
-//alert('this is hold:'+hold+'');
-//var hold=hold;
-if(hold=='true'){
-	//alert('hold is true and we go to putonhold with'+p_cn+'');
+
+if(valid_pat=='true'){
+	if(hold=='true'){
 	putonhold(res_pat_id, pat_barcode,p_cn);
-$('#cn_holdreq').val("");
-}else{
-	//alert('hold is not true and we go to getholds');
-	prep_getholds(pat_barcode);}
+	$('#cn_holdreq').val("");
+	}else{
+	prep_getholds(pat_barcode);
+	}
+} else{
+alert('Login information not valid. Please try again');
+}
 //end ajax
 });
 //end checklogin
