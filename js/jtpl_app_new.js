@@ -376,7 +376,7 @@ blist_html +='<table class="bibtbl"><tr><td class="picbox"><img class="bcover" s
 $.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
-	if(value2==35){$('.bcover').attr('src','img/logo_old.png');} 
+	if(key2==35){$(".bcover").attr("src","img/logo_old.png");} 
 	switch(key2){
 		case "PublicationDate":
 		key2="Publication Date";
