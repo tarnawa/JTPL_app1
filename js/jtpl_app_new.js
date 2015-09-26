@@ -473,7 +473,7 @@ $.each(value, function(key2, value2) {
 	}
 
 });
-detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Put on Hold</a></p>";
 detlist_html +="</td></tr></table>";
 });
  
