@@ -154,8 +154,6 @@ $( "#bcode" ).append(detlist_html);
 });
 };
 
-
-
 $(document).ready(function(){
 
 //open in app browser
@@ -252,18 +250,6 @@ $('#events').focus();
 },1000);
 });
 
-//cont_no=1234;
-//blist_html ="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
-//$('.trail a[data-role=button]').button();
-//$('.trail a').button('refresh');
- 
-//$( "#blist" ).append(blist_html);
-
-
-//cont_no=1234;
-//blist_html ="<p class='trail'><a id=''" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
-//$( "#blist" ).append(blist_html);
-
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 
@@ -328,7 +314,6 @@ $.ajax({
         }
 });
 }
-
 
 //case 1 - book search reqstring (get encryption data)
 var typingTimer;                //timer identifier
@@ -412,6 +397,7 @@ $('.trail a').button('refresh');
 });
  
 $( "#blist" ).append(blist_html);
+$('.trail a').button();
 });
 }
 
@@ -492,6 +478,7 @@ detlist_html +="</td></tr></table>";
 });
  
 $( "#bdetail" ).append(detlist_html);
+$('.hold_req a').button();
 });
 };
 
