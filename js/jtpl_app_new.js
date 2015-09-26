@@ -394,7 +394,7 @@ $.each(value, function(key2, value2) {
 	}
 
 });
-blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-theme='b'>Detail</a></p>";
 blist_html +="</td></tr></table>";
 });
  
