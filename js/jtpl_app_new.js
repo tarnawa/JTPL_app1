@@ -252,7 +252,17 @@ $('#events').focus();
 },1000);
 });
 
+//cont_no=1234;
+//blist_html ="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
+//$('.trail a[data-role=button]').button();
+//$('.trail a').button('refresh');
+ 
+//$( "#blist" ).append(blist_html);
 
+
+//cont_no=1234;
+//blist_html ="<p class='trail'><a id=''" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
+//$( "#blist" ).append(blist_html);
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
@@ -397,6 +407,8 @@ $.each(value, function(key2, value2) {
 });
 blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 blist_html +="</td></tr></table>";
+$('.trail a[data-role=button]').button();
+$('.trail a').button('refresh');
 });
  
 $( "#blist" ).append(blist_html);
