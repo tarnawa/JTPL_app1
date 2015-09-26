@@ -253,6 +253,7 @@ $('#events').focus();
 });
 
 
+
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 
@@ -394,7 +395,7 @@ $.each(value, function(key2, value2) {
 	}
 
 });
-blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-theme='b'>Detail</a></p>";
+blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 blist_html +="</td></tr></table>";
 });
  
