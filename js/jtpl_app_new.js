@@ -156,6 +156,10 @@ $( "#bcode" ).append(detlist_html);
 
 $(document).ready(function(){
 
+//$('#events_btn').on('click', function () {
+//$('iframe').attr('src', $('iframe').attr('src'));
+									   //});
+
 //open in app browser
 $('#3m_btn').on('click', function () {
 window.open('http://ebook.3m.com/library/jtpl/Featured', '_blank', 'location=yes');
