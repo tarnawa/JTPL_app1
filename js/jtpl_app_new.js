@@ -246,7 +246,7 @@ $('#cn_holdreq').val("");
 });
 
 $('#clr_ifr').on('click', function () {
- $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_ap.php');
+ $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
 });
 
 $('[data-rel="back"]').on('click', function () {
