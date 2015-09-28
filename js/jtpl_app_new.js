@@ -2,6 +2,8 @@
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 
+//$('#events_frame').on(
+//$('iframe').attr('src', $('iframe').attr('src'));
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -157,8 +159,9 @@ $( "#bcode" ).append(detlist_html);
 $(document).ready(function(){
 
 $('#events_btn').on('click', function () {
-$('#theframes').load("http://jeffersonlibrary.net/forms/eventsprobe_all_app.php");
-//$('iframe').attr('src', $('iframe').attr('src'));
+//$('#theframes').load("http://jeffersonlibrary.net/forms/eventsprobe_all_app.php");
+
+$('iframe').attr('src', $('iframe').attr('src'));
 });
 
 //open in app browser
