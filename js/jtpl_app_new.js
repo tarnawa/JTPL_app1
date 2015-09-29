@@ -158,11 +158,10 @@ $( "#bcode" ).append(detlist_html);
 
 $(document).ready(function(){
 
-$('#events_btn').on('click', function () {
+//$('#events_btn').on('click', function () {
 //$('#theframes').load("http://jeffersonlibrary.net/forms/eventsprobe_all_app.php");
-
-$('iframe').attr('src', $('iframe').attr('src'));
-});
+//$('iframe').attr('src', $('iframe').attr('src'));
+//});
 
 //open in app browser
 $('#3m_btn').on('click', function () {
