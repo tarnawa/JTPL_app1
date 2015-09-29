@@ -364,7 +364,7 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
   
