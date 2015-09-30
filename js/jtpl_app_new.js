@@ -394,9 +394,10 @@ var blist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
 if(ISBN==''){media=99;};
-media=value.PrimaryTypeOfMaterial;
+
 
 switch(media){
 	case 35: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
@@ -469,9 +470,10 @@ var detlist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
 if(ISBN==''){media=99;};
-media=value.PrimaryTypeOfMaterial;
+
 switch(media){
 	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
@@ -815,9 +817,10 @@ var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'Due
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
 $.each(response.PatronItemsOutGetRows, function(key, value) {
+media=value.FormatID;
 ISBN=value.ISBN;
 if(ISBN==''){media=99;};
-media=value.FormatID;
+
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
