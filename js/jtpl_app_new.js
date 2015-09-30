@@ -257,6 +257,30 @@ $('#events').focus();
 },1000);
 });
 
+/*$('#hours_btn').on('click', function () {
+alert('click');
+$.ajax({
+        type       : "GET",
+		url: "http://www.jeffersonlibrary.net/test.html",
+        crossDomain: true,
+        //data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+alert('response');
+		$('#close_dates').append(response);
+			
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+});*/
+
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 
@@ -371,11 +395,14 @@ var blist_html='';
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
+if(ISBN==''){media=99;};
 media=value.PrimaryTypeOfMaterial;
+
 switch(media){
 	case 35: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
 	case 33: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	case 99: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">'; break;
 	default: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">'; break;
 }
 
@@ -443,11 +470,13 @@ var detlist_html='';
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
+if(ISBN==''){media=99;};
 media=value.PrimaryTypeOfMaterial;
 switch(media){
 	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
 	case 33: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	case 99: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">'; break;
 	default: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">'; break;
 }
 
@@ -786,12 +815,14 @@ var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'Due
 $( "#borrowed" ).empty();
 //alert('loginresponse should be empty now');
 $.each(response.PatronItemsOutGetRows, function(key, value) {
-ISBN=value.ISBN;								
+ISBN=value.ISBN;
+if(ISBN==''){media=99;};
 media=value.FormatID;
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
 	case 33: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	case 99: blist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">'; break;
 	default: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">'; break;
 }										
 	
