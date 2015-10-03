@@ -819,7 +819,7 @@ $( "#borrowed" ).empty();
 $.each(response.PatronItemsOutGetRows, function(key, value) {
 media=value.FormatID;
 ISBN=value.ISBN;
-var renewable=true;
+//var renewable=true;
 
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
@@ -836,13 +836,13 @@ switch(media){
 				out_req_id=value2;
 				}
 				//if(key2=="RenewalCount"){
-					//if(value2==0){
+					//if(value2==''){
 						//value2='none';
 						//renewable=false;
 					//}
 				//}
 				   
-				if(value2!=''){
+				//if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
 				switch(key2){
@@ -869,7 +869,7 @@ switch(media){
 
 								
 				}
-				}
+				//}
 								   
 			});
 if(renewable==true){
