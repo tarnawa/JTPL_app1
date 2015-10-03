@@ -835,12 +835,12 @@ switch(media){
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
-				//if(key2=="RenewalCount"){
-					//if(value2==''){
-						//value2='none';
-						//renewable=false;
-					//}
-				//}
+				if(key2=="RenewalCount"){
+					if(value2==''){
+						value2='none';
+						renewable=false;
+					}
+				}
 				   
 				//if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
