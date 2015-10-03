@@ -832,19 +832,19 @@ switch(media){
 }										
 	
 			$.each(value, function(key2, value2) {
-				if(key2=="BibID"){
-				out_req_id=value2;
-				}
+				//if(key2=="BibID"){
+				//out_req_id=value2;
+				//}
 				
-				if(key2=="RenewalCount"){
+				//if(key2=="RenewalCount"){
 					//if(value2==''){
-						value2='this is '+value2+'';
+						//value2='this is '+value2+'';
 						//renewable=false;
 					//}
-				}
+				//}
 				   
-				if(value2!=''){
-				if(jQuery.inArray( key2, out_selection )!== -1){
+				//if(value2!=''){
+				//if(jQuery.inArray( key2, out_selection )!== -1){
 				
 				switch(key2){
 				case "RenewalCount":
@@ -869,13 +869,13 @@ switch(media){
 				}
 
 								
-				}
-				}
+				//}
+				//}
 								   
 			});
-if(renewable==true){
+//if(renewable==true){
 my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_extend' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-carat-r ui-btn-icon-left ui-btn-b'>Renew Item...</a></p>";
-}
+//}
 			
 my_outs +="</td></tr></table>";
 //}//end screen out cancelled
