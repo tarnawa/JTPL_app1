@@ -6,6 +6,12 @@ var counter=0;
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
+	
+if(device.platform === "iOS" && parseInt(device.version) === 9){
+        $.mobile.hashListeningEnabled = false;
+    }	
+	
+	
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
 if(deviceType!='NULL'){
