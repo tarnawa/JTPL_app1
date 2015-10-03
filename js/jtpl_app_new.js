@@ -244,6 +244,14 @@ $('#clr_ifr').on('click', function () {
  $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
 });
 
+$('[data-rel="back"]').on('click', function () {
+    history.go(-1);
+    navigator.app.backHistory();
+
+});
+
+
+
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
 //$('#events').focus();
