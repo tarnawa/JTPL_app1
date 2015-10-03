@@ -151,7 +151,7 @@ $.each(value, function(key2, value2) {
 	}
 
 });
-detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login'>Put on Hold</a></p>";
+detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Put on Hold</a></p>";
 detlist_html +="</td></tr></table>";
 });
  
@@ -819,6 +819,7 @@ $( "#borrowed" ).empty();
 $.each(response.PatronItemsOutGetRows, function(key, value) {
 media=value.FormatID;
 ISBN=value.ISBN;
+var renewable=true;
 
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
@@ -837,6 +838,7 @@ switch(media){
 				if(key2=="RenewalCount"){
 					if(value2==''){
 						value2='none';
+						renewable=false;
 					}
 				}
 				   
@@ -870,7 +872,9 @@ switch(media){
 				}
 								   
 			});
-my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_extend' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b'>Extend Item...</a></p>";
+if(renewable==true){
+my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_extend' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-carat-r ui-btn-icon-left ui-btn-b'>Renew Item...</a></p>";
+}
 			
 my_outs +="</td></tr></table>";
 //}//end screen out cancelled
@@ -889,12 +893,12 @@ extend_id=$(this).attr("id");
 $("#extend_out_conf").on('click', function(){
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
-alert('ready to extend'+extend_id+'');
+//alert('ready to extend'+extend_id+'');
 $( "#borrowed" ).empty();
 p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
-function item_renew(reqstring,thedate,code, pat_barcode){
+function item_renew(reqstring,thedate,code,pat_barcode){
 
 var settings = {
   "async": true,

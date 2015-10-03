@@ -59,20 +59,20 @@ var app = {
 
         scanner.scan( function (result) { 
 
-            alert("The Barcode is\n" + 
-            "Result: " + result.text + "\n" + 
-            "Format: " + result.format + "\n" + 
-            "Cancelled: " + result.cancelled);  
+            ////alert("The Barcode is\n" + 
+            //"Result: " + result.text + "\n" + 
+            //"Format: " + result.format + "\n" + 
+           //"Cancelled: " + result.cancelled);  
 
-           console.log("Scanner result: \n" +
-                "text: " + result.text + "\n" +
-                "format: " + result.format + "\n" +
-                "cancelled: " + result.cancelled + "\n");
+           //console.log("Scanner result: \n" +
+           //     "text: " + result.text + "\n" +
+           //     "format: " + result.format + "\n" +
+           //     "cancelled: " + result.cancelled + "\n");
 		   
             document.getElementById("bcode").innerHTML = result.text;
 			
 			var inputs=result.text;
-			alert(inputs);
+			//alert(inputs);
 			getData(inputs);
 			
 			
