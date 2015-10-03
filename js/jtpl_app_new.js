@@ -6,12 +6,11 @@ var counter=0;
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	
+//enable back button in ios9	
 if(device.platform === "iOS" && parseInt(device.version) === 9){
         $.mobile.hashListeningEnabled = false;
     }	
-	
-	
+//homepage spacing in iphone6plus	
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
 if(deviceType!='NULL'){
@@ -249,12 +248,6 @@ $('#cn_holdreq').val("");
 $('#clr_ifr').on('click', function () {
  $('#events_frame').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
 });
-
-//$('[data-rel="back"]').on('click', function () {
-//    history.go(-1);
-//    navigator.app.backHistory();
-//});
-
 
 
 //$('[data-rel="back"]').on('click', function () {
