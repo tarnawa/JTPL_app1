@@ -835,14 +835,15 @@ switch(media){
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
-				//if(key2=="RenewalCount"){
+				
+				if(key2=="RenewalCount"){
 					//if(value2==''){
-						//value2='none';
+						value2='this is '+value2+'';
 						//renewable=false;
 					//}
-				//}
+				}
 				   
-				//if(value2!=''){
+				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
 				switch(key2){
@@ -869,7 +870,7 @@ switch(media){
 
 								
 				}
-				//}
+				}
 								   
 			});
 if(renewable==true){
