@@ -820,7 +820,7 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 media=value.FormatID;
 ISBN=value.ISBN;
 RENCT=value.RenewalCount;
-alert(RENCT);
+//alert(RENCT);
 //var renewable=true;
 
 switch(media){
@@ -834,7 +834,7 @@ switch(media){
 }										
 	
 			$.each(value, function(key2, value2) {
-				
+				alert(key2);
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
