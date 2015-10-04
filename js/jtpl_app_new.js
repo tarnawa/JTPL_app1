@@ -834,13 +834,17 @@ switch(media){
 }										
 	
 			$.each(value, function(key2, value2) {
+				
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
 				if(key2=="RenewalCount"){
 					if(value2==''){
+						//alert('second'+value2+'');
 						value2='none';
 						//renewable=false;
+					}else{
+						value2=""+value2+"";
 					}
 				}
 				   
