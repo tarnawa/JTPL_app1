@@ -834,20 +834,22 @@ switch(media){
 }										
 	
 			$.each(value, function(key2, value2) {
-				alert(key2);
+				//alert(key2);
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
-				if(key2=="RenewalCount"){
-					if(value2==''){
+				//if(key2=="RenewalCount"){
+					//if(value2==''){
 						//alert('second'+value2+'');
-						value2='none';
+						//value2='none';
 						//renewable=false;
-					}else{
-						value2=""+value2+"";
-					}
-				}
-				   
+					//}else{
+						//value2=""+value2+"";
+					//}
+				//}
+				
+				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+				
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
 				
