@@ -819,7 +819,7 @@ return hold_ind;
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-
+alert('begin items out all');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -862,9 +862,11 @@ ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
+alert('going to encrypt');
 p_validate(12,''+bib_id+'','','','','GET','','');
 
-function filter_holds (code,reqstring,thedate){	
+function filter_holds (code,reqstring,thedate){
+alert('begin filter_holds');
 var settings2 = {
   "async": true,
   "crossDomain": true,
