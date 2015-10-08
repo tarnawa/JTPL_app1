@@ -835,9 +835,11 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
+$.each(response.BibGetRows, function(value, value2) {
 //alert('bibgetrows'+value+'');
-var hold_ind=value.Value;
+var hold_ind=value2.Value;
 alert(hold_ind);
+});
 });
 });
 };
