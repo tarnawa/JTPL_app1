@@ -887,7 +887,7 @@ ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
-//alert('going to encrypt');
+alert(bib_id);
 p_validate(12,''+bib_id+'','','','','GET','','');
 
 
