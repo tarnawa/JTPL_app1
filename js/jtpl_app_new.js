@@ -835,8 +835,8 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-alert('bibgetrows'+value+'');
-var hold_ind=value.Label;
+//alert('bibgetrows'+value+'');
+var hold_ind=value.CurrentHolds;
 alert(hold_ind);
 });
 });
