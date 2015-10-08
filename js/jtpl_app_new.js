@@ -834,7 +834,8 @@ $.ajax(settings2).done(function (response2) {
 var response2=JSON.stringify(response2);
 var response2= jQuery.parseJSON(response2);
 
-$.each(response2.BibGetRows[14], function(key, value) {
+$.each(response2.BibGetRows, function(key, value) {
+alert('bibgetrows'+value+'');
 var hold_ind=value.Label;
 alert(hold_ind);
 });
@@ -886,7 +887,7 @@ ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
-alert('going to encrypt');
+//alert('going to encrypt');
 p_validate(12,''+bib_id+'','','','','GET','','');
 
 
