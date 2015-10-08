@@ -816,6 +816,30 @@ return hold_ind;
 });
 };
 */
+function filter_holds (code,reqstring,thedate){
+alert('begin filter_holds');
+var settings2 = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings2).done(function (response2) {
+
+var response2=JSON.stringify(response2);
+var response2= jQuery.parseJSON(response2);
+
+$.each(response2.BibGetRows[14], function(key, value) {
+var hold_ind=value.Label;
+alert(hold_ind);
+});
+});
+};
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -865,30 +889,6 @@ bib_id=value.BibID;
 alert('going to encrypt');
 p_validate(12,''+bib_id+'','','','','GET','','');
 
-function filter_holds (code,reqstring,thedate){
-alert('begin filter_holds');
-var settings2 = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-$.ajax(settings2).done(function (response2) {
-
-var response2=JSON.stringify(response2);
-var response2= jQuery.parseJSON(response2);
-
-$.each(response2.BibGetRows[14], function(key, value) {
-var hold_ind=value.Label;
-alert(hold_ind);
-});
-});
-};
 
 
 //alert(RENCT);
