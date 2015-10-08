@@ -837,10 +837,10 @@ var response= jQuery.parseJSON(response);
 $.each(response.BibGetRows, function(key, value) {
 $.each(value, function(key2, value2) {
 
-if (key2=='Current Holds'){
-var hold_ind=value2;
+//if (key2=='Current Holds'){
+var hold_ind=key2;
 alert(hold_ind);
-}
+//}
 
 });
 });
