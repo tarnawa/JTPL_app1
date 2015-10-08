@@ -835,15 +835,14 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-									 alert(key);
+if(key==14){									 
 $.each(value, function(key2, value2) {
-
-//if (key2=='Current Holds'){
-var hold_ind=key2;
-alert(hold_ind);
-//}
-
+if(key2=='Value'){
+var hold_ind=value2;
+alert('there are' + hold_ind +'current holds');
+}
 });
+};
 });
 });
 };
