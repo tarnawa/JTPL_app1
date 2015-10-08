@@ -301,7 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
-case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bib/"+p_searchitem+""; break;
+case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -887,7 +887,7 @@ ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
-alert(bib_id);
+//alert(bib_id);
 p_validate(12,''+bib_id+'','','','','GET','','');
 
 
