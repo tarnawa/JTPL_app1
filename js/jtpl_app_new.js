@@ -301,7 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
-case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
+case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bib/"+p_searchitem+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -818,7 +818,7 @@ return hold_ind;
 */
 function filter_holds (code,reqstring,thedate){
 alert('begin filter_holds');
-var settings2 = {
+var settings = {
   "async": true,
   "crossDomain": true,
   "url": ""+reqstring+"",
@@ -829,12 +829,12 @@ var settings2 = {
     "content-type": "application/json"
   }
 }
-$.ajax(settings2).done(function (response2) {
+$.ajax(settings).done(function (response) {
 
-var response2=JSON.stringify(response2);
-var response2= jQuery.parseJSON(response2);
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
 
-$.each(response2.BibGetRows, function(key, value) {
+$.each(response.BibGetRows, function(key, value) {
 alert('bibgetrows'+value+'');
 var hold_ind=value.Label;
 alert(hold_ind);
