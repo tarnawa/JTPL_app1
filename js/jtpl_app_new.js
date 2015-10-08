@@ -289,7 +289,6 @@ if(p_bc ==='undefined') p_bc ='';
 if(p_type ==='undefined') p_type ='';
 if(p_holdID ==='undefined') p_holdID ='';
 if(p_searchitem ==='undefined') p_searchitem ='';
-
 switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
@@ -302,6 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
+case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -335,6 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
+			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate); break;
 			}
 			
         },
@@ -789,11 +790,36 @@ $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
 };//end getholds function
+
+//filter holds
+/*function filter_holds (code,reqstring,thedate){	
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+
+$.each(response.BibSearchRows, function(key, value) {
+var hold_ind=value.CurrentHoldRequest;
+return hold_ind;
+});
+});
+};
+*/
+
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-//alert('items_out_all started');
-//$.mobile.changePage("#inside");
-//var response='';	
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -815,11 +841,54 @@ var my_outs='';
 var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount'];
 
 $( "#borrowed" ).empty();
-//alert('loginresponse should be empty now');
+
+
+//$.each(response.PatronItemsOutGetRows, function(key, value) {
+//bib_id.push(value.BibID);												
+
+//bib_id=value.BibID;
+//p_validate(12,''+bib_id+'','','','','GET','','');
+
+//});
+
+//find existing holds for those bib ids
+
+
+
 $.each(response.PatronItemsOutGetRows, function(key, value) {
+
 media=value.FormatID;
 ISBN=value.ISBN;
 RENCT=value.RenewalCount;
+bib_id=value.BibID;
+
+p_validate(12,''+bib_id+'','','','','GET','','');
+
+function filter_holds (code,reqstring,thedate){	
+var settings2 = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings2).done(function (response2) {
+
+var response2=JSON.stringify(response2);
+var response2= jQuery.parseJSON(response2);
+
+$.each(response2.BibGetRows[14], function(key, value) {
+var hold_ind=value.Label;
+alert(hold_ind);
+});
+});
+};
+
+
 //alert(RENCT);
 //var renewable=true;
 
@@ -920,7 +989,7 @@ var settings = {
   },
   "processData": false,
   
-  "data": '{"Action":"renew", "LogonBranchID":13, "LogonUserID":1, "LogonWorkstationID":1, "RenewData":"", "IgnoreOverrideErrors":"true", "RenewData":""}',
+  "data": '{"Action": "renew","LogonBranchID": "13","LogonUserID": "1","LogonWorkstationID": "1","RenewData": { "IgnoreOverrideErrors": "true" }}'
 }
 
 $.ajax(settings).done(function (response) {
