@@ -833,10 +833,10 @@ $.ajax(settings).done(function (response) {
 
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-alert('filt hold ajax ran');
-$.each(response.BibGetRows, function(key, value) {
+//alert('filt hold ajax ran');
+$.each(response.BibGetRows[14], function(key, value) {
 //alert('bibgetrows'+value+'');
-var hold_ind=value.CurrentHolds;
+var hold_ind=value.Value;
 alert(hold_ind);
 });
 });
