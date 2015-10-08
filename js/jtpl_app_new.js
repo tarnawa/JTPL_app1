@@ -835,6 +835,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
+									 alert(key);
 $.each(value, function(key2, value2) {
 
 //if (key2=='Current Holds'){
