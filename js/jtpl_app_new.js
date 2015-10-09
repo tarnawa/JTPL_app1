@@ -791,32 +791,8 @@ $( "#loginresponse" ).append(my_holds);
 });//end ajax 
 };//end getholds function
 
-//filter holds
-/*function filter_holds (code,reqstring,thedate){	
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-$.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-
-$.each(response.BibSearchRows, function(key, value) {
-var hold_ind=value.CurrentHoldRequest;
-return hold_ind;
-});
-});
-};
-*/
-function filter_holds (code,reqstring,thedate){
+/*function filter_holds (code,reqstring,thedate){
 //alert('begin filter_holds');
 var settings = {
   "async": true,
@@ -830,13 +806,10 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
-//alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
 if(value.ElementID=='8'){
-//alert('this is key'+key+' and value'+value.ElementID+'');										 
 $.each(value, function(key2, value2) {
 if(key2=='Value'){
 var holds=value2;
@@ -849,6 +822,7 @@ alert(hold_ind);
 });
 });
 };
+*/
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -898,9 +872,39 @@ bib_id=value.BibID;
 //alert(bib_id);
 p_validate(12,''+bib_id+'','','','','GET','','');
 
+function filter_holds (code,reqstring,thedate){
+//alert('begin filter_holds');
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+$.each(response.BibGetRows, function(key, value) {
+if(value.ElementID=='8'){
+$.each(value, function(key2, value2) {
+if(key2=='Value'){
+var holds=value2;
+alert(holds);
+if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
+alert(hold_ind);
+};
+});
+};
+});
+});
+};
 
 
-//alert(RENCT);
+alert('ok this is '+hold_ind+'');
 //var renewable=true;
 
 switch(media){
