@@ -835,7 +835,7 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-alert('this is key'+key+' and value'+value+'');										 
+alert('this is key'+key+' and value'+value.ElementID+'');										 
 $.each(value, function(key2, value2) {
 alert('this is key2'+key2+' and value2'+value2+'');		
 //if(key2.ElementID.value2=='8'){
