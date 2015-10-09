@@ -817,7 +817,7 @@ return hold_ind;
 };
 */
 function filter_holds (code,reqstring,thedate){
-alert('begin filter_holds');
+//alert('begin filter_holds');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -835,14 +835,14 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-if(key==14){									 
+//if(key==14){									 
 $.each(value, function(key2, value2) {
-if(key2=='Value'){
-var hold_ind=value2;
+if(key2.ElementID=='8'){
+var hold_ind=key2.Value.value2;
 alert('there are' + hold_ind +'current holds');
 }
 });
-};
+//};
 });
 });
 };
