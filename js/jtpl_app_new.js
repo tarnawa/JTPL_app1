@@ -837,7 +837,7 @@ var response= jQuery.parseJSON(response);
 $.each(response.BibGetRows, function(key, value) {
 //if(key==14){									 
 $.each(value, function(key2, value2) {
-if(key2.ElementID=='8'){
+if(key2.ElementID.value2=='8'){
 var hold_ind=key2.Value.value2;
 alert('there are' + hold_ind +'current holds');
 }
@@ -849,7 +849,7 @@ alert('there are' + hold_ind +'current holds');
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-alert('begin items out all');
+//alert('begin items out all');
 var settings = {
   "async": true,
   "crossDomain": true,
