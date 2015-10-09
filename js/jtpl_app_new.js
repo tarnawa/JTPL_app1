@@ -835,12 +835,13 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-//if(key==14){									 
+alert('this is key'+key+' and value'+value+'');										 
 $.each(value, function(key2, value2) {
-if(key2.ElementID.value2=='8'){
-var hold_ind=key2.Value.value2;
-alert('there are' + hold_ind +'current holds');
-}
+alert('this is key2'+key2+' and value2'+value2+'');		
+//if(key2.ElementID.value2=='8'){
+//var hold_ind=key2.Value.value2;
+//alert('there are' + hold_ind +'current holds');
+//}
 });
 //};
 });
