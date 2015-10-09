@@ -835,15 +835,17 @@ var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 //alert('filt hold ajax ran');
 $.each(response.BibGetRows, function(key, value) {
-alert('this is key'+key+' and value'+value.ElementID+'');										 
+if(value.ElementID=='8'){
+//alert('this is key'+key+' and value'+value.ElementID+'');										 
 $.each(value, function(key2, value2) {
-alert('this is key2'+key2+' and value2'+value2+'');		
-//if(key2.ElementID.value2=='8'){
-//var hold_ind=key2.Value.value2;
-//alert('there are' + hold_ind +'current holds');
-//}
+if(key2=='Value'){
+var holds=value2;
+alert(holds);
+if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
+alert(hold_ind);
+};
 });
-//};
+};
 });
 });
 };
