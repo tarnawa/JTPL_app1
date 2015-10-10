@@ -858,11 +858,73 @@ media=value.FormatID;
 ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
+var hold_ind;
+///////////////////////////////////////////////////////////
 
-//alert(bib_id);
-var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
 
-alert('ok this is '+holdindi+'');
+var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+bib_id+"";
+var thedate=(new Date()).toUTCString();
+
+$.ajax({
+        type       : "POST",
+		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
+        async: false,
+		crossDomain: true,
+        data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
+		error: function(jqXHR,text_status,strError){
+			alert("no connection");},
+		timeout:60000,
+		cache: false,
+        success : function(response) {
+			var code=response;
+			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
+			filter_holds(p_response.code,p_response.reqstring,p_response.thedate, bib_id);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+
+function filter_holds (code,reqstring,thedate,bibID){
+//alert('begin filter_holds');
+var settings = {
+  "async": false,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+$.ajax(settings).done(function (response) {
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
+$.each(response.BibGetRows, function(key, value) {
+if(value.ElementID=='8'){
+$.each(value, function(key2, value2) {
+if(key2=='Value'){
+var holds=value2;
+alert(holds);
+if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
+alert(hold_ind);
+//return hold_ind;
+};
+});
+};
+});
+});
+};
+
+
+
+
+
+/////////////////////////////////////////////////////////
+alert('this is finally'+bib_id+'');
+
 //var renewable=true;
 
 switch(media){
