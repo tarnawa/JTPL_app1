@@ -301,7 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
-case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
+//case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
 }
 //
 var thedate=(new Date()).toUTCString();
@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert(theret); return theret; break;
+			//case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert(theret); return theret; break;
 			}
 			
         },
@@ -344,8 +344,8 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
-alert(theret);
-return theret;
+//alert(theret);
+//return theret;
 }
 
 //case 1 - book search reqstring (get encryption data)
@@ -794,7 +794,7 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 
 
-function filter_holds (code,reqstring,thedate,bibID){
+/*function filter_holds (code,reqstring,thedate,bibID){
 //alert('begin filter_holds');
 var settings = {
   "async": true,
@@ -825,7 +825,7 @@ alert(hold_ind);
 });
 });
 };
-
+*/
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -861,9 +861,6 @@ bib_id=value.BibID;
 
 //alert(bib_id);
 //var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
-
-
-
 
 //alert('ok this is '+holdindi+'');
 //var renewable=true;
