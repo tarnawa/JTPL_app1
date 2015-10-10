@@ -303,7 +303,7 @@ case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/item
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
 case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
 }
-
+//
 var thedate=(new Date()).toUTCString();
 if(p_searchitem){
 	start_spin();
