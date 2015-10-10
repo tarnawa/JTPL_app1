@@ -868,7 +868,7 @@ var thedate=(new Date()).toUTCString();
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        async: false,
+        async: true,
 		crossDomain: true,
         data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
 		error: function(jqXHR,text_status,strError){
@@ -878,6 +878,7 @@ $.ajax({
         success : function(response) {
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
+			alert('ready to send to filter holds');
 			filter_holds(p_response.code,p_response.reqstring,p_response.thedate, bib_id);
         },
         error      : function() {
@@ -887,7 +888,7 @@ $.ajax({
 });
 
 function filter_holds (code,reqstring,thedate,bibID){
-//alert('begin filter_holds');
+alert('begin filter_holds');
 var settings = {
   "async": false,
   "crossDomain": true,
