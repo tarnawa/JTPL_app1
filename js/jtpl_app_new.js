@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert('return from filter holds '+hold_ind+''); return hold_ind; break;
+			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); break;
 			}
 			
         },
@@ -344,7 +344,7 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
-alert('return from main'+hold_ind+'');
+//alert('return from main'+hold_ind+'');
 //return theret;
 }
 
@@ -818,7 +818,7 @@ var holds=value2;
 alert(holds);
 if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
 alert(hold_ind);
-return hold_ind;
+//return hold_ind;
 };
 });
 };
