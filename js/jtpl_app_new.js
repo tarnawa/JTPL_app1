@@ -861,7 +861,7 @@ bib_id=value.BibID;
 var hold_ind;
 ///////////////////////////////////////////////////////////
 
-
+/*
 var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+bib_id+"";
 var thedate=(new Date()).toUTCString();
 
@@ -919,7 +919,7 @@ alert(hold_ind);
 });
 };
 
-
+*/
 
 
 
