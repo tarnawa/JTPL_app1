@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); return theret; break;
+			case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert(theret); return theret; break;
 			}
 			
         },
@@ -344,6 +344,7 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
+alert(theret);
 return theret;
 }
 
