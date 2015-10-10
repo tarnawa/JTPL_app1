@@ -818,7 +818,7 @@ var holds=value2;
 alert(holds);
 if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
 alert(hold_ind);
-return hold_ind;
+//return hold_ind;
 };
 });
 };
@@ -860,12 +860,12 @@ RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
 //alert(bib_id);
-var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
+//var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
 
 
 
 
-alert('ok this is '+holdindi+'');
+//alert('ok this is '+holdindi+'');
 //var renewable=true;
 
 switch(media){
