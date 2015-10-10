@@ -301,7 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
-//case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
+case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
 }
 //
 var thedate=(new Date()).toUTCString();
@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			//case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert(theret); return theret; break;
+			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); alert('return from filter holds '+hold_ind+''); return hold_ind; break;
 			}
 			
         },
@@ -344,7 +344,7 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
-//alert(theret);
+alert('return from main'+hold_ind+'');
 //return theret;
 }
 
@@ -794,7 +794,7 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 
 
-/*function filter_holds (code,reqstring,thedate,bibID){
+function filter_holds (code,reqstring,thedate,bibID){
 //alert('begin filter_holds');
 var settings = {
   "async": true,
@@ -818,14 +818,14 @@ var holds=value2;
 alert(holds);
 if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
 alert(hold_ind);
-//return hold_ind;
+return hold_ind;
 };
 });
 };
 });
 });
 };
-*/
+
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -860,9 +860,9 @@ RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
 //alert(bib_id);
-//var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
+var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
 
-//alert('ok this is '+holdindi+'');
+alert('ok this is '+holdindi+'');
 //var renewable=true;
 
 switch(media){
