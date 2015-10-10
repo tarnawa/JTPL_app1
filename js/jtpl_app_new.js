@@ -794,7 +794,7 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 
 
-function filter_holds (code,reqstring,thedate,bibID){
+/*function filter_holds (code,reqstring,thedate,bibID){
 //alert('begin filter_holds');
 var settings = {
   "async": true,
@@ -825,7 +825,7 @@ return hold_ind;
 });
 });
 };
-
+*/
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
