@@ -818,7 +818,7 @@ var holds=value2;
 alert(holds);
 if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
 alert(hold_ind);
-//return hold_ind;
+return hold_ind;
 };
 });
 };
