@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate); break;
+			case 12: var theret=filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); return theret; break;
 			}
 			
         },
@@ -344,6 +344,7 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
+return theret;
 }
 
 //case 1 - book search reqstring (get encryption data)
@@ -792,7 +793,7 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 
 
-/*function filter_holds (code,reqstring,thedate){
+function filter_holds (code,reqstring,thedate,bibID){
 //alert('begin filter_holds');
 var settings = {
   "async": true,
@@ -816,13 +817,14 @@ var holds=value2;
 alert(holds);
 if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
 alert(hold_ind);
+return hold_ind;
 };
 });
 };
 });
 });
 };
-*/
+
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -849,19 +851,6 @@ var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'Due
 
 $( "#borrowed" ).empty();
 
-
-//$.each(response.PatronItemsOutGetRows, function(key, value) {
-//bib_id.push(value.BibID);												
-
-//bib_id=value.BibID;
-//p_validate(12,''+bib_id+'','','','','GET','','');
-
-//});
-
-//find existing holds for those bib ids
-
-
-
 $.each(response.PatronItemsOutGetRows, function(key, value) {
 
 media=value.FormatID;
@@ -870,41 +859,12 @@ RENCT=value.RenewalCount;
 bib_id=value.BibID;
 
 //alert(bib_id);
-p_validate(12,''+bib_id+'','','','','GET','','');
-
-function filter_holds (code,reqstring,thedate){
-//alert('begin filter_holds');
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-$.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-$.each(response.BibGetRows, function(key, value) {
-if(value.ElementID=='8'){
-$.each(value, function(key2, value2) {
-if(key2=='Value'){
-var holds=value2;
-alert(holds);
-if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
-alert(hold_ind);
-};
-});
-};
-});
-});
-};
+var holdindi=p_validate(12,''+bib_id+'','','','','GET','','');
 
 
-alert('ok this is '+hold_ind+'');
+
+
+alert('ok this is '+holdindi+'');
 //var renewable=true;
 
 switch(media){
