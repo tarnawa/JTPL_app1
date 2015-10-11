@@ -858,7 +858,7 @@ media=value.FormatID;
 ISBN=value.ISBN;
 RENCT=value.RenewalCount;
 bib_id=value.BibID;
-var hold_ind;
+var hold_ind=true;
 ///////////////////////////////////////////////////////////
 
 
@@ -881,7 +881,7 @@ $.ajax({
         success : function(response) {
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			alert('ready to send to filter holds');
+			//alert('ready to send to filter holds');
 			filter_holds(p_response.code,p_response.reqstring,p_response.thedate, bib_id);
         },
         error      : function() {
@@ -891,7 +891,7 @@ $.ajax({
 });
 
 function filter_holds (code,reqstring,thedate,bibID){
-alert('begin filter_holds');
+//alert('begin filter_holds');
 var settings = {
   "async": false,
   "crossDomain": true,
@@ -911,9 +911,9 @@ if(value.ElementID=='8'){
 $.each(value, function(key2, value2) {
 if(key2=='Value'){
 var holds=value2;
-alert(holds);
-if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
-alert(hold_ind);
+//alert(holds);
+if(holds>0){hold_ind=true;}else{hold_ind=false;}
+//alert(hold_ind);
 //return hold_ind;
 };
 });
@@ -924,7 +924,7 @@ alert(hold_ind);
 
 
 /////////////////////////////////////////////////////////
-alert('we move on');
+alert('we move on with'+bib_id+' is:'+hold_ind+'');
 
 //var renewable=true;
 
