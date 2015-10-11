@@ -911,7 +911,7 @@ switch(media){
 				
 				switch(key2){
 				case "RenewalCount":
-				key2="Renewals Left";
+				key2="Renewals Count";
 				break;
 				case "DueDate":
 				var DDate= new Date( parseFloat(value2.substr(6 )));
