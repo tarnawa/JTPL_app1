@@ -322,6 +322,7 @@ $.ajax({
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
+			alert('here:'+p_holdID+','+p_cn+','+code+','+reqstring+','+thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(p_response.code,p_response.reqstring,p_response.thedate); break;
@@ -958,12 +959,13 @@ $("#extend_out_conf").on('click', function(){
 p_barcode=$("#libcard").val();
 p_pin=$("#libpin").val();
 //alert('ready to extend'+extend_id+'');
-$( "#borrowed" ).empty();
+$("#borrowed" ).empty();
+alert('this is ppin:'+p_pin+' - pbarcode:'+p_barcode+' - extendid:'+extend_id+'');
 p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
-
+alert('start item renew');
 var settings = {
   "async": true,
   "crossDomain": true,
