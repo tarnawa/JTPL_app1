@@ -301,7 +301,7 @@ case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdr
 case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
-case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
+//case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+p_searchitem+""; break;
 }
 //
 var thedate=(new Date()).toUTCString();
@@ -335,7 +335,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
-			case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); break;
+			//case 12: filter_holds(p_response.code,p_response.reqstring,p_response.thedate, p_searchitem); break;
 			}
 			
         },
@@ -580,7 +580,6 @@ $( "#news" ).append(np_list_html);
 });
 };*/
 
-
 //case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
 var cont_num;
@@ -792,41 +791,6 @@ $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
 };//end getholds function
-
-
-/*function filter_holds (code,reqstring,thedate,bibID){
-//alert('begin filter_holds');
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-$.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
-$.each(response.BibGetRows, function(key, value) {
-if(value.ElementID=='8'){
-$.each(value, function(key2, value2) {
-if(key2=='Value'){
-var holds=value2;
-alert(holds);
-if(holds>0){var hold_ind=true;}else{var hold_ind=false;}
-alert(hold_ind);
-return hold_ind;
-};
-});
-};
-});
-});
-};
-*/
-
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
 //alert('begin items out all');
@@ -860,7 +824,6 @@ RENCT=value.RenewalCount;
 bib_id=value.BibID;
 var hold_ind=true;
 ///////////////////////////////////////////////////////////
-
 
 var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+bib_id+"";
 var thedate=(new Date()).toUTCString();
@@ -911,23 +874,15 @@ if(value.ElementID=='8'){
 $.each(value, function(key2, value2) {
 if(key2=='Value'){
 var holds=value2;
-//alert(holds);
 if(holds>0){hold_ind=true;}else{hold_ind=false;}
-//alert(hold_ind);
-//return hold_ind;
 };
 });
 };
 });
 });
 };
-
-
 /////////////////////////////////////////////////////////
-alert('we move on with'+bib_id+' is:'+hold_ind+'');
-
-//var renewable=true;
-
+//alert('we move on with'+bib_id+' is:'+hold_ind+'');
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
@@ -937,7 +892,6 @@ switch(media){
 	} else{
 	my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';};
 }										
-	
 			$.each(value, function(key2, value2) {
 				//alert(key2);
 				if(key2=="BibID"){
