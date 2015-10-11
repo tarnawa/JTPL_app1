@@ -821,8 +821,10 @@ $.each(response.PatronItemsOutGetRows, function(key, value) {
 media=value.FormatID;
 ISBN=value.ISBN;
 RENCT=value.RenewalCount;
+RENLIM=value.RenewalLimit;
+var RENPOS=RENLIM-RENCT;
 bib_id=value.BibID;
-var hold_ind=true;
+var hold_ind=false;
 ///////////////////////////////////////////////////////////
 
 var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+bib_id+"";
@@ -885,29 +887,24 @@ if(holds>0){hold_ind=true;}else{hold_ind=false;}
 //alert('we move on with'+bib_id+' is:'+hold_ind+'');
 switch(media){
 	case 35: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
-	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
-	case 33: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">';hold_ind=true; break;
+	case 33: my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; hold_ind=true; break;
 	default: if(ISBN==''){
 		my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
 	} else{
 	my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';};
 }										
 			$.each(value, function(key2, value2) {
-				//alert(key2);
 				if(key2=="BibID"){
 				out_req_id=value2;
 				}
-				//if(key2=="RenewalCount"){
-					//if(value2==''){
-						//alert('second'+value2+'');
-						//value2='none';
-						//renewable=false;
-					//}else{
-						//value2=""+value2+"";
-					//}
-				//}
+				if(key2=="RenewalCount"){
+					if(hold_ind==true){value2='not renewable';}
+					if(RENPOS<=0){value2='not renewable';hold_ind=true;}
+					else{value2=""+value2+"";}
+				}
 				
-				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+				//my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
 				
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
