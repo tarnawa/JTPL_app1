@@ -861,14 +861,17 @@ bib_id=value.BibID;
 var hold_ind;
 ///////////////////////////////////////////////////////////
 
-/*
+
 var reqstring=""+dest+"/REST/public/v1/1033/100/13/bib/"+bib_id+"";
 var thedate=(new Date()).toUTCString();
+
+p_method="GET";
+p_pwd ='';
 
 $.ajax({
         type       : "POST",
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
-        async: true,
+        async: false,
 		crossDomain: true,
         data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
 		error: function(jqXHR,text_status,strError){
@@ -919,12 +922,9 @@ alert(hold_ind);
 });
 };
 
-*/
-
-
 
 /////////////////////////////////////////////////////////
-alert('this is finally'+bib_id+'');
+alert('we move on');
 
 //var renewable=true;
 
@@ -985,9 +985,9 @@ switch(media){
 				}
 								   
 			});
-//if(renewable==true){
+if(hold_ind==false){
 my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_extend' data-rel='popup' data-position-to='window' data-transition='pop' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-carat-r ui-btn-icon-left ui-btn-b'>Renew Item...</a></p>";
-//}
+}
 			
 my_outs +="</td></tr></table>";
 //}//end screen out cancelled
