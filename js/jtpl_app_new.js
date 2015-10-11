@@ -322,7 +322,7 @@ $.ajax({
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
-			alert('here:'+p_holdID+','+p_cn+','+code+','+reqstring+','+thedate+','+p_bc+'');
+			//alert('here:'+p_holdID+','+p_cn+','+code+','+reqstring+','+thedate+','+p_bc+'');
 			switch(p_query){
 			case 1:	get_books(p_response.code,p_response.reqstring,p_response.thedate); break;
 			case 2: getit_bc(p_response.code,p_response.reqstring,p_response.thedate); break;
@@ -965,7 +965,7 @@ p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
-alert('start item renew');
+alert('start item renew for '+pat_barcode+'');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -977,15 +977,17 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  
   "data": '{"Action": "renew","LogonBranchID": "13","LogonUserID": "1","LogonWorkstationID": "1","RenewData": { "IgnoreOverrideErrors": "true" }}'
 }
 
 $.ajax(settings).done(function (response) {
-//alert('your request has been processed');
+pwd=$('#libpin').val();
+alert('your request has been processed for '+pat_barcode+' at '+pwd+'');
 //what if it can't be extended? Feedback needs to be here...
-prep_getholds (pat_barcode);
-  console.log(response);
+//prep_getholds (pat_barcode);
+  //console.log(response);
+  p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
+  
 });
 }
 
