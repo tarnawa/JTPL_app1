@@ -306,7 +306,7 @@ case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/item
 //
 var thedate=(new Date()).toUTCString();
 if(p_searchitem){
-	start_spin();
+	//start_spin();
 }
 $.ajax({
         type       : "POST",
@@ -318,7 +318,7 @@ $.ajax({
 		timeout:60000,
 		cache: false,
         success : function(response) {
-			stop_spin();
+			//stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			//alert('here:'+p_holdID+','+p_cn+','+p_response.code+','+p_response.reqstring+','+p_response.thedate+','+p_bc+'');
@@ -373,6 +373,7 @@ function doneTyping () {
 //case 1 - get books
 function get_books(code,reqstring,thedate){
 //alert(reqstring);
+start_spin();
 var blist_html='';
 
 var settings = {
@@ -437,6 +438,7 @@ $('.trail a').button('refresh');
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
 });
+stop_spin();
 }
 
 //case 3 - get book detail (get encryption data)
@@ -446,7 +448,7 @@ p_validate(3,''+p_searchitem+'','','','','GET','','');
 });
 //case 3 - get detail
 function get_detail(code,reqstring,thedate){
-
+start_spin();
 var detlist_html='';
 
 var settings = {
@@ -522,6 +524,7 @@ detlist_html +="</td></tr></table>";
 $( "#bdetail" ).append(detlist_html);
 $('.hold_req a').button();
 });
+stop_spin();
 };
 
 //case 4 - get new publication (encrypt)
@@ -720,7 +723,8 @@ p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
 //case 8 getholds (list)
-function getholds(reqstring,thedate,code){	
+function getholds(reqstring,thedate,code){
+start_spin();
 $.mobile.changePage("#inside");
 //var response='';	
 var settings = {
@@ -794,9 +798,11 @@ my_holds +="</td></tr></table>";
 $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
+stop_spin();
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
+start_spin();
 //alert('begin items out all');
 var settings = {
   "async": true,
@@ -951,6 +957,7 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
+stop_spin();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
@@ -968,6 +975,7 @@ p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
+start_spin();
 //alert('start item renew for '+pat_barcode+'');
 var settings = {
   "async": true,
