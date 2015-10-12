@@ -674,7 +674,7 @@ hold_id=$(this).attr("id");
 });
 //modal dialog
 $("#cancel_hold_conf").on('click', function(){
-p_barcode=$("#libcard").val();
+p_barcode=$("#patron_bc").val();
 p_pin=$("#libpin").val();
 $( "#loginresponse" ).empty();
 p_validate(7,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+hold_id+'');
@@ -700,7 +700,10 @@ var response= jQuery.parseJSON(response);
 var cancel_confirm=response.PAPIErrorCode;
 //if error code =0
 if(cancel_confirm==0){
-prep_getholds(res_pat_id, cont_num, pat_barcode);
+var pwd=$('#libpin').val();
+var pat_barcode=$("#patron_bc").val();
+p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
+//prep_getholds(res_pat_id, cont_num, pat_barcode);
 }else{
 alert('your hold cancel request failed');
 }
@@ -713,7 +716,6 @@ alert('your hold cancel request failed');
 function prep_getholds(pat_barcode){
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
-start_spin();	
 p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
@@ -792,7 +794,6 @@ my_holds +="</td></tr></table>";
 $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
-stop_spin();
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
@@ -950,7 +951,6 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
-stop_spin();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
