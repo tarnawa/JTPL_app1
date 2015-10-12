@@ -897,7 +897,7 @@ switch(media){
 	my_outs +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';};
 }										
 			$.each(value, function(key2, value2) {
-				if(key2=="BibID"){
+				if(key2=="ItemID"){
 				out_req_id=value2;
 				}
 				if(key2=="RenewalCount"){
