@@ -372,8 +372,8 @@ function doneTyping () {
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-//alert(reqstring);
 start_spin();
+//alert(reqstring);
 var blist_html='';
 
 var settings = {
@@ -395,7 +395,7 @@ var response= jQuery.parseJSON(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
-  
+ 
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 media=value.PrimaryTypeOfMaterial;
@@ -448,7 +448,7 @@ p_validate(3,''+p_searchitem+'','','','','GET','','');
 });
 //case 3 - get detail
 function get_detail(code,reqstring,thedate){
-start_spin();
+
 var detlist_html='';
 
 var settings = {
@@ -524,7 +524,6 @@ detlist_html +="</td></tr></table>";
 $( "#bdetail" ).append(detlist_html);
 $('.hold_req a').button();
 });
-stop_spin();
 };
 
 //case 4 - get new publication (encrypt)
@@ -723,8 +722,7 @@ p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
 //case 8 getholds (list)
-function getholds(reqstring,thedate,code){
-start_spin();
+function getholds(reqstring,thedate,code){	
 $.mobile.changePage("#inside");
 //var response='';	
 var settings = {
@@ -798,11 +796,9 @@ my_holds +="</td></tr></table>";
 $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
-stop_spin();
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-start_spin();
 //alert('begin items out all');
 var settings = {
   "async": true,
@@ -957,7 +953,6 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
-stop_spin();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
@@ -975,7 +970,6 @@ p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
-start_spin();
 //alert('start item renew for '+pat_barcode+'');
 var settings = {
   "async": true,
