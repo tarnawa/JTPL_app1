@@ -795,8 +795,8 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-alert('begin items out all');
-
+//alert('begin items out all');
+start_spin();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -907,7 +907,7 @@ switch(media){
 					else{value2=""+value2+"";}
 				}
 				
-				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+				//my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
 				
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
@@ -950,6 +950,7 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
+stop_spin();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
@@ -962,12 +963,12 @@ p_barcode=$("#patron_bc").val();
 p_pin=$("#libpin").val();
 //alert('ready to extend'+extend_id+'');
 $("#borrowed" ).empty();
-alert('this is ppin:'+p_pin+' - pbarcode:'+p_barcode+' - extendid:'+extend_id+'');
+//alert('this is ppin:'+p_pin+' - pbarcode:'+p_barcode+' - extendid:'+extend_id+'');
 p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 });
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
-alert('start item renew for '+pat_barcode+'');
+//alert('start item renew for '+pat_barcode+'');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -984,12 +985,11 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 pwd=$('#libpin').val();
-alert('your request has been processed for '+pat_barcode+' at '+pwd+'');
+//alert('your request has been processed for '+pat_barcode+' at '+pwd+'');
 //what if it can't be extended? Feedback needs to be here...
 //prep_getholds (pat_barcode);
   //console.log(response);
   p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
-  
 });
 }
 
