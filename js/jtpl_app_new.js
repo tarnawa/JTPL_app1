@@ -351,7 +351,7 @@ $.ajax({
 
 //case 1 - book search reqstring (get encryption data)
 var typingTimer;                //timer identifier
-var doneTypingInterval = 650;  //time in ms, 5 second for example
+var doneTypingInterval = 500;  //time in ms, 5 second for example
 
 $('#search_item').on('keyup',function () {
 counter +=1;
@@ -372,7 +372,7 @@ function doneTyping () {
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-start_spin();
+
 //alert(reqstring);
 var blist_html='';
 
@@ -395,7 +395,7 @@ var response= jQuery.parseJSON(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
-stop_spin();
+
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 media=value.PrimaryTypeOfMaterial;
