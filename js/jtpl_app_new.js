@@ -618,7 +618,7 @@ var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 //alert(valid_pat);
-if(valid_pat=='true'){
+if(valid_pat==true){
 	if(hold=='true'){
 	putonhold(res_pat_id, pat_barcode,p_cn);
 	$('#cn_holdreq').val("");
