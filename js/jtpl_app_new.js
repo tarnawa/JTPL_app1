@@ -713,7 +713,7 @@ alert('your hold cancel request failed');
 function prep_getholds(pat_barcode){
 	//searchitem1=pat_barcode;
 	var pwd=$('#libpin').val();
-	
+start_spin();	
 p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
@@ -792,11 +792,11 @@ my_holds +="</td></tr></table>";
 $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
+stop_spin();
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
 //alert('begin items out all');
-start_spin();
 var settings = {
   "async": true,
   "crossDomain": true,
