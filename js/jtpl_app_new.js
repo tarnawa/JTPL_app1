@@ -395,7 +395,7 @@ var response= jQuery.parseJSON(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
- 
+stop_spin();
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 media=value.PrimaryTypeOfMaterial;
@@ -438,7 +438,7 @@ $('.trail a').button('refresh');
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
 });
-stop_spin();
+
 }
 
 //case 3 - get book detail (get encryption data)
