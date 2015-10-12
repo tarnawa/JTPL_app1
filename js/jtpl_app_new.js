@@ -618,16 +618,17 @@ var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
 var valid_pat=response.ValidPatron;
 //alert(valid_pat);
-//if(valid_pat=='true'){
+if(valid_pat=='true'){
 	if(hold=='true'){
 	putonhold(res_pat_id, pat_barcode,p_cn);
 	$('#cn_holdreq').val("");
 	}else{
 	prep_getholds(pat_barcode);
 	}
-//} else{
-//alert('Login information not valid. Please try again');
-//}
+	$('#patron_bc').val(pat_barcode);
+} else{
+alert('Login information not valid. Please try again');
+}
 //end ajax
 }).fail(function() {
 	alert ('Your login failed. Please try again');
@@ -957,7 +958,7 @@ extend_id=$(this).attr("id");
 });
 //modal dialog
 $("#extend_out_conf").on('click', function(){
-p_barcode=$("#libcard").val();
+p_barcode=$("#patron_bc").val();
 p_pin=$("#libpin").val();
 //alert('ready to extend'+extend_id+'');
 $("#borrowed" ).empty();
