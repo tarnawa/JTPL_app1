@@ -794,7 +794,8 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
-//alert('begin items out all');
+alert('begin items out all');
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -905,7 +906,7 @@ switch(media){
 					else{value2=""+value2+"";}
 				}
 				
-				//my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
+				my_outs += "<strong>" + key2 + ": " + value2 + "</strong><br>";
 				
 				if(value2!=''){
 				if(jQuery.inArray( key2, out_selection )!== -1){
