@@ -501,6 +501,9 @@ $.each(value, function(key2, value2) {
 			case "LocalItemsIn":
 			key2="Local Items In";
 			break;
+			case "SystemItemsTotal":
+			key2="System Items Total";
+			break;
 			case "CallNumber":
 			key2="Call Number";
 			break;
