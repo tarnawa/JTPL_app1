@@ -11,10 +11,10 @@
     <access origin="*" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="org.apache.cordova.device" />
-	<gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
+	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" version="2.1.0" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
-	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
+	<gap:plugin name="cordova-plugin-spinnerdialog" source="npm" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="com.surfernetwork.fileplugin" />
 	<gap:plugin name="com.phonegap.plugin.statusbar" />
