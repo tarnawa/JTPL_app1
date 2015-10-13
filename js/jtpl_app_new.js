@@ -371,7 +371,7 @@ function doneTyping () {
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-
+start_spin();
 //alert(reqstring);
 var blist_html='';
 
@@ -388,7 +388,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
+stop_spin();
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
@@ -970,6 +970,7 @@ p_validate(11,'',''+p_pin+'','',''+p_barcode+'','PUT','',''+extend_id+'');
 //case 11 - extend (ajax & go to prep_getholds)
 function item_renew(reqstring,thedate,code,pat_barcode){
 //alert('start item renew for '+pat_barcode+'');
+start_spin();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -992,6 +993,7 @@ pwd=$('#libpin').val();
   //console.log(response);
   p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 });
+stop_spin();
 }
 
 //change page
