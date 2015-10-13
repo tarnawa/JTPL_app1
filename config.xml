@@ -29,7 +29,7 @@
     <preference name="phonegap-version" value="3.7.0" />
 	<preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="false" />
 	<preference name="AutoHideSplashScreen" value="false" />
 	<preference name="SplashScreenDelay" value="10000"/>
@@ -57,11 +57,13 @@
 	<!-- iPhone and iPod touch -->
     <gap:splash gap:platform="ios" height="480" src="res/screen/ios/screen-iphone-portrait.png" width="320" />
     <gap:splash gap:platform="ios" height="960" src="res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
+	<gap:splash gap:platform="ios" height="1136" src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
     <gap:splash gap:platform="ios" height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
     <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="ios" height="1334" src="res/screen/ios/Splash-750x1334.png" width="750" />
     <gap:splash gap:platform="ios" height="2208" src="res/screen/ios/Splash-2208x1242.png" width="1242" />
     <gap:splash gap:platform="ios" height="1242" src="res/screen/ios/Splash-1242x2208.png" width="2208" />
+	
 
 	
 	<gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
