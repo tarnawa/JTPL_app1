@@ -290,17 +290,17 @@ if(p_type ==='undefined') p_type ='';
 if(p_holdID ==='undefined') p_holdID ='';
 if(p_searchitem ==='undefined') p_searchitem ='';
 switch(p_query){
-case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/0/search/bibs/keyword/kw?q="+p_searchitem+"&bibsperpage=20"; break;
-case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/0/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
-case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/0/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/0/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
-case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+""; break;
-case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/0/holdrequest"; break;
-case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
-case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+"/holdrequests/all"; break;
-case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+"/itemsout/all"; break;
-case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+"/itemsout/overdue"; break;
-case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/0/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
+case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20"; break;
+case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
+case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
+case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+""; break;
+case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/13/holdrequest"; break;
+case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
+case 8: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/holdrequests/all"; break;
+case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/all"; break;
+case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/overdue"; break;
+case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/13/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
 //case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/headings/TI?startpoint="+p_searchitem+"&numterms=20"; break;
 }
 //
