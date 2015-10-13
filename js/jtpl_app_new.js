@@ -467,7 +467,7 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary','CallNumber'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', , 'SystemItemsTotal', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bdetail" ).empty();
 
 var detlist_html='';
