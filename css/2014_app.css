@@ -151,6 +151,12 @@ width: 100%;
 	margin-left: -15px;
 	padding-left: 15px;
 }
+#event_content{
+	width: auto;
+	overflow: auto;
+	height: auto;
+	-webkit-overflow-scrolling:touch;
+}
 
 
 
