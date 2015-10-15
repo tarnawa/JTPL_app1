@@ -366,9 +366,10 @@ counter +=1;
 });
 
 function doneTyping () {
-   searchitem= $('#search_item').val();
+   window.p_validate=function(){return false;};
    window.get_books=function(){return false;};
-  	p_searchitem=searchitem.replace(/\s+/g,"+");
+   searchitem= $('#search_item').val();
+   	p_searchitem=searchitem.replace(/\s+/g,"+");
 	p_validate(1,''+p_searchitem+'','','','','GET','','');
 }
 //case 1 - get books
