@@ -116,15 +116,26 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
 $( "#bcode" ).empty();
 
 var detlist_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
+
+switch(media){
+	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
+	case 33: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	default: if(ISBN==''){
+		detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
+	} else{
 detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+}
+}
 								  
 $.each(value, function(key2, value2) {
 	
@@ -142,6 +153,9 @@ $.each(value, function(key2, value2) {
 			case "CurrentHoldRequests":
 			key2="Current Hold Requests";
 			break;
+			case "SystemItemsTotal":
+			key2="System Items Total";
+			break;
 			case "PrimaryTypeOfMaterial":
 			key2="Media Tyoe";
 			value2=matconv(value2);
@@ -156,6 +170,7 @@ detlist_html +="</td></tr></table>";
 });
  
 $( "#bcode" ).append(detlist_html);
+$('.hold_req a').button();
 });
 };
 
