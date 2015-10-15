@@ -447,7 +447,6 @@ p_validate(3,''+p_searchitem+'','','','','GET','','');
 });
 //case 3 - get detail
 function get_detail(code,reqstring,thedate){
-
 var detlist_html='';
 
 var settings = {
@@ -486,7 +485,6 @@ switch(media){
 	} else{
 	detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';};
 }
-
 								  
 $.each(value, function(key2, value2) {
 	
