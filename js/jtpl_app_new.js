@@ -310,7 +310,7 @@ if(p_searchitem){
 }
 $.ajax({
         type: "POST",
-		async: false,
+		async: true,
 		url: "http://www.jeffersonlibrary.net/INTERMED_short.php",
         crossDomain: true,
         data: {"uri": ""+reqstring+"", "rdate": ""+thedate+"", "method":""+p_method+"", "patron_pin":""+p_pwd+""},
@@ -357,11 +357,11 @@ $('#search_item').on('keyup',function () {
 counter +=1;
   searchitem=0;
   	if(counter>2){
-	doneTyping();
-	//clearTimeout(typingTimer);
-    //if ($('#myInput').val) {
-    //    typingTimer = setTimeout(doneTyping, doneTypingInterval);
-	//}
+	//doneTyping();
+	clearTimeout(typingTimer);
+    if ($('#myInput').val) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+	}
 	}
 });
 
@@ -378,7 +378,7 @@ function get_books(code,reqstring,thedate){
 var blist_html='';
 
 var settings = {
-  "async": false,
+  "async": true,
   "crossDomain": true,
   "url": ""+reqstring+"",
   "method": "GET",
