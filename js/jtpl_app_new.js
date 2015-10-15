@@ -116,7 +116,7 @@ $.ajax(settings).done(function (response) {
 var response=JSON.stringify(response);
 var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'CurrentHoldRequests', 'Summary'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', , 'SystemItemsTotal', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bcode" ).empty();
 
 var detlist_html='';
@@ -128,7 +128,7 @@ detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://co
 								  
 $.each(value, function(key2, value2) {
 	
-	if(jQuery.inArray( key2, selection )!== -1){
+if(jQuery.inArray( key2, selection )!== -1){
 		switch(key2){
 			case "PublicationDate":
 			key2="Publication Date";
@@ -139,15 +139,21 @@ $.each(value, function(key2, value2) {
 			case "LocalItemsIn":
 			key2="Local Items In";
 			break;
+			case "SystemItemsTotal":
+			key2="System Items Total";
+			break;
+			case "CallNumber":
+			key2="Call Number";
+			break;
 			case "CurrentHoldRequests":
 			key2="Current Hold Requests";
 			break;
 			case "PrimaryTypeOfMaterial":
-			key2="Media Tyoe";
+			key2="Media Type";
 			value2=matconv(value2);
 			break;
 		}
-	detlist_html += key2 + ": " + value2 + "<br>";
+	detlist_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
 	}
 
 });
@@ -155,7 +161,8 @@ detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-rol
 detlist_html +="</td></tr></table>";
 });
  
-$( "#bcode" ).append(detlist_html);
+$( "#bdetail" ).append(detlist_html);
+$('.hold_req a').button();
 });
 };
 
