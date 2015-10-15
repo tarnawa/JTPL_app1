@@ -357,11 +357,11 @@ $('#search_item').on('keyup',function () {
 counter +=1;
   searchitem=0;
   	if(counter>2){
-	
-	clearTimeout(typingTimer);
-    if ($('#myInput').val) {
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-	}
+	doneTyping();
+	//clearTimeout(typingTimer);
+    //if ($('#myInput').val) {
+    //    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+	//}
 	}
 });
 
