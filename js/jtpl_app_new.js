@@ -766,6 +766,10 @@ var hold_selection= ['Title', 'Author', 'StatusDescription', 'FormatDescription'
 
 $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
+
+//sort patronholdrequestrows
+//sort by value.StatusID
+
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
 if(value.StatusDescription!="Cancelled"){
