@@ -768,7 +768,7 @@ $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
 
 //sort patronholdrequestrows
-//sort by value.StatusID
+////sort by value.StatusID
 
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
