@@ -21,7 +21,7 @@ if(deviceType!='NULL'){
 
 var model = device.model;
 alert('this is a: '+model+'');
-if(model=='iPhone7,1'){
+if(model=='iPhone7,2'){
 	//alert('this is an iphone 6plus');
 	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
