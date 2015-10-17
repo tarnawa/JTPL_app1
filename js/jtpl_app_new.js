@@ -740,6 +740,7 @@ function prep_getholds(pat_barcode){
 p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
+
 //case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
 $.mobile.changePage("#inside");
@@ -824,10 +825,13 @@ $( "#loginresponse" ).append(my_holds);
 
 });//end ajax 
 };//end getholds function
+
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
 //alert('begin items out all');
-start_spin();
+//start_spin();
+alert('spinner starts');
+window.plugins.spinnerDialog.show();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -980,7 +984,9 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
-stop_spin();
+//stop_spin();
+alert('spinner stops');
+window.plugins.spinnerDialog.hide();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
