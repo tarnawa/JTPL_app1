@@ -768,7 +768,7 @@ $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
 
 ////sort by value.StatusID
-var response=response.PatronHoldRequestsGetRows;
+response=response.PatronHoldRequestsGetRows;
 response.sort(function(a, b){
 return a.StatusID - b.StatusID;
 });  
