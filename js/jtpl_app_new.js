@@ -828,11 +828,8 @@ $( "#loginresponse" ).append(my_holds);
 
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){
-	window.plugins.spinnerDialog.show(null,"...processing");
-//alert('begin items out all');
-//start_spin();
-//alert('spinner starts');
-//window.plugins.spinnerDialog.show();
+window.plugins.spinnerDialog.show(null,"...processing");
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -969,7 +966,6 @@ switch(media){
 				}else{
 				my_outs += key2 + ": " + value2 + "<br>";
 				}
-
 								
 				}
 				}
@@ -985,9 +981,6 @@ my_outs +="</td></tr></table>";
 $( "#borrowed" ).append(my_outs);
 window.plugins.spinnerDialog.hide();
 });//end ajax 
-//stop_spin();
-//alert('spinner stops');
-//window.plugins.spinnerDialog.hide();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
