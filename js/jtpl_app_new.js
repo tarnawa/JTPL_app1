@@ -827,7 +827,8 @@ $( "#loginresponse" ).append(my_holds);
 };//end getholds function
 
 //case 9 - items out all (list)
-function items_out_all(reqstring,thedate,code){	
+function items_out_all(reqstring,thedate,code){
+	window.plugins.spinnerDialog.show(null,"...processing");
 //alert('begin items out all');
 //start_spin();
 //alert('spinner starts');
@@ -845,7 +846,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-window.plugins.spinnerDialog.show(null,"...processing");
+//window.plugins.spinnerDialog.show(null,"...processing");
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
