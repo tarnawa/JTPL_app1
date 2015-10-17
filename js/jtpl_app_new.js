@@ -758,8 +758,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-//var response=JSON.stringify(response);
-//var response= jQuery.parseJSON(response);
+var response=JSON.stringify(response);
+var response= jQuery.parseJSON(response);
 
 var my_holds='';
 var hold_selection= ['Title', 'Author', 'StatusDescription', 'FormatDescription', 'StatusID'];
