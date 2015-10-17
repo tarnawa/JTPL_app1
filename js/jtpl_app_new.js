@@ -982,11 +982,11 @@ my_outs +="</td></tr></table>";
 //}//end screen out cancelled
 });
 $( "#borrowed" ).append(my_outs);
-
+window.plugins.spinnerDialog.hide();
 });//end ajax 
 //stop_spin();
 //alert('spinner stops');
-window.plugins.spinnerDialog.hide();
+//window.plugins.spinnerDialog.hide();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
