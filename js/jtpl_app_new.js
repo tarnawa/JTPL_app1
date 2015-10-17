@@ -830,8 +830,8 @@ $( "#loginresponse" ).append(my_holds);
 function items_out_all(reqstring,thedate,code){	
 //alert('begin items out all');
 //start_spin();
-alert('spinner starts');
-window.plugins.spinnerDialog.show();
+//alert('spinner starts');
+//window.plugins.spinnerDialog.show();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -845,7 +845,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
+window.plugins.spinnerDialog.show(null,"...processing");
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
@@ -985,7 +985,7 @@ $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
 //stop_spin();
-alert('spinner stops');
+//alert('spinner stops');
 window.plugins.spinnerDialog.hide();
 };//end items_out_all function
 
