@@ -116,8 +116,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
 $( "#bcode" ).empty();
@@ -408,8 +408,8 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
@@ -482,8 +482,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', , 'SystemItemsTotal', 'CurrentHoldRequests', 'Summary','CallNumber'];
 $( "#bdetail" ).empty();
@@ -567,8 +567,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#news" ).empty();
@@ -632,8 +632,8 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 //response is a json object
 var res_pat_id=response.PatronID;
 var pat_barcode=response.PatronBarcode;
@@ -715,8 +715,8 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 //response is a json object
 var cancel_confirm=response.PAPIErrorCode;
 //if error code =0
@@ -743,7 +743,7 @@ p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 //case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
 $.mobile.changePage("#inside");
-//var response='';	
+////var response='';	
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -758,8 +758,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 
 var my_holds='';
 var hold_selection= ['Title', 'Author', 'StatusDescription', 'FormatDescription', 'StatusID'];
@@ -767,8 +767,12 @@ var hold_selection= ['Title', 'Author', 'StatusDescription', 'FormatDescription'
 $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
 
-//sort patronholdrequestrows
 ////sort by value.StatusID
+var response=response.PatronHoldRequestsGetRows;
+response.sort(function(a, b){
+return a.StatusID - b.StatusID;
+});  
+
 
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
 
@@ -823,6 +827,7 @@ $( "#loginresponse" ).append(my_holds);
 //case 9 - items out all (list)
 function items_out_all(reqstring,thedate,code){	
 //alert('begin items out all');
+start_spin();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -837,8 +842,8 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 
 var my_outs='';
 var out_selection= ['FormatDescription', 'Title', 'Author', 'CheckOutDate', 'DueDate', 'RenewalCount'];
@@ -898,8 +903,8 @@ var settings = {
   }
 }
 $.ajax(settings).done(function (response) {
-var response=JSON.stringify(response);
-var response= jQuery.parseJSON(response);
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
 $.each(response.BibGetRows, function(key, value) {
 if(value.ElementID=='8'){
 $.each(value, function(key2, value2) {
@@ -972,10 +977,10 @@ my_outs +="<p class='out_extend'><a id=" + out_req_id + " href='#popupDialog_ext
 my_outs +="</td></tr></table>";
 //}//end screen out cancelled
 });
-								
 $( "#borrowed" ).append(my_outs);
 
 });//end ajax 
+stop_spin();
 };//end items_out_all function
 
 //case 11 - extend (encrypt) - take: out_extend id, p_bc, p_pin
