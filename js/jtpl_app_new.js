@@ -768,10 +768,10 @@ $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
 
 ////sort by value.StatusID
-response=response.PatronHoldRequestsGetRows;
-response.sort(function(a, b){
-return a.StatusID - b.StatusID;
-});  
+//response=response.PatronHoldRequestsGetRows;
+//response.sort(function(a, b){
+//return a.StatusID - b.StatusID;
+//});  
 
 
 $.each(response.PatronHoldRequestsGetRows, function(key, value) {
