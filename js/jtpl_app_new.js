@@ -263,6 +263,7 @@ $('#main_login').on('click', function () {
 $('#cn_holdreq').val("");								   
 });
 
+//manage iframe back btn behaviour
 $('#clr_ifr').on('click', function () {
 $('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
 $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
@@ -777,13 +778,13 @@ $( "#loginresponse" ).empty();
 //alert('loginresponse should be empty now');
 
 ////sort by value.StatusID
-//response=response.PatronHoldRequestsGetRows;
-//response.sort(function(a, b){
-//return a.StatusID - b.StatusID;
-//});  
+response=response.PatronHoldRequestsGetRows;
+response.sort(function(a, b){
+return a.StatusID - b.StatusID;
+});  
 
 
-$.each(response.PatronHoldRequestsGetRows, function(key, value) {
+$.each(response, function(key, value) {
 
 if(value.StatusDescription!="Cancelled"){
 
