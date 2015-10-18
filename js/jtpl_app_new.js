@@ -179,6 +179,8 @@ $('.hold_req a').button();
 
 $(document).ready(function(){
 
+$('exportform').css("display", "none");
+
 //open in app browser
 $('#3m_btn').on('click', function () {
 window.open('http://ebook.3m.com/library/jtpl/Featured', '_blank', 'location=yes');
@@ -780,7 +782,7 @@ $( "#loginresponse" ).empty();
 ////sort by value.StatusID
 response=response.PatronHoldRequestsGetRows;
 response.sort(function(a, b){
-return a.StatusID - b.StatusID;
+return b.StatusID - a.StatusID;
 });  
 
 
