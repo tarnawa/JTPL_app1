@@ -273,9 +273,9 @@ $('#cn_holdreq').val("");
 });
 
 //manage iframe back btn behaviour
-$('#clr_ifr').on('click', function () {
-history.go(-(history.length - 1));
-});
+//$('#clr_ifr').on('click', function () {
+//history.go(-(history.length - 1));
+//});
 
 //fix back btn
 $('#clr_ifr_list').on('click', function () {
