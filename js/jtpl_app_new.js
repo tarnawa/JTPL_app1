@@ -287,6 +287,16 @@ $('#clr_ifr_cal').on('click', function () {
 $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
 });
 
+$('#clr_ifr_list0').on('click', function () {
+$('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
+$(this).blur();
+});
+
+$('#clr_ifr_cal0').on('click', function () {
+$('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
+$(this).blur();
+});
+
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
 //$('#events').focus();
