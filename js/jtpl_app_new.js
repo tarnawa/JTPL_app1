@@ -273,9 +273,9 @@ $('#cn_holdreq').val("");
 });
 
 //manage iframe back btn behaviour
-//$('#clr_ifr').on('click', function () {
-//history.go(-(history.length - 1));
-//});
+$('#clr_ifr').on('click', function () {
+$.mobile.changePage("#pageone");
+});
 
 //fix back btn
 /*$('#clr_ifr_list').on('click', function () {
@@ -288,13 +288,13 @@ $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/mont
 */
 $('#clr_ifr_list0').on('click', function () {
 $('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
-$.mobile.changePage("#events_cal");
+$.mobile.changePage("#events_list");
 $(this).blur();
 });
 
 $('#clr_ifr_cal0').on('click', function () {
 $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
-$.mobile.changePage("#events_list");
+$.mobile.changePage("#events_cal");
 $(this).blur();
 });
 
