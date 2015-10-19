@@ -179,7 +179,14 @@ $('.hold_req a').button();
 
 $(document).ready(function(){
 
-$('exportform').css("display", "none");
+//$('exportform').css("display", "none");
+
+//$('#events_frame_cal').load(function() {
+									// alert('loaded');
+  //var css = '<style type="text/css">body{display: none};</style>';
+ // $('#events_frame_cal').contents().find("head").append(css);
+ //$("#events_frame_cal").contents().find("head").append(css);
+//});
 
 //open in app browser
 $('#3m_btn').on('click', function () {
