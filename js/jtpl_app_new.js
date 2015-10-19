@@ -273,7 +273,7 @@ $('#cn_holdreq').val("");
 });
 
 //manage iframe back btn behaviour
-$('#clr_ifr').on('click', function () {
+/*$('#clr_ifr').on('click', function () {
 $('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
 $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
 });
@@ -285,7 +285,7 @@ $('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventspro
 $('#clr_ifr_cal').on('click', function () {
 $('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
 });
-
+*/
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
 //$('#events').focus();
