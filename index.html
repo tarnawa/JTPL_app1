@@ -17,6 +17,7 @@
 $(document).bind("mobileinit", function(){
 $.support.cors 
 $.mobile.allowCrossDomainPages = true;
+  //back btn fix?
   if ( device.platform === "iOS" ) {
   $.mobile.hashListeningEnabled=false;
   }
