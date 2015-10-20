@@ -286,10 +286,10 @@ framehistory.push(frame2.window.location.href);
 });
 
 $('#clr_ifr_cal0').on('click', function () {
-if(framehistory.length<=1){
+if(framehistory.length<=2){
 $.mobile.changePage("#events_main");
 }
-else if (framehistory.length>2){
+else if (framehistory.length>3){
 framehistory.pop();									 
 var hist= (framehistory.length)-1;
 var thetarget=framehistory[hist];
