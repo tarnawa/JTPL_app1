@@ -283,12 +283,12 @@ framehistory.push(frame.window.location.href);
 });
 
 $('#clr_ifr_cal0').on('click', function () {
-									 
-var hist= (framehistory.length)-2;
+framehistory.pop();									 
+var hist= (framehistory.length)-1;
 var thetarget=framehistory[hist];
 alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget;
-framehistory.pop();	
+	
 });
 
 
