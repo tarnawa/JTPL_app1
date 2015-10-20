@@ -309,7 +309,7 @@ window.frames['events_frame_cal'].location=thetarget;
 
 
 $('#clr_ifr_list0').on('click', function () {
-if(framehistory2.length<=1){
+if(framehistory2.length<=1 || frame.window.location.href=="http://jeffersonlibrary.net/forms/eventsprobe_all_app.php"){
 $.mobile.changePage("#events_main");
 framehistory2=framehistory2.slice(0,1);
 }
