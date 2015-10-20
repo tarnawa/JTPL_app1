@@ -313,7 +313,7 @@ $(this).blur();
 $('#clr_ifr_cal0').on('click', function () {
 										// "javascript:top.frames['framename'].location = 'filename.html';return true;";
 var hist= framehistory.length;
-var thetarget=framehistory[hist-1];
+var thetarget=framehistory[hist-2];
 alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget
 //alert(frame);
