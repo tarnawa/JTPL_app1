@@ -2,6 +2,7 @@
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 var framehistory=[];
+var framehistory2=[];
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -281,19 +282,19 @@ framehistory.push(frame.window.location.href);
 });
 $("#events_frame_list").load(function(){
 var frame2=window.frames[1];									 
-framehistory.push(frame2.window.location.href);
+framehistory2.push(frame2.window.location.href);
 });
 });
 
 $('#clr_ifr_cal0').on('click', function () {
-if(framehistory.length<=2){
+if(framehistory.length<=1){
 $.mobile.changePage("#events_main");
+framehistory=framehistory.slice(0,1);
 }
-else if (framehistory.length>3){
+else if (framehistory.length>2){
 framehistory.pop();									 
 var hist= (framehistory.length)-1;
 var thetarget=framehistory[hist];
-//alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget;
 framehistory.pop();
 }
@@ -301,31 +302,38 @@ else{
 framehistory.pop();									 
 var hist= (framehistory.length)-1;
 var thetarget=framehistory[hist];
-//alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget;
 }
 });
+
+
 $('#clr_ifr_list0').on('click', function () {
-if (framehistory.length>2){
-framehistory.pop();									 
-var hist= (framehistory.length)-1;
-var thetarget=framehistory[hist];
+if(framehistory2.length<=1){
+$.mobile.changePage("#events_main");
+framehistory=framehistory2.slice(0,1);
+}
+else if (framehistory2.length>2){
+framehistory2.pop();									 
+var hist2= (framehistory2.length)-1;
+var thetarget2=framehistory2[hist2];
 //alert(thetarget);
-window.frames['events_frame_list'].location=thetarget;
-framehistory.pop();
+window.frames['events_frame_list'].location=thetarget2;
+framehistory2.pop();
 }
 else{
-framehistory.pop();									 
-var hist= (framehistory.length)-1;
-var thetarget=framehistory[hist];
+framehistory2.pop();									 
+var hist2= (framehistory2.length)-1;
+var thetarget2=framehistory2[hist2];
 //alert(thetarget);
-window.frames['events_frame_list'].location=thetarget;
+window.frames['events_frame_list'].location=thetarget2;
 }
 });
 
 
 $('#clr_ifr').on('click', function () {
 history.go(0);
+framehistory=framehistory.slice(0,1);
+framehistory2=framehistory2.slice(0,1);
 });
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
