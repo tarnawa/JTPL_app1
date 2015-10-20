@@ -288,7 +288,7 @@ var hist= (framehistory.length)-1;
 var thetarget=framehistory[hist];
 alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget;
-	
+framehistory.pop();	
 });
 
 
