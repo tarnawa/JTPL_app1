@@ -312,9 +312,13 @@ $(this).blur();
 */
 $('#clr_ifr_cal0').on('click', function () {
 										// "javascript:top.frames['framename'].location = 'filename.html';return true;";
+var hist= framehistory.length;
+var thetarget=framehistory[hist-1];
+alert(thetarget);
+window.frames['events_frame_cal'].location=thetarget
 //alert(frame);
 //alert(framehistory.length);
-document.getElementById("events_frame_cal").contentWindow.history.back(-1);
+//document.getElementById("events_frame_cal").contentWindow.history.back(-1);
 //$('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
 //$(this).blur();
 });
