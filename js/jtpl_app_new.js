@@ -310,7 +310,7 @@ window.frames['events_frame_cal'].location=thetarget;
 $('#clr_ifr_list0').on('click', function () {
 if(framehistory2.length<=1){
 $.mobile.changePage("#events_main");
-framehistory=framehistory2.slice(0,1);
+framehistory2=framehistory2.slice(0,1);
 }
 else if (framehistory2.length>2){
 framehistory2.pop();									 
