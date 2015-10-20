@@ -298,49 +298,12 @@ var thetarget=framehistory[hist];
 //alert(thetarget);
 window.frames['events_frame_cal'].location=thetarget;
 }
-
 });
 
 
-//});
-
-
-
-
-
-//manage iframe back btn behaviour
-/*$('#clr_ifr').on('click', function () {
-$.mobile.changePage("#pageone");
+$('#clr_ifr').on('click', function () {
+history.go(0)
 });
-
-//fix back btn
-$('#clr_ifr_list').on('click', function () {
-$('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
-});
-
-$('#clr_ifr_cal').on('click', function () {
-$('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
-});
-
-$('#clr_ifr_list0').on('click', function () {
-$.mobile.changePage("#events_list");
-//$('#events_frame_list').attr('src', 'http://jeffersonlibrary.net/forms/eventsprobe_all_app.php');
-$(this).blur();
-});
-*/
-//$('#clr_ifr_cal0').on('click', function () {
-										// "javascript:top.frames['framename'].location = 'filename.html';return true;";
-//var hist= (framehistory.length)-1;
-//var thetarget=framehistory[hist];
-//alert(thetarget);
-//window.frames['events_frame_cal'].location=thetarget
-//alert(frame);
-//alert(framehistory.length);
-//document.getElementById("events_frame_cal").contentWindow.history.back(-1);
-//$('#events_frame_cal').attr('src', 'http://jeffersonlibrary.net/WebCalendar/month.php');
-//$(this).blur();
-//});
-
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
 //$('#events').focus();
