@@ -288,7 +288,7 @@ framehistory2.push(frame2.window.location.href);
 
 $('#clr_ifr_cal0').on('click', function () {
 var frame=window.frames[0];										 
-if(framehistory.length<=1 || frame.window.location.href=="http://jeffersonlibrary.net/WebCalendar/month.php"){
+if(framehistory.length<=1 || frame.window.location.href=="http://jeffersonlibrary.net/WebCalendar/month_ap.php"){
 $.mobile.changePage("#events_main");
 framehistory=framehistory.slice(0,1);
 }
