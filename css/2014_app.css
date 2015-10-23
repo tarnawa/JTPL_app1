@@ -50,7 +50,7 @@ background-color: #FC3;
 }
 
 
-.home {
+.home, .home_ev {
 	float: right;
 }
 .picbox{
@@ -156,9 +156,6 @@ width: 100%;
 	overflow: auto;
 	height: auto;
 	-webkit-overflow-scrolling:touch;
-}
-exportform{
-	
 }
 
 
