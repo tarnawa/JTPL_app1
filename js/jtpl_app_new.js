@@ -275,7 +275,7 @@ $('#cn_holdreq').val("");
 
 
 $(document).ready(function(){
-
+//create browsing array for list and calendar view
 $("#events_frame_cal").load(function(){
 var frame=window.frames[0];									 
 framehistory.push(frame.window.location.href);
@@ -285,7 +285,7 @@ var frame2=window.frames[1];
 framehistory2.push(frame2.window.location.href);
 });
 });
-
+//create go-back logic for calendar view
 $('#clr_ifr_cal0').on('click', function () {
 var frame=window.frames[0];										 
 if(framehistory.length<=1 || frame.window.location.href=="http://jeffersonlibrary.net/WebCalendar/month_ap.php"){
@@ -307,7 +307,7 @@ window.frames['events_frame_cal'].location=thetarget;
 }
 });
 
-
+//create go-back logic for list view
 $('#clr_ifr_list0').on('click', function () {
 var frame=window.frames[1];											  
 if(framehistory2.length<=1 || frame.window.location.href=="http://jeffersonlibrary.net/forms/eventsprobe_all_app.php"){
@@ -331,12 +331,14 @@ window.frames['events_frame_list'].location=thetarget2;
 }
 });
 
-
+//empty go-back buffers upon leaving event section
 $('#clr_ifr').on('click', function () {
-history.go(0);
+//history.go(0);
 framehistory=framehistory.slice(0,1);
 framehistory2=framehistory2.slice(0,1);
+$.mobile.changePage("#pageone");
 });
+
 //$('[data-rel="back"]').on('click', function () {
 //setTimeout(function(){
 //$('#events').focus();
