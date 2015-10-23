@@ -336,7 +336,7 @@ $('#clr_ifr').on('click', function () {
 //history.go(0);
 framehistory=framehistory.slice(0,1);
 framehistory2=framehistory2.slice(0,1);
-$.mobile.changePage("#pageone");
+//$.mobile.changePage("#pageone");
 });
 
 //$('[data-rel="back"]').on('click', function () {
