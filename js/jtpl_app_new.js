@@ -273,6 +273,10 @@ $('#main_login').on('click', function () {
 $('#cn_holdreq').val("");								   
 });
 
+$('.home').on('click', function () {
+location.replace("index.html")
+});
+
 
 $(document).ready(function(){
 //create browsing array for list and calendar view
