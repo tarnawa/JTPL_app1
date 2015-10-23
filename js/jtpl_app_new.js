@@ -274,8 +274,8 @@ $('#cn_holdreq').val("");
 });
 //Home Button workaround to work with IOS 9
 $('.home').on('click', function () {
-//$.mobile.pageContainer.pagecontainer('change', 'index.html', { transition: "fade" });						 
-location.replace("index.html")
+$.mobile.pageContainer.pagecontainer('change', 'index.html', { transition: "fade", changeHash:false, allowSamePageTransition: true });						 
+//location.replace("index.html")
 });
 
 
