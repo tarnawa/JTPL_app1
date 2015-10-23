@@ -274,7 +274,8 @@ $('#cn_holdreq').val("");
 });
 
 $('.home').on('click', function () {
-location.replace("index.html")
+$.mobile.pageContainer.pagecontainer('change', 'index.html', { transition: "fade" });						 
+//location.replace("index.html")
 });
 
 
