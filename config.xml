@@ -9,15 +9,16 @@
     </author>
     <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
-    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
-	<gap:plugin name="org.apache.cordova.device" />
-	<gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
+   <gap:plugin name="cordova-plugin-barcodescanner" source="npm" />
+	<gap:plugin name="cordova-plugin-device" source="npm" />
+	<gap:plugin name="cordova-plugin-camera" source="npm"  />
+	<gap:plugin name="cordova-plugin-inappbrowser" version="npm" />
 	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" version="2.1.0" />
-	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="com.surfernetwork.fileplugin" />
-	<gap:plugin name="com.phonegap.plugin.statusbar" />
+	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
 	<feature name="StatusBar">
 	 <param name="ios-package" value="CDVStatusBar" onload="true" />
 	 </feature>
