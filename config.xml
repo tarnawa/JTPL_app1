@@ -1,32 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.ryanw.barcodedemo" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>JTPL Library App</name>
     <description>
         Library user App with Barcode scanning and Reading Light
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
-    </author>
     <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
    <gap:plugin name="cordova-plugin-barcodescanner" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-camera" source="npm"  />
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
-	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" version="2.1.0" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
-	<gap:plugin name="com.surfernetwork.fileplugin" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
 	<feature name="StatusBar">
 	 <param name="ios-package" value="CDVStatusBar" onload="true" />
 	 </feature>
-	<feature name="http://api.phonegap.com/1.0/device" />
-    <feature name="debug-server" required="true">
-        <param name="domain" value="http://debug.phonegap.com" />
-        <param name="key" value="willoughby" />
-    </feature>
+
     <preference name="phonegap-version" value="cli-5.2.0" />
 	<preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
