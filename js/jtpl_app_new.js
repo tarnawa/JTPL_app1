@@ -272,6 +272,7 @@ $(document).on("pagecreate", function () {
 $('#main_login').on('click', function () {
 $('#cn_holdreq').val("");								   
 });
+
 //Home Button workaround to work with IOS 9
 //$('.home').on('click', function () {
 //location.hash = '';
