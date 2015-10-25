@@ -13,9 +13,6 @@
 	<gap:plugin name="hu.dpal.phonegap.plugins.spinnerdialog" />
 	<gap:plugin name="nl.x-services.plugins.flashlight" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
-	<feature name="StatusBar">
-	 <param name="ios-package" value="CDVStatusBar" onload="true" />
-	 </feature>
     <preference name="phonegap-version" value="cli-5.2.0" />
 	<preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
