@@ -29,7 +29,7 @@
 	<gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" version="2.1.0" />
     <preference name="phonegap-version" value="cli-5.2.0" />
 	<preference name="StatusBarOverlaysWebView" value="false" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
+	<preference name="StatusBarBackgroundColor" value="#999999" />
 	<preference name="StatusBarStyle" value="lightcontent" />
 	<preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
