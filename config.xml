@@ -14,11 +14,10 @@
     </author>
     <access origin="http://jeffersonlibrary.net/INTERMED.php" />
     <access origin="*" />
-   <gap:plugin name="cordova-plugin-barcodescanner" source="npm" />
-	<gap:plugin name="cordova-plugin-device" source="npm" />
-	<gap:plugin name="cordova-plugin-camera" source="npm"  />
-	<gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
-	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+   <gap:plugin name="org.cordova.apache.barcodescanner" source="npm" />
+	<gap:plugin name="org.apache.cordova.device" source="npm" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" source="npm"/> 
+	<gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
 	<preference name="orientation" value="default" />
