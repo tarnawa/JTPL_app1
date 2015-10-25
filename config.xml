@@ -17,7 +17,7 @@
    <gap:plugin name="cordova-plugin-barcodescanner" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-camera" source="npm"  />
-	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
+	<gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
     <preference name="phonegap-version" value="cli-5.2.0" />
