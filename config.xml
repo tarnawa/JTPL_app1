@@ -20,6 +20,7 @@
 	<gap:plugin name="cordova-plugin-camera" source="npm"  />
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+	<gap:plugin name="cordova-plugin-native-transitions" version="0.2.3" source="npm" />
 	<gap:plugin name="com.phonegap.plugin.statusbar" />
 		<feature name="StatusBar">
 	 		<param name="ios-package" value="CDVStatusBar" onload="true" />

@@ -70,6 +70,11 @@ default: var val2="other media format"; break;
 return val2;
 }
 
+
+var duration = 0.5, // animation time in seconds
+    direction = "down"; // animation direction - up | down
+nativetransitions.curl(duration, direction, onComplete);
+
 //case2 - BARCODE SCANNER
 function getData(barcode){  
 //var barcode=9781440569722;
@@ -282,6 +287,11 @@ $('.home').on('click', function () {
 self.location.href = 'index.html';
 ////location.replace("index.html")
 });
+
+//setTimeout(function() {
+    // Change your html here
+//}, 50);
+//nativetransitions.flip(duration, direction);
 
 
 $(document).ready(function(){
