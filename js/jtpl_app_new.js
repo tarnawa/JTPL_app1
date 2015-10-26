@@ -71,9 +71,7 @@ return val2;
 }
 
 
-var duration = 0.5, // animation time in seconds
-    direction = "down"; // animation direction - up | down
-nativetransitions.curl(duration, direction, onComplete);
+
 
 //case2 - BARCODE SCANNER
 function getData(barcode){  
