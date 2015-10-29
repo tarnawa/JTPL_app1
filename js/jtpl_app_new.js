@@ -188,6 +188,15 @@ $('.hold_req a').button();
 
 $(document).ready(function(){
 
+//make keyboard disappear on "go"
+$('input').keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        	if ( (code==13) || (code==10)){
+            jQuery(this).blur();
+            return false;
+            }
+});
+
 //$('exportform').css("display", "none");
 
 //$('#events_frame_cal').load(function() {
