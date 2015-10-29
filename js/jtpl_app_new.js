@@ -540,6 +540,10 @@ $.each(value, function(key2, value2) {
 blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 blist_html +="</td></tr></table>";
 
+$('.trail a[data-role=button]').button();
+$('.trail a').button('refresh');
+});
+
 if(page_counter==0){
 blist_html +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 }
@@ -547,10 +551,6 @@ if(page_counter>0){
 blist_html +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 }
 
-$('.trail a[data-role=button]').button();
-$('.trail a').button('refresh');
-});
- 
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
 });
