@@ -3,6 +3,7 @@ var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 var framehistory=[];
 var framehistory2=[];
+var page_counter=0;
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -397,7 +398,7 @@ if(p_type ==='undefined') p_type ='';
 if(p_holdID ==='undefined') p_holdID ='';
 if(p_searchitem ==='undefined') p_searchitem ='';
 switch(p_query){
-case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+pc+""; break;
+case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
 case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
@@ -477,7 +478,7 @@ function doneTyping () {
    window.get_books=function(){return false;};
    searchitem= $('#search_item').val();
    	p_searchitem=searchitem.replace(/\s+/g,"+");
-	p_validate(1,''+p_searchitem+'','','','','GET','','');
+	p_validate(1,''+p_searchitem+'','','','','GET','',1);
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
@@ -538,10 +539,14 @@ $.each(value, function(key2, value2) {
 });
 blist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 blist_html +="</td></tr></table>";
-if(page_counter>=1){
-blist_html +="<span id='counter_fwd'>next 20 results</span><span id='counter_bwd'>last 20 results</span>";
-page_counter=page_counter+1;
+
+if(page_counter==0){
+blist_html +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 }
+if(page_counter>0){
+blist_html +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+}
+
 $('.trail a[data-role=button]').button();
 $('.trail a').button('refresh');
 });
@@ -551,6 +556,25 @@ $('.trail a').button();
 });
 
 }
+
+//ffwd search button
+
+$(document).on('click', '#fwd_btn', function () {
+page_counter=page_counter+1;
+next_search(page_counter);
+});
+$(document).on('click', '#rev_btn', function () {
+page_counter=page_counter-1;
+next_search(page_counter);
+});
+
+
+function next_search(next_page){
+searchitem= $('#search_item').val();
+   	p_searchitem=searchitem.replace(/\s+/g,"+");
+	p_validate(1,''+p_searchitem+'','','','','GET','',''+next_page+'');
+}
+
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
