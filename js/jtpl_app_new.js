@@ -22,14 +22,14 @@ if(device.platform === "iOS" && parseInt(device.version) === 9){
 var deviceType = (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : 'NULL';
 //alert(deviceType);
 if(deviceType!='NULL'){
-	$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
+	//$('.ui-btn').css({'margin-top':'1px', 'margin-bottom': '1px'}); 
 }
 
 var model = device.model;
 //alert('this is a: '+model+'');
 if(model=='iPhone8,1'){
 	//alert('this is an iphone 6plus');
-	$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
+	//$('.ui-btn').css({'margin-top':'', 'margin-bottom':''}); 
 }
 }
 
