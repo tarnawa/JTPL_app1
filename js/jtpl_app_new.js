@@ -503,6 +503,7 @@ $.ajax(settings).done(function (response) {
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
 $( "#blist" ).empty();
 var blist_html='';
+var next_batch='';
 
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
@@ -544,16 +545,18 @@ $('.trail a[data-role=button]').button();
 $('.trail a').button('refresh');
 });
 
-if(page_counter==0){
-blist_html +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
-}
-if(page_counter>0){
-blist_html +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
-}
-
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
 });
+
+if(page_counter==0){
+next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+$( "#blist" ).append(next_batch);
+}
+if(page_counter>0){
+next_batch +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+$( "#blist" ).append(next_batch);
+}
 
 }
 
