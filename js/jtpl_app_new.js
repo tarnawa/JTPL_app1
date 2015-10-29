@@ -3,7 +3,11 @@ var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 var framehistory=[];
 var framehistory2=[];
-var page_counter=0;
+var page_counter=1;
+
+if(page_counter<1){
+var page_counter=1;
+}
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -547,12 +551,12 @@ $('.trail a').button('refresh');
 
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
-if(page_counter==0){
+if(page_counter==1){
 next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 $( "#blist" ).append(next_batch);
 }
-if(page_counter>0){
-next_batch +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+if(page_counter>1){
+next_batch +="<a href='#' id='rev_btn' class='ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left'>last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-btn-inline ui-icon-carat-r ui-btn-icon-left'>next 20 results</a>";
 $( "#blist" ).append(next_batch);
 }
 });
