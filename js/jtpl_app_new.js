@@ -547,8 +547,6 @@ $('.trail a').button('refresh');
 
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
-});
-
 if(page_counter==0){
 next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 $( "#blist" ).append(next_batch);
@@ -557,6 +555,9 @@ if(page_counter>0){
 next_batch +="<a href='#' id='rev_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...last 20 results</a><a href='#' id='fwd_btn' class='ui-btn ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 $( "#blist" ).append(next_batch);
 }
+});
+
+
 
 }
 
