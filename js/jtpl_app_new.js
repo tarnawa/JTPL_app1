@@ -459,12 +459,6 @@ $.ajax({
 
 
 //case 1 - book search reqstring (get encryption data)
-$('#main_search').on('click', function () {
-			//$('input').blur();
-			//return false;
-            //}
-});
-
 var typingTimer;                //timer identifier
 var doneTypingInterval = 500;  //time in ms, 5 second for example
 
