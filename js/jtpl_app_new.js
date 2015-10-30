@@ -456,7 +456,13 @@ $.ajax({
 });
 }
 
+
+
 //case 1 - book search reqstring (get encryption data)
+$('#main_search').on('click', function () {
+	doneTyping();
+});
+
 var typingTimer;                //timer identifier
 var doneTypingInterval = 500;  //time in ms, 5 second for example
 
