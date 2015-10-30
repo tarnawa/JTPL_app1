@@ -460,7 +460,7 @@ $.ajax({
 
 //case 1 - book search reqstring (get encryption data)
 $('#main_search').on('click', function () {
-			$('input').blur();
+			//$('input').blur();
 			//return false;
             //}
 });
