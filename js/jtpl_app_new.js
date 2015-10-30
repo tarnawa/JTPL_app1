@@ -463,8 +463,8 @@ $('#main_search').on('click', function () {
 	doneTyping();
 	        //var code = (e.keyCode ? e.keyCode : e.which);
         	//if ( (code==13) || (code==10)){
-            $('.bibtbl').blur();
-            return false;
+            $('.bibtbl').focus();
+            //return false;
             //}
 });
 
