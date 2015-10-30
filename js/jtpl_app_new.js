@@ -463,7 +463,8 @@ $('#main_search').on('click', function () {
 	
 	        //var code = (e.keyCode ? e.keyCode : e.which);
         	//if ( (code==13) || (code==10)){
-            window.location.hash = '.bibtbl';
+            alert('this is go click');
+			$('input').blur();
     //doneTyping();
 	//return false;
             //}
