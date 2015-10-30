@@ -75,9 +75,6 @@ default: var val2="other media format"; break;
 return val2;
 }
 
-
-
-
 //case2 - BARCODE SCANNER
 function getData(barcode){  
 //var barcode=9781440569722;
@@ -189,13 +186,14 @@ $('.hold_req a').button();
 $(document).ready(function(){
 
 //make keyboard disappear on "go"
-$('input').keypress(function(e) {
+	
+/*$('input').keypress(function(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         	if ( (code==13) || (code==10)){
             jQuery(this).blur();
             return false;
             }
-});
+});*/
 
 //$('exportform').css("display", "none");
 
@@ -338,7 +336,6 @@ var thetarget=framehistory[hist];
 window.frames['events_frame_cal'].location=thetarget;
 }
 });
-
 //create go-back logic for list view
 $('#clr_ifr_list0').on('click', function () {
 var frame=window.frames[1];											  
@@ -362,20 +359,12 @@ var thetarget2=framehistory2[hist2];
 window.frames['events_frame_list'].location=thetarget2;
 }
 });
-
 //empty go-back buffers upon leaving event section
 $('#clr_ifr').on('click', function () {
-//history.go(0);
 framehistory=framehistory.slice(0,1);
 framehistory2=framehistory2.slice(0,1);
 $.mobile.changePage("#pageone");
 });
-
-//$('[data-rel="back"]').on('click', function () {
-//setTimeout(function(){
-//$('#events').focus();
-//},1000);
-//});
 
 /*$('#hours_btn').on('click', function () {
 alert('click');
@@ -403,7 +392,6 @@ alert('response');
 
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
-
 if(p_pwd ==='undefined') p_pwd ='';
 if(p_cn ==='undefined') p_cn ='';
 if(p_bc ==='undefined') p_bc ='';
@@ -466,8 +454,6 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
-//alert('return from main'+hold_ind+'');
-//return theret;
 }
 
 //case 1 - book search reqstring (get encryption data)
@@ -497,7 +483,6 @@ function doneTyping () {
 function get_books(code,reqstring,thedate){
 //alert(reqstring);
 var blist_html='';
-
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -570,13 +555,9 @@ next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='tr
 $( "#blist" ).append(next_batch);
 }
 });
-
-
-
 }
 
-//ffwd search button
-
+//next batch search button
 $(document).on('click', '#fwd_btn', function () {
 page_counter=page_counter+1;
 next_search(page_counter);
@@ -586,13 +567,11 @@ page_counter=page_counter-1;
 next_search(page_counter);
 });
 
-
 function next_search(next_page){
 searchitem= $('#search_item').val();
    	p_searchitem=searchitem.replace(/\s+/g,"+");
 	p_validate(1,''+p_searchitem+'','','','','GET','',''+next_page+'');
 }
-
 
 //case 3 - get book detail (get encryption data)
 $(document).on('click', '.trail a', function () {
