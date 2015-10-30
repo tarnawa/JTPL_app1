@@ -464,7 +464,7 @@ $('#main_search').on('click', function () {
 	        //var code = (e.keyCode ? e.keyCode : e.which);
         	//if ( (code==13) || (code==10)){
             alert('this is go click');
-			//$('input').blur();
+			$('input').blur();
     //doneTyping();
 	//return false;
             //}
