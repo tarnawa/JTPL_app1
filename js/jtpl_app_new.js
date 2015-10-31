@@ -186,11 +186,6 @@ $('.hold_req a').button();
 });
 };
 
-$('.home').on('click', function () {
-self.location.href = 'index.html';
-});
-
-
 $(document).ready(function(){
 
 //make keyboard disappear on "go"
@@ -297,14 +292,14 @@ $('#cn_holdreq').val("");
 });
 
 //Home Button workaround to work with IOS 9
-//$('.home').on('click', function () {
+$('.home').on('click', function () {
 //location.hash = '';
 //window.history.back(-1);
 //alert(window.location.hash.substring(0));								 
 //$.mobile.pageContainer.pagecontainer('change', 'index.html', { transition: "fade", allowSamePageTransition: 'true' });
-//self.location.href = 'index.html';
+self.location.href = 'index.html';
 ////location.replace("index.html")
-//});
+});
 
 //setTimeout(function() {
     // Change your html here
