@@ -12,6 +12,9 @@ var page_counter=1;
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
+	
+	$.mobile.hashListeningEnabled=false;
+	
 //enable back button in ios9	
 //if(device.platform === "iOS" && parseInt(device.version) === 9){
        // $.mobile.hashListeningEnabled = false;
@@ -455,8 +458,6 @@ $.ajax({
         }
 });
 }
-
-
 
 //case 1 - book search reqstring (get encryption data)
 var typingTimer;                //timer identifier
