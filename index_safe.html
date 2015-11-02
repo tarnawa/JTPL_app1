@@ -72,13 +72,15 @@ document.addEventListener('deviceready', function() {
 
 <div data-role="page" id="catalog_search">
 <div data-role="header" data-theme="a" data-position="fixed" data-add-back-btn="true">
+<span class="home"><a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-right">&nbsp;</a></span>
  
 <h3>Catalog Search</h3></div>
 
 <div data-role="ui-content" id="catalog_search_content">	
-
+<form action="" method="get" onSubmit="document.location.href='index.html#catalog_search'; return false;">
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" placeholder="Enter your search item (Title, Author...)"/>
-
+<input type="submit" name="main_search" id="main_search" data-role="none" style="visibility: hidden; position: absolute;" />
+</form>
 
 <div id="blist"></div>
 
@@ -114,7 +116,8 @@ document.addEventListener('deviceready', function() {
 	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" placeholder="Your PIN #..."/><br />
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input type="hidden" name="patron_bc" id="patron_bc" value="" /><br />
-             <input name="loginsubmit" type="submit" id="loginsubmit" value="submit">
+             <!--<input name="loginsubmit" type="submit" id="loginsubmit" value="submit">-->
+             <input type="submit" name="loginsubmit" id="loginsubmit" data-role="none" style="visibility: hidden; position: absolute;" />
              
 </form>
 		
@@ -322,7 +325,7 @@ Fax: 973-697-7051<br />
             </div>
             <!--<a href="#" button class="ui-btn ui-corner-all" id="scan">SCAN ISBN CODE</a>-->
             
-            <p align="center"><a href="#" id="scan"><img src="img/scan_icon.png" width="70%" alt="SCAN"></a></p>
+            <p align="center"><a href="#" id="scan"><img src="img/scan_icon.png" width="45%" alt="SCAN"></a></p>
 
 
           <p id="bcode"></p>
