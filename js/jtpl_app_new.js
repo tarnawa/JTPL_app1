@@ -678,14 +678,14 @@ detlist_html +="</td></tr></table>";
  
 $( "#bdetail" ).append(detlist_html);
 $('.hold_req a').button();
+initialize_pv(ISBN);
 });
-initialize_pv();
 };
 
-      function initialize_pv() {
+      function initialize_pv(ISBN) {
 		  
         var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        viewer.load('ISBN:0738531367');
+        viewer.load('ISBN: '+ISBN+'');
       }
 
 //case 4 - get new publication (encrypt)

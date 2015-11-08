@@ -157,6 +157,9 @@ width: 100%;
 	height: auto;
 	-webkit-overflow-scrolling:touch;
 }
+#theviewer{
+	text-align: center;
+}
 
 
 
