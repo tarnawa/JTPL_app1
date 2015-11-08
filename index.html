@@ -80,7 +80,7 @@ document.addEventListener('deviceready', function() {
  
 <h3>Catalog Search</h3></div>
 
-<div data-role="ui-content" id="catalog_search_content">	
+<div data-role="ui-content" id="catalog_search_content">
 <form action="" method="get" onSubmit="document.location.href='index.html#catalog_search'; return false;">
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" placeholder="Enter your search item (Title, Author...)"/>
 <input type="submit" name="main_search" id="main_search" data-role="none" style="visibility: hidden; position: absolute;" />
@@ -89,6 +89,7 @@ document.addEventListener('deviceready', function() {
 <div id="most_popular"></div>
 <div id="blist"></div>
 <div id="news"></div>
+
 </div>
 </div>
 </div>
@@ -100,7 +101,8 @@ document.addEventListener('deviceready', function() {
 <h3>Detail</h3></div>
 <div data-role="ui-content" id="bib_detail">	
 <div id="bdetail"></div>
-<div id="viewerCanvas" style="width: 100%; height: 800px"></div>
+<iframe id="bookviewer" frameborder="0"><div id="viewerCanvas" style="width: 100%; height: 800px"></div></iframe>
+
 </div>
 </div>
 
