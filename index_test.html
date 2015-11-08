@@ -45,13 +45,10 @@ alert(searchitem);
 
 $.ajax({
         type: 'GET',
-		//url: "http://plato-r2.polarislibrary.com/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B",
-		headers: {'Access-Control-Allow-Origin': '*','PolarisDate': thedate,'Authorization': 'PWS ' +code,'Content-Type':'application/json','Accept': 'application/json'},
-		//headers: {'Access-Control-Allow-Origin': '*','PolarisDate':''+thedate+'','Authorization':'PWS '+code+'','Content-Type':'application/json', 'Accept': 'application/json'},
-       url: searchitem,
-	   crossDomain: true,
-		//data: 'B',
-		dataType   : 'json',
+		url: "https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/1/search/bibs/boolean?q=B",
+		headers: {'Access-Control-Allow-Origin': '*','PolarisDate': thedate,'Authorization': 'PWS '+code,'Content-Type':'application/json','Accept': 'application/json'},
+       crossDomain: true,
+	   async: true,
         //processData: false,
 		error: function(jqXHR,text_status,strError){
 			alert("no connection");},

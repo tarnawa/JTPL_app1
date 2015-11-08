@@ -13,7 +13,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
 	
-	
 //enable back button in ios9	
 if(device.platform === "iOS" && parseInt(device.version) === 9){
        $.mobile.hashListeningEnabled = false;
@@ -415,6 +414,8 @@ case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemso
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
 //case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/headings/TI?startpoint="+p_searchitem+"&numterms=20"; break;
+//http://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/boolean?q=COL=58+sortby+PD/sort.descending
+case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=COL=7+sortby+MP/sort.descending&page="+p_holdID+"";break;
 }
 //
 var thedate=(new Date()).toUTCString();
@@ -450,6 +451,7 @@ $.ajax({
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
+			case 12: most_popular(code,reqstring,thedate); break;
 			//case 12: keysearch(p_response.code,p_response.reqstring,p_response.thedate); break;
 			}
         },
@@ -575,6 +577,20 @@ function next_search(next_page){
 searchitem= $('#search_item').val();
    	p_searchitem=searchitem.replace(/\s+/g,"+");
 	p_validate(1,''+p_searchitem+'','','','','GET','',''+next_page+'');
+}
+
+//next batch most popular button
+$(document).on('click', '#fwd_btn_mp', function () {
+page_counter=page_counter+1;
+next_search(page_counter);
+});
+$(document).on('click', '#rev_btn_mp', function () {
+page_counter=page_counter-1;
+next_search(page_counter);
+});
+
+function next_search(next_page){
+	p_validate(12,'','','','','GET','',''+next_page+'');
 }
 
 //case 3 - get book detail (get encryption data)
@@ -1142,6 +1158,92 @@ pwd=$('#libpin').val();
 });
 
 }
+
+//case 12 - get most popular (encrypt)
+$(document).on('click', '#mp_btn', function () {
+var page_counter=1;
+p_validate(12,'','','','','GET','','');
+});
+
+//case 12 - list most popular
+function most_popular(code,reqstring,thedate){
+//alert(reqstring);
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+//var response=JSON.stringify(response);
+//var response= jQuery.parseJSON(response);
+var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial', 'LocalItemsTotal','LocalItemsIn', 'SystemItemsTotal', 'SystemItemsIn'];
+$( "#most_popular" ).empty();
+var mplist_html='';
+var next_mplist_html='';
+
+
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
+ISBN=value.ISBN;
+
+switch(media){
+	case 35: mplist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: mplist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
+	case 33: mplist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	default: if(ISBN==''){
+		mplist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
+	} else{
+		mplist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';};
+}
+
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+		
+	switch(key2){
+		case "PublicationDate":
+		key2="Publication Date";
+		break;
+		case "PrimaryTypeOfMaterial":
+		key2="Media Type";
+		value2=matconv(value2);
+		break;
+	}
+	
+	mplist_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
+	}
+
+});
+mplist_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
+mplist_html +="</td></tr></table>";
+
+$('.trail a[data-role=button]').button();
+$('.trail a').button('refresh');
+});
+
+$( "#most_popular" ).append(mplist_html);
+$('.trail a').button();
+if(page_counter==1){
+next_batch +="<a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+$( "#most_popular" ).append(next_batch);
+}
+if(page_counter>1){
+	
+next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
+$( "#most_popular" ).append(next_batch);
+}
+});
+}
+
 
 //change page
 function login(){
