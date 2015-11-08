@@ -249,6 +249,7 @@ var map;
       });
 });
 
+
 //navigator
 $('#dir_start').on ("tap", function () {
 //start_spin();									   
@@ -678,7 +679,14 @@ detlist_html +="</td></tr></table>";
 $( "#bdetail" ).append(detlist_html);
 $('.hold_req a').button();
 });
+initialize_pv();
 };
+
+      function initialize_pv() {
+		  alert('we initilaize');
+        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        viewer.load('ISBN:0738531367');
+      }
 
 //case 4 - get new publication (encrypt)
 /*$(document).on('click', '#thesearch', function () {
