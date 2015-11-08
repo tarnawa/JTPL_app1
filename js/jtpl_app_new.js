@@ -484,7 +484,7 @@ function doneTyping () {
    searchitem= $('#search_item').val();
    	p_searchitem=searchitem.replace(/\s+/g,"+");
 	$('#most_popular').empty();
-	var page_counter=1;
+	page_counter=1;
 	p_validate(1,''+p_searchitem+'','','','','GET','',1);
 }
 //case 1 - get books
@@ -1162,7 +1162,7 @@ pwd=$('#libpin').val();
 
 //case 12 - get most popular (encrypt)
 $(document).on('click', '#mp_btn', function () {
-var page_counter=1;
+page_counter=1;
 $('#blist').empty();
 p_validate(12,'','','','','GET','',1);
 });
