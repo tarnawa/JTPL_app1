@@ -1162,7 +1162,7 @@ pwd=$('#libpin').val();
 //case 12 - get most popular (encrypt)
 $(document).on('click', '#mp_btn', function () {
 var page_counter=1;
-p_validate(12,'','','','','GET','','');
+p_validate(12,'','','','','GET','',1);
 });
 
 //case 12 - list most popular
@@ -1233,13 +1233,12 @@ $('.trail a').button('refresh');
 $( "#most_popular" ).append(mplist_html);
 $('.trail a').button();
 if(page_counter==1){
-next_batch +="<a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
-$( "#most_popular" ).append(next_batch);
+next_mplist_html +="<a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+$( "#most_popular" ).append(next_mplist_html);
 }
 if(page_counter>1){
-	
-next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
-$( "#most_popular" ).append(next_batch);
+next_mplist_html +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
+$( "#most_popular" ).append(next_mplist_html);
 }
 });
 }
