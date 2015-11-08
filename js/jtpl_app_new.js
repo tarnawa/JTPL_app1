@@ -683,9 +683,9 @@ initialize_pv(ISBN);
 };
 
       function initialize_pv(ISBN) {
-		  
+		 alert(ISBN); 
         var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        viewer.load('ISBN: '+ISBN+'');
+        viewer.load('ISBN:'+ISBN+'');
       }
 
 //case 4 - get new publication (encrypt)
