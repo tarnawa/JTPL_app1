@@ -489,7 +489,7 @@ function doneTyping () {
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
-alert(page_counter);
+//alert(page_counter);
 var blist_html='';
 var settings = {
   "async": true,
@@ -554,12 +554,12 @@ $('.trail a').button('refresh');
 $( "#blist" ).append(blist_html);
 $('.trail a').button();
 if(page_counter==1){
-next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 resultsa</a>";
+next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 $( "#blist" ).append(next_batch);
 }
 if(page_counter>1){
 	
-next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20a</a><a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20a</a></div>";
+next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
 $( "#blist" ).append(next_batch);
 }
 });
@@ -1169,7 +1169,7 @@ p_validate(12,'','','','','GET','',1);
 //case 12 - list most popular
 function most_popular(code,reqstring,thedate){
 //alert(reqstring);
-alert(page_counter);
+//alert(page_counter);
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -1243,7 +1243,6 @@ $( "#most_popular" ).append(next_mplist_html);
 }
 });
 }
-
 
 //change page
 function login(){
