@@ -484,6 +484,7 @@ function doneTyping () {
    searchitem= $('#search_item').val();
    	p_searchitem=searchitem.replace(/\s+/g,"+");
 	$('#most_popular').empty();
+	var page_counter=1;
 	p_validate(1,''+p_searchitem+'','','','','GET','',1);
 }
 //case 1 - get books
@@ -582,14 +583,14 @@ searchitem= $('#search_item').val();
 //next batch most popular button
 $(document).on('click', '#fwd_btn_mp', function () {
 page_counter=page_counter+1;
-next_search(page_counter);
+next_mp_search(page_counter);
 });
 $(document).on('click', '#rev_btn_mp', function () {
 page_counter=page_counter-1;
-next_search(page_counter);
+next_mp_search(page_counter);
 });
 
-function next_search(next_page){
+function next_mp_search(next_page){
 	p_validate(12,'','','','','GET','',''+next_page+'');
 }
 
