@@ -30,6 +30,7 @@ $.mobile.allowCrossDomainPages = true;
 <script type="text/javascript" src="js/jtpl_app_new.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="//books.google.com/books/previewlib.js"></script>
 
 
 
@@ -84,7 +85,6 @@ document.addEventListener('deviceready', function() {
 <a href="#" data-transition="turn" id="mp_btn" class="ui-btn ui-icon-star ui-btn-icon-left">Browse Most Popular</a>
 <div id="most_popular"></div>
 <div id="blist"></div>
-
 <div id="news"></div>
 </div>
 </div>
@@ -98,7 +98,8 @@ document.addEventListener('deviceready', function() {
 <div data-role="ui-content" id="bib_detail">	
 
 <div id="bdetail"></div>
-
+    <script>GBS_setLanguage('en');</script>
+    <script>GBS_insertPreviewButtonPopup('ISBN:0738531367');</script>
 </div>
 </div>
 
