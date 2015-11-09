@@ -157,8 +157,11 @@ width: 100%;
 	height: auto;
 	-webkit-overflow-scrolling:touch;
 }
-#theviewer{
-	text-align: center;
+#viewerCanvas{
+	width: 90%;
+	height: 500px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 
