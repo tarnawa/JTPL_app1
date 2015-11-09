@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/2014_app.css" type="text/css" />
 <link rel="stylesheet" href="css/JTPL_icons.min.css" />
 <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+<link rel="stylesheet" href="js/jquery-ui-1.11.4.custom/custom-icon.css" type="text/css" />
 
 
 <script src="js/jquery-1.11.2.min.js"></script>
@@ -17,10 +18,6 @@
 $(document).bind("mobileinit", function(){
 $.support.cors 
 $.mobile.allowCrossDomainPages = true;
-  //back btn fix?
-  //if ( device.platform === "iOS" ) {
-  //$.mobile.hashListeningEnabled=false;
-  //}
 });
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
@@ -30,10 +27,10 @@ $.mobile.allowCrossDomainPages = true;
 <script type="text/javascript" src="js/jtpl_app_new.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
   google.load("books", "0");
-</script>
+</script>-->
 
 
 
@@ -82,10 +79,12 @@ document.addEventListener('deviceready', function() {
 
 <div data-role="ui-content" id="catalog_search_content">
 <form action="" method="get" onSubmit="document.location.href='index.html#catalog_search'; return false;">
-<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" placeholder="Enter your search item (Title, Author...)"/>
+<input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" placeholder="Enter your search term (Title, Author...)"/>
 <input type="submit" name="main_search" id="main_search" data-role="none" style="visibility: hidden; position: absolute;" />
 </form>
-<a href="#" data-transition="turn" id="mp_btn" class="ui-btn ui-icon-star ui-btn-icon-left">Browse Most Popular</a>
+<a href="#" data-transition="turn" id="mp_btn" class="ui-btn ui-icon-heart ui-btn-icon-left">Browse Most Popular</a>
+<a href="#" data-transition="turn" id="nb_btn" class="ui-btn ui-icon-book ui-btn-icon-left">New Books</a>
+<a href="#" data-transition="turn" id="ndvd_btn" class="ui-btn ui-icon-dvd ui-btn-icon-left">New DVDs</a>
 <div id="most_popular"></div>
 <div id="blist"></div>
 <div id="news"></div>
