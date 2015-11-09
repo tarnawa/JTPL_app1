@@ -686,7 +686,7 @@ function initialize_pv(ISBN) {
 ISBN_num = ISBN.replace(/\D/g,'');
 var ISBN_net = jQuery.trim(ISBN_num);
 //alert(ISBN); 
-        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        var viewer = new google.books.viewer_cont(document.getElementById('viewerCanvas'));
         viewer.load('ISBN:'+ISBN_net+'');
       }
 
