@@ -692,7 +692,8 @@ $('.hold_req a').button();
 
 //case 4 - get new publication (encrypt)
 $(document).on('click', '#nb_btn', function () {
-alert('click');
+$('#blist').empty();
+$('#most_popular').empty();
 $.ajax({
         type: "GET",
 		async: true,
@@ -729,7 +730,7 @@ $.ajax(settings).done(function (response) {
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'ControlNumber'];
 $( "#news" ).empty();
 var np_list_html='';
   
