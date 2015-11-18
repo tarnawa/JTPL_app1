@@ -1191,6 +1191,7 @@ pwd=$('#libpin').val();
 $(document).on('click', '#mp_btn', function () {
 page_counter=1;
 $('#blist').empty();
+$('#news').empty();
 p_validate(12,'','','','','GET','',1);
 });
 //case 12 - list most popular
