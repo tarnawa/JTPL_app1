@@ -406,7 +406,7 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=*+sortby+PD/sort.descending&bibsperpage=10"; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&bibsperpage=50"; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
@@ -691,8 +691,22 @@ $('.hold_req a').button();
       //}
 
 //case 4 - get new publication (encrypt)
-/*$(document).on('click', '#thesearch', function () {
-p_validate(4,'','','','','GET','','');
+$(document).on('click', '#nb_btn', function () {
+alert('click');
+$.ajax({
+        type: "GET",
+		async: true,
+		url: "http://www.jeffersonlibrary.net/newbook.php",
+        crossDomain: true,
+        success : function(response) {
+			//alert('this is '+response+'');
+			p_validate(4,'','','','','GET','',''+response+'');
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
 });
 //case 4 - get news
 function get_news(code,reqstring,thedate){
@@ -745,7 +759,7 @@ np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
 });
-};*/
+};
 
 //case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
@@ -1253,6 +1267,7 @@ $( "#most_popular" ).append(next_mplist_html);
 }
 });
 }
+
 
 //change page
 function login(){
