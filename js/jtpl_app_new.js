@@ -406,7 +406,7 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&bibsperpage=50"; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&bibsperpage=70"; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
@@ -702,6 +702,7 @@ $.ajax({
         success : function(response) {
 			//alert('this is '+response+'');
 			p_validate(4,'','','','','GET','',''+response+'');
+			start_spin();
         },
         error      : function() {
             console.error("error");
@@ -759,6 +760,7 @@ np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail
 np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
+stop_spin();
 });
 };
 
