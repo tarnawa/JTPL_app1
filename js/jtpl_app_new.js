@@ -690,14 +690,37 @@ $('.hold_req a').button();
         //viewer.load('ISBN:'+ISBN_net+'');
       //}
 
-//case 4 - get new publication (encrypt)
+//case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
 $('#blist').empty();
 $('#most_popular').empty();
+$('#new_dvds').empty();
+
 $.ajax({
         type: "GET",
 		async: true,
 		url: "http://www.jeffersonlibrary.net/newbook.php",
+        crossDomain: true,
+        success : function(response) {
+			//alert('this is '+response+'');
+			p_validate(4,'','','','','GET','',''+response+'');
+			start_spin();
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+});
+
+$(document).on('click', '#ndvd_btn', function () {
+$('#blist').empty();
+$('#most_popular').empty();
+$('#news').empty();
+$.ajax({
+        type: "GET",
+		async: true,
+		url: "http://www.jeffersonlibrary.net/newdvd.php",
         crossDomain: true,
         success : function(response) {
 			//alert('this is '+response+'');
@@ -1192,6 +1215,7 @@ $(document).on('click', '#mp_btn', function () {
 page_counter=1;
 $('#blist').empty();
 $('#news').empty();
+$('#new_dvds').empty();
 p_validate(12,'','','','','GET','',1);
 });
 //case 12 - list most popular
