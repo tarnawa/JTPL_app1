@@ -406,7 +406,7 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&bibsperpage=70"; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&sortby=PD/sort.descending&bibsperpage=70"; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
@@ -686,9 +686,9 @@ $('.hold_req a').button();
 //ISBN_num = ISBN.replace(/\D/g,'');
 //var ISBN_net = jQuery.trim(ISBN_num);
 //alert(ISBN); 
-        //var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+      //var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
         //viewer.load('ISBN:'+ISBN_net+'');
-      //}
+//}
 
 //case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
@@ -754,7 +754,7 @@ $.ajax(settings).done(function (response) {
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'ControlNumber'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'ControlNumber', 'ISBN'];
 $( "#news" ).empty();
 var np_list_html='';
   
@@ -762,7 +762,7 @@ $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 ISBN=value.ISBN;
 np_list_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-								  
+	                                                              						  
 $.each(value, function(key2, value2) {
 	
 	if(jQuery.inArray( key2, selection )!== -1){
@@ -1217,6 +1217,7 @@ $('#blist').empty();
 $('#news').empty();
 $('#new_dvds').empty();
 p_validate(12,'','','','','GET','',1);
+start_spin();
 });
 //case 12 - list most popular
 function most_popular(code,reqstring,thedate){
@@ -1292,6 +1293,7 @@ $( "#most_popular" ).append(next_mplist_html);
 if(page_counter>1){
 next_mplist_html +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
 $( "#most_popular" ).append(next_mplist_html);
+stop_spin();
 }
 });
 }
