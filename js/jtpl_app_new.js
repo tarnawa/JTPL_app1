@@ -249,7 +249,6 @@ var map;
       });
 });
 
-
 //navigator
 $('#dir_start').on ("tap", function () {
 //start_spin();									   
@@ -682,14 +681,6 @@ $('.hold_req a').button();
 });
 };
 
-//function initialize_pv(ISBN) {
-//ISBN_num = ISBN.replace(/\D/g,'');
-//var ISBN_net = jQuery.trim(ISBN_num);
-//alert(ISBN); 
-      //var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        //viewer.load('ISBN:'+ISBN_net+'');
-//}
-
 //case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
 $('#blist').empty();
@@ -733,7 +724,7 @@ $.ajax({
         }
 });
 });
-//case 4 - get news
+//case 4 - get news list - book and dvd
 function get_news(code,reqstring,thedate){
 var np_list_html='';
 
@@ -754,7 +745,7 @@ $.ajax(settings).done(function (response) {
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'UPC', 'ISBN'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'Summary', 'ISBN'];
 $( "#news" ).empty();
 var np_list_html='';
   
