@@ -754,14 +754,30 @@ $.ajax(settings).done(function (response) {
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'ControlNumber', 'ISBN'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'UPC', 'ISBN'];
 $( "#news" ).empty();
 var np_list_html='';
   
 $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
-np_list_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+UPC=value.UPC;
+if(ISBN){
+	cover_no=ISBN;
+}
+else{
+	cover_no=UPC;
+}
+
+/*switch(media){
+	case 35: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
+	case 33: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	default: my_holds +='<table class="bibtbl"><tr><td class="picbox"><img src="img/book_icon.png" /></td ><td class="txtbox">'; break;
+}*/	
+
+np_list_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+cover_no+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
 	                                                              						  
 $.each(value, function(key2, value2) {
 	
@@ -925,7 +941,6 @@ function prep_getholds(pat_barcode){
 p_validate(8,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 p_validate(9,'',''+pwd+'','',''+pat_barcode+'','GET','','');
 };
-
 //case 8 getholds (list)
 function getholds(reqstring,thedate,code){	
 $.mobile.changePage("#inside");
@@ -1285,6 +1300,7 @@ $('.trail a').button('refresh');
 });
 
 $( "#most_popular" ).append(mplist_html);
+stop_spin();
 $('.trail a').button();
 if(page_counter==1){
 next_mplist_html +="<a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
@@ -1293,7 +1309,7 @@ $( "#most_popular" ).append(next_mplist_html);
 if(page_counter>1){
 next_mplist_html +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn_mp' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
 $( "#most_popular" ).append(next_mplist_html);
-stop_spin();
+
 }
 });
 }
