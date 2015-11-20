@@ -745,7 +745,7 @@ $.ajax(settings).done(function (response) {
 //var response=JSON.stringify(response);
 //var response= jQuery.parseJSON(response);
 
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial', 'Summary', 'ISBN'];
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
 $( "#news" ).empty();
 var np_list_html='';
   
@@ -755,6 +755,10 @@ media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
 UPC=value.UPC;
 if(ISBN){cover_no=ISBN;}else{cover_no=UPC;}
+
+if(UPC!=''){
+selection= ['Title', 'PublicationDate', 'Description', 'PrimaryTypeOfMaterial'];
+}
 
 if(cover_no==''){
 switch(media){
@@ -783,7 +787,7 @@ $.each(value, function(key2, value2) {
 	}
 
 });
-np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail'>Detail</a></p>";
+np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 np_list_html +="</td></tr></table>";
 });
 $( "#news" ).append(np_list_html);
