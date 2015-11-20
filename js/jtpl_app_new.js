@@ -789,6 +789,10 @@ $.each(value, function(key2, value2) {
 });
 np_list_html +="<p class='trail'><a id=" + cont_no + " href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
 np_list_html +="</td></tr></table>";
+
+$('.trail a[data-role=button]').button();
+$('.trail a').button('refresh');
+
 });
 $( "#news" ).append(np_list_html);
 stop_spin();
