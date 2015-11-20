@@ -795,6 +795,7 @@ $('.trail a').button('refresh');
 
 });
 $( "#news" ).append(np_list_html);
+$('.trail a').button();
 stop_spin();
 });
 };
