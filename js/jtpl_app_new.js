@@ -488,6 +488,7 @@ function doneTyping () {
 }
 //case 1 - get books
 function get_books(code,reqstring,thedate){
+$('#selection').collapsible( "collapse" );
 //alert(page_counter);
 var blist_html='';
 var settings = {
@@ -873,7 +874,7 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"2015-11-17T09:28:00.00","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
 }
 
 //2015-11-17T09:28:00.00
@@ -1310,6 +1311,7 @@ $( "#most_popular" ).append(next_mplist_html);
 
 //GET NYT Bestseller JSON
 $(document).on('click', '#nyt_btn', function () {
+$('#selection').collapsible( "collapse" );
 $.ajax({
         type: "GET",
 		dataType: "json",
