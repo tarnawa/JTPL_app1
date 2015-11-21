@@ -882,8 +882,10 @@ var settings = {
 $.ajax(settings).done(function (response) {
 var hold_message=response.Message;
 var hold_status_type=response.StatusType;
-alert(hold_status);
+
+alert(hold_status_type);
 alert(hold_message);
+
 prep_getholds (pat_barcode);
   console.log(response);
 //});
