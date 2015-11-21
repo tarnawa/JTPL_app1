@@ -861,8 +861,8 @@ p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
-//alert('begin createhold for'+res_pat_id+'');
-//alert(cont_num);
+alert('res pat id'+res_pat_id+'');
+alert('cont num'+cont_num+'');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -874,7 +874,7 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"2015-08-18T00:00:00Z","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
 }
 
 //2015-11-17T09:28:00.00
