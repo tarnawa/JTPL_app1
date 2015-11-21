@@ -82,13 +82,20 @@ document.addEventListener('deviceready', function() {
 <input name="search_item" id="search_item" type="text" size="25" maxlength="25" data-clear-btn="true" placeholder="Enter your search term (Title, Author...)"/>
 <input type="submit" name="main_search" id="main_search" data-role="none" style="visibility: hidden; position: absolute;" />
 </form>
-<a href="#" data-transition="turn" id="mp_btn" class="ui-btn ui-icon-heart ui-btn-icon-left">Browse Most Popular</a>
-<a href="#" data-transition="turn" id="nb_btn" class="ui-btn ui-icon-book ui-btn-icon-left">New Books</a>
-<a href="#" data-transition="turn" id="ndvd_btn" class="ui-btn ui-icon-dvd ui-btn-icon-left">New DVDs</a>
-<div id="most_popular"></div>
+<div data-role="collapsible" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+<h4>Selections...</h4>
+    <ul data-role="listview" data-filter="false" class="ui-mini">
+        <li><a href="#" data-transition="turn" id="mp_btn" class="ui-btn ui-icon-heart ui-btn-icon-left">Browse Most Popular</a></li>
+        <li><a href="#" data-transition="turn" id="nb_btn" class="ui-btn ui-icon-book ui-btn-icon-left">New Books</a></li>
+        <li><a href="#" data-transition="turn" id="ndvd_btn" class="ui-btn ui-icon-dvd ui-btn-icon-left">New DVDs</a></li>
+        <li><a href="#" data-transition="turn" id="nyt_btn" class="ui-btn ui-icon-nyt ui-btn-icon-left">NY Times Bestseller</a></li>
+    </ul>
+</div>
 <div id="blist"></div>
+<div id="most_popular"></div>
 <div id="news"></div>
 <div id="new_dvds"></div>
+<div id="nyt"></div>
 
 </div>
 </div>
@@ -121,9 +128,8 @@ document.addEventListener('deviceready', function() {
 	         <input type="text" name="libpin" id="libpin" value="" data-clear-btn="true" placeholder="Your PIN #..."/><br />
              <input type="hidden" name="cn_holdreq" id="cn_holdreq" value="" /><br />
              <input type="hidden" name="patron_bc" id="patron_bc" value="" /><br />
-             <!--<input name="loginsubmit" type="submit" id="loginsubmit" value="submit">-->
-             <input type="submit" name="loginsubmit" id="loginsubmit" data-role="none" style="visibility: hidden; position: absolute;" />
-             
+             <input name="loginsubmit" type="submit" id="loginsubmit" value="submit">
+             <!--<input type="submit" name="loginsubmit" id="loginsubmit" data-role="none" style="visibility: hidden; position: absolute;" />-->
 </form>
 		
 </div>

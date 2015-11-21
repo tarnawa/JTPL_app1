@@ -188,7 +188,6 @@ $('.hold_req a').button();
 $(document).ready(function(){
 
 //make keyboard disappear on "go"
-	
 /*$('input').keypress(function(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         	if ( (code==13) || (code==10)){
@@ -564,7 +563,6 @@ $( "#blist" ).append(next_batch);
 }
 });
 }
-
 //next batch search button
 $(document).on('click', '#fwd_btn', function () {
 page_counter=page_counter+1;
@@ -875,13 +873,12 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"\/Date(2015-08-18T00:00:00.00)\/","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
 }
 
+//2015-11-17T09:28:00.00
+
 $.ajax(settings).done(function (response) {
-//alert('your ajax request has been processed');
-//clean the control number from the request
-//$('#cn_holdreq').val()='';
 prep_getholds (pat_barcode);
   console.log(response);
 });
@@ -1311,6 +1308,26 @@ $( "#most_popular" ).append(next_mplist_html);
 });
 }
 
+//GET NYT Bestseller JSON
+$(document).on('click', '#nyt_btn', function () {
+$.ajax({
+        type: "GET",
+		dataType: "json",
+		async: true,
+		url: "http://www.wolfsworld1.com/NYT_HCF.php",
+        crossDomain: true,
+        success : function(response) {
+			
+		var response=JSON.stringify(response);
+		var response= jQuery.parseJSON(response);
+		alert(response);
+        },
+        error      : function() {
+            console.error("error");
+            alert('Not working1!');                  
+        }
+});
+});
 
 //change page
 function login(){
