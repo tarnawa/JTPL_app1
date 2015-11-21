@@ -874,7 +874,7 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"2015-11-17T09:28:00.00","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
+  "data": '{"PatronID":"'+res_pat_id+'","BibID":"'+cont_num+'","ItemBarcode":"","VolumeNumber":"","Designation":"","PickupOrgID":"13","IsBorrowByMail":0,"PatronNotes":"","ActivationDate":"2015-11-17T09:28:00Z","Answer":"","RequestID":"","WorkstationID":1,"UserID":1,"RequestingOrgID":13,"TargetGUID":""}',
 }
 
 //2015-11-17T09:28:00.00
