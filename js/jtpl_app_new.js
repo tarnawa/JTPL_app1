@@ -920,7 +920,8 @@ var settings = {
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
-alert(str_time);
+alert(response);
+	var xml=''+response+'';
 	var xml = $.parseXML(response),
   	$xml = $( xml ),
   	$fb_message = $xml.find('Message');
