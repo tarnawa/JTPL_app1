@@ -1,4 +1,4 @@
-//set global variables
+ //set global variables
 var dest="https://catalog.mainlib.org/PAPIService";
 var counter=0;
 var framehistory=[];
@@ -861,6 +861,7 @@ p_validate(6,'','',''+p_cn+'',''+pat_barcode+'','POST','',''+res_pat_id+'');
 };
 //case 6 - function createhold & -> 8 prep getholds
 function createhold(res_pat_id,cont_num,code,reqstring,thedate,pat_barcode){
+/*
 alert('res pat id'+res_pat_id+'');
 alert('cont num'+cont_num+'');
 var settings = {
@@ -893,6 +894,43 @@ prep_getholds (pat_barcode);
 	alert ('Your hold request failed.');
 });
 }
+*/
+
+alert('res pat id'+res_pat_id+'');
+alert('cont num'+cont_num+'');
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "POST",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/xml"
+  },
+  "processData": false,
+  
+  "data": '<PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>2015-11-17T09:28:00.00</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID>',
+}
+
+//2015-11-17T09:28:00.00
+
+$.ajax(settings).done(function (response) {
+var hold_message=response.Message;
+var hold_status_type=response.StatusType;
+
+alert(hold_status_type);
+alert(hold_message);
+
+//prep_getholds (pat_barcode);
+  console.log(response);
+//});
+}).fail(function() {
+	alert ('Your hold request failed.');
+});
+}
+
+
 
 //case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
