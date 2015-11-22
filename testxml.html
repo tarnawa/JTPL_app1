@@ -21,14 +21,14 @@ var response='<HoldRequestResult xmlns:i="http://www.w3.org/2001/XMLSchema-insta
 var xml = $.parseXML(response),
   $xml = $( xml ),
   $fback = $xml.find('Message');
-//alert($fback.text());
+alert($fback.text());
 });
 
     //var d = new Date();
     //var n = d.toString();
 	
 	var d = new Date();
-var n = d.toUTCString();
+var n = d.toISOString();
 
 alert(n);
 

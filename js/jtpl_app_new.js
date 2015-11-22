@@ -913,20 +913,22 @@ var settings = {
   },
   "processData": false,
   
-  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>'+str_time+'</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
+  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>2015-11-17T09:28:00.00</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
 }
 
 
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
-
+alert(str_time);
 	var xml = $.parseXML(response),
   	$xml = $( xml ),
   	$fb_message = $xml.find('Message');
 	alert($fb_message.text());
 //prep_getholds (pat_barcode);
 alert('now we do it');
+
+
 }).fail(function() {
 	alert ('Sorry, your hold request failed.');
 });
