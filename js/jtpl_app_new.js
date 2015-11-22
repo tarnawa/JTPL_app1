@@ -920,12 +920,14 @@ var settings = {
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
-alert(response);
-	var xml=''+response+'';
+response=JSON.stringify(response);
+	var xml=response;
 	var xml = $.parseXML(response),
   	$xml = $( xml ),
   	$fb_message = $xml.find('Message');
 	alert($fb_message.text());
+	$fb_queue_pos = $xml.find('QueuePosition');
+	alert($fb_queue_pos.text());
 //prep_getholds (pat_barcode);
 alert('now we do it');
 

@@ -18,9 +18,18 @@
 $(document).ready(function() {
 var response='<HoldRequestResult xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><PAPIErrorCode>0</PAPIErrorCode><ErrorMessage/><RequestGUID>E0BB26BD-38CA-4087-8BEC-38708C2E30CE</RequestGUID><TxnGroupQualifer>9RVDHMe4te2cffcdM6cpqq</TxnGroupQualifer><TxnQualifier>jQToIy4mduw9BIShlApWOa</TxnQualifier><StatusType>2</StatusType><StatusValue>1</StatusValue><Message>Your request has been placed.&lt;br /&gt;&lt;br /&gt;You will be notified when the item is available for pick-up.</Message><QueuePosition>98</QueuePosition><QueueTotal>98</QueueTotal></HoldRequestResult>';
 
-var xml = $.parseXML(response),
+
+
+var hubi=JSON.stringify(response);
+
+alert(hubi);
+
+
+
+
+/*var xml = $.parseXML(response),
   $xml = $( xml ),
-  $fback = $xml.find('Message');
+  $fback = $xml.find('QueuePosition');
 alert($fback.text());
 });
 
@@ -31,8 +40,8 @@ alert($fback.text());
 var n = d.toISOString();
 
 alert(n);
-
-
+*/
+});
 </script>
 
 
