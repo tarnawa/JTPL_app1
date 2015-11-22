@@ -910,7 +910,7 @@ var settings = {
   },
   "processData": false,
   
-  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>2015-11-17T09:28:00.00</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>',
+  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>2015-11-17T09:28:00.00</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
 }
 
 
