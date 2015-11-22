@@ -896,8 +896,11 @@ prep_getholds (pat_barcode);
 }
 */
 
-alert('res pat id'+res_pat_id+'');
-alert('cont num'+cont_num+'');
+//alert('res pat id'+res_pat_id+'');
+//alert('cont num'+cont_num+'');
+var d = new Date();
+var str_time = d.toISOString();
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -910,28 +913,24 @@ var settings = {
   },
   "processData": false,
   
-  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>2015-11-17T09:28:00.00</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
+  "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>3</PickupOrgID><PatronNotes/><ActivationDate>'+str_time+'</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>1</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
 }
 
 
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
-var hold_message=response.Message;
-var hold_status_type=response.StatusType;
 
-alert(hold_status_type);
-alert(hold_message);
-
+	var xml = $.parseXML(response),
+  	$xml = $( xml ),
+  	$fb_message = $xml.find('Message');
+	alert($fb_message.text());
 //prep_getholds (pat_barcode);
-  console.log(response);
-//});
+alert('now we do it');
 }).fail(function() {
-	alert ('Your hold request failed.');
+	alert ('Sorry, your hold request failed.');
 });
 }
-
-
 
 //case 7 - Cancel Hold - take hold id, validate patron and -> cancelhold
 $(document).on('click', '.hold_cancel a', function () {
