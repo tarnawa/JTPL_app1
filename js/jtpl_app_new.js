@@ -929,7 +929,10 @@ var the_value = response.getElementsByTagName("StatusValue")[0].childNodes[0].no
 var the_pos = response.getElementsByTagName("QueuePosition")[0].childNodes[0].nodeValue;
 var the_queue = response.getElementsByTagName("QueueTotal")[0].childNodes[0].nodeValue;
 var the_message = response.getElementsByTagName("Message")[0].childNodes[0].nodeValue;
-the_message = the_message.replace(/<br>/g, "\n");
+the_message = the_message.replace(/<br\s*[\/]?>/gi, "\n");
+
+//var regex = /<br\s*[\/]?>/gi;
+//the_message=the_message.replace(regex, "\n"))
 
 //Status type
 //1 - Error
@@ -941,7 +944,7 @@ the_message = the_message.replace(/<br>/g, "\n");
 		h_cont=false;
 	}
 	if(the_status==2){
-		if(the_value==1){alert(''+the_message+'.\nYour are # '+the_pos+' in the waiting queue of '+the_queue+'');}else{alert(the_message);}
+		if(the_value==1){alert(''+the_message+'\nYour are # '+the_pos+' in the waiting queue of '+the_queue+'');}else{alert(the_message);}
 	h_cont=true;
 	}
 	if(the_status==3){
