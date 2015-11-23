@@ -105,7 +105,9 @@ $.ajax({
 }
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate,referer){
+if(referer=='nyt'){
 $.mobile.changePage("#bib_detail");
+}
 var detlist_html='';
 var settings = {
   "async": true,
@@ -175,7 +177,7 @@ detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-rol
 detlist_html +="</td></tr></table>";
 });
  
-if(referer='nyt'){
+if(referer=='nyt'){
 $( "#bdetail" ).append(detlist_html);
 } else{
 $( "#bcode" ).append(detlist_html);
