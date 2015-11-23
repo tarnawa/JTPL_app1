@@ -77,7 +77,7 @@ return val2;
 
 //case2 - BARCODE SCANNER
 function getData(barcode){  
-
+alert(barcode);
 p_searchitem=barcode;
 var thedate=(new Date()).toUTCString();
 var reqstring="https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+"";
@@ -97,6 +97,9 @@ $.ajax({
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
 			getit_bc(p_response.code,p_response.reqstring,p_response.thedate);
+			alert(p_response.code);
+			alert(p_response.reqstring);
+			alert(p_response.thedate);
         },
         error      : function() {
             console.error("error");
@@ -107,7 +110,6 @@ $.ajax({
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
 var detlist_html='';
-alert('getit started');
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -1267,7 +1269,7 @@ $( "#most_popular" ).append(next_mplist_html);
 
 //take the ISBN to the library
 $(document).on('click', '.bc a', function () {
-the_isbn=$(this).attr("id");
+var the_isbn=$(this).attr("id");
 getData(the_isbn);
 });
 
