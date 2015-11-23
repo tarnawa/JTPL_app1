@@ -348,6 +348,9 @@ framehistory2=framehistory2.slice(0,1);
 $.mobile.changePage("#pageone");
 });
 
+
+
+
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 if(p_pwd ==='undefined') p_pwd ='';
@@ -1261,9 +1264,17 @@ $( "#most_popular" ).append(next_mplist_html);
 });
 }
 
+//take the ISBN to the library
+$(document).on('click', '.bc a', function () {
+the_isbn=$(this).attr("id");
+getData(the_isbn);
+});
+
+
 //GET NYT Bestseller JSON
 $(document).on('click', '#nyt_btn', function () {
 $('#selection').collapsible( "collapse" );
+start_spin();
 $.ajax({
         type: "GET",
 		dataType: "json",
@@ -1271,17 +1282,76 @@ $.ajax({
 		url: "http://www.wolfsworld1.com/NYT_HCF.php",
         crossDomain: true,
         success : function(response) {
-			
-		var response=JSON.stringify(response);
-		var response= jQuery.parseJSON(response);
-		alert(response);
-        },
+		NYT_HC_FIC(response);
+		},
         error      : function() {
             console.error("error");
             alert('Not working1!');                  
         }
 });
 });
+
+function NYT_HC_FIC (response){
+		var response=JSON.stringify(response);
+		var response= jQuery.parseJSON(response);
+
+var selection= ['title', 'author', 'publisher', 'description', 'primary_isbn13'];
+
+$( "#most_popular" ).empty();
+$( "#news" ).empty();
+$( "#blist" ).empty();
+$( "#news_dvd" ).empty();
+
+
+$.each(response.results, function(key, value) {
+var rank=key+1;
+var nyt1_html='';
+the_isbn=value.book_details[0].primary_isbn13;
+the_cover=value.book_details[0].book_image;
+
+nyt1_html +='<table class="bibtbl"><tr><td class="picbox"><img src="'+the_cover+'" width="90px" /></td ><td class="txtbox">';
+
+nyt1_html += "<strong>Rank: " + rank + "</strong><br>";
+
+$.each(value.book_details[0], function(key2, value2) {
+					//alert('this is rank: '+key+' key2: '+ key2 +' and value2: '+ value2 +'');
+
+	if(jQuery.inArray( key2, selection )!== -1){
+	
+		switch(key2){
+		case "title":
+		key2="Title";
+		break;
+		case "author":
+		key2="Author";
+		break;
+		case "publisher":
+		key2="Publisher";
+		break;
+		case "description":
+		key2="Summary";
+		break;
+		case "primary_isbn13":
+		key2="ISBN";
+		break;
+	}
+	
+	
+	nyt1_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
+	}
+});
+nyt1_html +="<p class='bc'><a id='"+the_isbn+"' href='#bib_detail' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Detail</a></p>";
+nyt1_html +="</td></tr></table>";
+
+$('.bc a[data-role=button]').button();
+$('.bc a').button('refresh');
+
+$( "#nyt" ).append(nyt1_html);
+stop_spin();
+});
+}
+
+
 
 //change page
 function login(){
