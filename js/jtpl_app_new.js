@@ -920,6 +920,8 @@ var settings = {
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
+
+alert('start process');
 var h_cont=false;
 //parse the xml object
 var the_status = response.getElementsByTagName("StatusType")[0].childNodes[0].nodeValue;
@@ -927,7 +929,7 @@ var the_value = response.getElementsByTagName("StatusValue")[0].childNodes[0].no
 var the_pos = response.getElementsByTagName("QueuePosition")[0].childNodes[0].nodeValue;
 var the_queue = response.getElementsByTagName("QueueTotal")[0].childNodes[0].nodeValue;
 var the_message = response.getElementsByTagName("Message")[0].childNodes[0].nodeValue;
-the_message = mystring.replace(/<br>/g, "\n");
+the_message = the_message.replace(/<br>/g, "\n");
 
 //Status type
 //1 - Error
