@@ -77,6 +77,7 @@ return val2;
 
 //case2 - BARCODE SCANNER
 function getData(barcode){  
+
 p_searchitem=barcode;
 var thedate=(new Date()).toUTCString();
 var reqstring="https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+"";
@@ -1272,16 +1273,34 @@ getData(the_isbn);
 
 
 //GET NYT Bestseller JSON
-$(document).on('click', '#nyt_btn', function () {
-$('#selection').collapsible( "collapse" );
-start_spin();
+$(document).on('click', '#nyt_f_btn', function () {
+var type="fiction";
+nyt_bestseller(type);											
+});
+$(document).on('click', '#nyt_nf_btn', function () {
+var type="nonfiction";
+nyt_bestseller(type);											
+});
+
+
+//source bestseller data
+function nyt_bestseller(type){
+//start_spin();
+if(type=='fiction'){
+var the_url="http://www.wolfsworld1.com/NYT_HCF.php";
+}
+if(type=='nonfiction'){
+var the_url="http://www.wolfsworld1.com/NYT_HCNF.php";
+}
+
 $.ajax({
         type: "GET",
 		dataType: "json",
 		async: true,
-		url: "http://www.wolfsworld1.com/NYT_HCF.php",
+		url: ""+the_url+"",
         crossDomain: true,
         success : function(response) {
+		//alert('success');
 		NYT_HC_FIC(response);
 		},
         error      : function() {
@@ -1289,28 +1308,29 @@ $.ajax({
             alert('Not working1!');                  
         }
 });
-});
-
+}
+//populate Bestseller Field
 function NYT_HC_FIC (response){
+	//alert(response);
 		var response=JSON.stringify(response);
 		var response= jQuery.parseJSON(response);
-
+//alert(response);
 var selection= ['title', 'author', 'publisher', 'description', 'primary_isbn13'];
 
 $( "#most_popular" ).empty();
 $( "#news" ).empty();
 $( "#blist" ).empty();
 $( "#news_dvd" ).empty();
-
+$( "#nyt" ).empty();
 
 $.each(response.results, function(key, value) {
-var rank=key+1;
 var nyt1_html='';
+var rank=key+1;
+
 the_isbn=value.book_details[0].primary_isbn13;
 the_cover=value.book_details[0].book_image;
 
 nyt1_html +='<table class="bibtbl"><tr><td class="picbox"><img src="'+the_cover+'" width="90px" /></td ><td class="txtbox">';
-
 nyt1_html += "<strong>Rank: " + rank + "</strong><br>";
 
 $.each(value.book_details[0], function(key2, value2) {
@@ -1347,7 +1367,7 @@ $('.bc a[data-role=button]').button();
 $('.bc a').button('refresh');
 
 $( "#nyt" ).append(nyt1_html);
-stop_spin();
+//stop_spin();
 });
 }
 
