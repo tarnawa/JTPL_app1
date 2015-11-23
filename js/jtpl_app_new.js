@@ -920,15 +920,41 @@ var settings = {
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
+h_cont=false;
 //parse the xml object
+var the_status = response.getElementsByTagName("StatusType")[0].childNodes[0].nodeValue;
+var the_value = response.getElementsByTagName("StatusValue")[0].childNodes[0].nodeValue;
 var the_pos = response.getElementsByTagName("QueuePosition")[0].childNodes[0].nodeValue;
 var the_queue = response.getElementsByTagName("QueueTotal")[0].childNodes[0].nodeValue;
 var the_message = response.getElementsByTagName("Message")[0].childNodes[0].nodeValue;
+the_message = mystring.replace(/<br>/g, "\n");
 
-alert(''+the_message+'<br>Your are # '+the_pos+' in the waiting queue of '+the_queue+'');
+//Status type
+//1 - Error
+//2 - Answer
+//3 - Conditional
 
-prep_getholds (pat_barcode);
-//alert('now we do it');
+	if(the_status==1){
+		alert('Can not process.\n'+the_message+'.');
+		h_cont=false;
+	}
+	if(the_status==2){
+		if(the_value==1){alert(''+the_message+'.\nYour are # '+the_pos+' in the waiting queue of '+the_queue+'');}else{alert(the_message);}
+	h_cont=true;
+	}
+	if(the_status==3){
+	var dec = confirm(the_message);
+	  if (dec==true){h_cont=true;}else{h_cont=false;}
+	}
+
+if(h_cont==true){
+//prep_getholds (pat_barcode);	
+alert('now we process');
+}
+else{
+alert('Request could not be processed');
+}
+
 }).fail(function() {
 	alert ('Sorry, your hold request failed.');
 });
