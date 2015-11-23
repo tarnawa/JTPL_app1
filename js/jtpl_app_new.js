@@ -916,12 +916,7 @@ var settings = {
   "data": '<HoldRequestCreateData><PatronID>'+res_pat_id+'</PatronID><BibID>'+cont_num+'</BibID><ItemBarcode/><VolumeNumber/><Designation/><PickupOrgID>13</PickupOrgID><PatronNotes/><ActivationDate>'+str_time+'</ActivationDate><WorkstationID>1</WorkstationID><UserID>1</UserID><RequestingOrgID>13</RequestingOrgID><TargetGUID></TargetGUID></HoldRequestCreateData>'
 }
 
-
-//2015-11-17T09:28:00.00
-
 $.ajax(settings).done(function (response) {
-
-alert('start process');
 var h_cont=false;
 //parse the xml object
 var the_status = response.getElementsByTagName("StatusType")[0].childNodes[0].nodeValue;
@@ -930,9 +925,6 @@ var the_pos = response.getElementsByTagName("QueuePosition")[0].childNodes[0].no
 var the_queue = response.getElementsByTagName("QueueTotal")[0].childNodes[0].nodeValue;
 var the_message = response.getElementsByTagName("Message")[0].childNodes[0].nodeValue;
 the_message = the_message.replace(/<br\s*[\/]?>/gi, "\n");
-
-//var regex = /<br\s*[\/]?>/gi;
-//the_message=the_message.replace(regex, "\n"))
 
 //Status type
 //1 - Error
@@ -945,21 +937,20 @@ the_message = the_message.replace(/<br\s*[\/]?>/gi, "\n");
 	}
 	if(the_status==2){
 		if(the_value==1){alert(''+the_message+'\nYour are # '+the_pos+' in the waiting queue of '+the_queue+'');}else{alert(the_message);}
-	h_cont=true;
+		h_cont=true;
 	}
 	if(the_status==3){
-	var dec = confirm(the_message);
-	  if (dec==true){h_cont=true;}else{h_cont=false;}
+		var dec = confirm(the_message);
+	  	if (dec==true){h_cont=true;}else{h_cont=false;}
 	}
 
 if(h_cont==true){
-//prep_getholds (pat_barcode);	
-alert('now we process');
+prep_getholds (pat_barcode);	
+//alert('now we process');
 }
 else{
 alert('Request could not be processed');
 }
-
 }).fail(function() {
 	alert ('Sorry, your hold request failed.');
 });
