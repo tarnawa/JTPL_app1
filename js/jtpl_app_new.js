@@ -920,7 +920,7 @@ var settings = {
 //2015-11-17T09:28:00.00
 
 $.ajax(settings).done(function (response) {
-h_cont=false;
+var h_cont=false;
 //parse the xml object
 var the_status = response.getElementsByTagName("StatusType")[0].childNodes[0].nodeValue;
 var the_value = response.getElementsByTagName("StatusValue")[0].childNodes[0].nodeValue;
