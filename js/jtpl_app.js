@@ -76,8 +76,7 @@ return val2;
 }
 
 //case2 - BARCODE SCANNER
-function getData(barcode){  
-alert(barcode);
+function getData(barcode,referer){  
 p_searchitem=barcode;
 var thedate=(new Date()).toUTCString();
 var reqstring="https://catalog.mainlib.org/PAPIService/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+"";
@@ -96,10 +95,7 @@ $.ajax({
 			//stop_spin();
 			var code=response;
 			p_response={"code": ""+code+"", "reqstring": ""+reqstring+"", "thedate": ""+thedate+""};
-			getit_bc(p_response.code,p_response.reqstring,p_response.thedate);
-			alert(p_response.code);
-			alert(p_response.reqstring);
-			alert(p_response.thedate);
+			getit_bc(p_response.code,p_response.reqstring,p_response.thedate,referer);
         },
         error      : function() {
             console.error("error");
@@ -108,7 +104,8 @@ $.ajax({
 });
 }
 //case 2 - get barcode detail
-function getit_bc(code,reqstring,thedate){
+function getit_bc(code,reqstring,thedate,referer){
+$.mobile.changePage("#bib_detail");
 var detlist_html='';
 var settings = {
   "async": true,
@@ -126,6 +123,7 @@ $.ajax(settings).done(function (response) {
 
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
 $( "#bcode" ).empty();
+$( "#bdetail" ).empty();
 
 var detlist_html='';
   
@@ -177,7 +175,12 @@ detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-rol
 detlist_html +="</td></tr></table>";
 });
  
+if(referer='nyt'){
+$( "#bdetail" ).append(detlist_html);
+} else{
 $( "#bcode" ).append(detlist_html);
+}
+
 $('.hold_req a').button();
 });
 };
@@ -375,6 +378,7 @@ case 9: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemso
 case 10: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemsout/overdue"; break;
 case 11: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/itemsout/"+p_holdID+""; break;
 case 12: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=COL=7+sortby+MP/sort.descending&page="+p_holdID+"";break;
+case 13: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 }
 
 var thedate=(new Date()).toUTCString();
@@ -403,12 +407,12 @@ $.ajax({
 			case 5: checklogin(p_response.code,p_response.reqstring,p_response.thedate,p_type,p_cn); break;
 			case 6: createhold(p_holdID,p_cn,p_response.code,p_response.reqstring,p_response.thedate,p_bc); break;
 			case 7: cancelhold(reqstring,thedate,code); break;
-			//case 7: validate_patron(reqstring,thedate,code,hold_id); break;
 			case 8: getholds(reqstring,thedate,code); break;
 			case 9: items_out_all(reqstring,thedate,code); break;
 			case 10: items_out_over(reqstring,thedate,code); break;
 			case 11: item_renew(reqstring,thedate,code,p_bc); break;
 			case 12: most_popular(code,reqstring,thedate); break;
+			case 13: get_det_nyt(p_response.code,p_response.reqstring,p_response.thedate); break;
 			}
         },
         error      : function() {
@@ -1270,7 +1274,8 @@ $( "#most_popular" ).append(next_mplist_html);
 //take the ISBN to the library
 $(document).on('click', '.bc a', function () {
 var the_isbn=$(this).attr("id");
-getData(the_isbn);
+getit_bc(the_isbn,nyt);
+//$.mobile.changePage("#scanner");
 });
 
 
