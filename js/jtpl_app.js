@@ -107,7 +107,7 @@ $.ajax({
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate){
 var detlist_html='';
-
+alert('getit started');
 var settings = {
   "async": true,
   "crossDomain": true,
