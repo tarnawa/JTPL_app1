@@ -356,9 +356,6 @@ framehistory2=framehistory2.slice(0,1);
 $.mobile.changePage("#pageone");
 });
 
-
-
-
 //ENCRYPTION/VALIDATION
 function p_validate(p_query, p_searchitem, p_pwd, p_cn, p_bc, p_method, p_type, p_holdID ){
 if(p_pwd ==='undefined') p_pwd ='';
@@ -1276,10 +1273,86 @@ $( "#most_popular" ).append(next_mplist_html);
 //take the ISBN to the library
 $(document).on('click', '.bc a', function () {
 var the_isbn=$(this).attr("id");
-$.mobile.changePage("#scanner");
+//$.mobile.changePage("#scanner");
+start_spin();
 p_validate(13,''+the_isbn+'','','','','GET','','');
 });
 
+//case 13 Get NYT Detail in the Detail Page
+function get_det_nyt(code,reqstring,thedate){
+alert('nyt detail started');
+var det_nyt_html='';
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+alert('ajax done');
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
+$( "#bdetail" ).empty();
+
+var det_nyt_html='';
+  
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
+ISBN=value.ISBN;
+alert(ISBN);
+switch(media){
+	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
+	case 33: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	default: if(ISBN==''){
+		detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
+	} else{
+det_nyt_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+}
+}
+								  
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+		switch(key2){
+			case "PublicationDate":
+			key2="Publication Date";
+			break;
+			case "LocalItemsTotal":
+			key2="Local Items Total";
+			break;
+			case "LocalItemsIn":
+			key2="Local Items In";
+			break;
+			case "CurrentHoldRequests":
+			key2="Current Hold Requests";
+			break;
+			case "SystemItemsTotal":
+			key2="System Items Total";
+			break;
+			case "PrimaryTypeOfMaterial":
+			key2="Media Type";
+			value2=matconv(value2);
+			break;
+		}
+	det_nyt_html += "<strong>" + key2 + "</strong>: " + value2 + "<br>";
+	}
+
+});
+det_nyt_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Put on Hold</a></p>";
+det_nyt_html +="</td></tr></table>";
+});
+
+$( "#bdetail" ).append(det_nyt_html);
+$('.hold_req a').button();
+});
+};
 
 //GET NYT Bestseller JSON
 $(document).on('click', '#nyt_f_btn', function () {
@@ -1290,7 +1363,6 @@ $(document).on('click', '#nyt_nf_btn', function () {
 var type="nonfiction";
 nyt_bestseller(type);											
 });
-
 
 //source bestseller data
 function nyt_bestseller(type){
@@ -1376,87 +1448,9 @@ $('.bc a[data-role=button]').button();
 $('.bc a').button('refresh');
 
 $( "#nyt" ).append(nyt1_html);
-//stop_spin();
+stop_spin();
 });
 }
-
-
-//case 13 Get NYT Detail in the Detail Page
-function get_det_nyt(code,reqstring,thedate){
-alert('nyt detail started');
-var det_nyt_html='';
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": ""+reqstring+"",
-  "method": "GET",
-  "headers": {
-    "polarisdate": ""+thedate+"",
-    "authorization": ""+code+"",
-    "content-type": "application/json"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-alert('ajax done');
-var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
-$( "#bdetail" ).empty();
-
-var det_nyt_html='';
-  
-$.each(response.BibSearchRows, function(key, value) {
-cont_no=value.ControlNumber;
-media=value.PrimaryTypeOfMaterial;
-ISBN=value.ISBN;
-alert(ISBN);
-switch(media){
-	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
-	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
-	case 33: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
-	default: if(ISBN==''){
-		detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
-	} else{
-det_nyt_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
-}
-}
-								  
-$.each(value, function(key2, value2) {
-	
-	if(jQuery.inArray( key2, selection )!== -1){
-		switch(key2){
-			case "PublicationDate":
-			key2="Publication Date";
-			break;
-			case "LocalItemsTotal":
-			key2="Local Items Total";
-			break;
-			case "LocalItemsIn":
-			key2="Local Items In";
-			break;
-			case "CurrentHoldRequests":
-			key2="Current Hold Requests";
-			break;
-			case "SystemItemsTotal":
-			key2="System Items Total";
-			break;
-			case "PrimaryTypeOfMaterial":
-			key2="Media Tyoe";
-			value2=matconv(value2);
-			break;
-		}
-	det_nyt_html += key2 + ": " + value2 + "<br>";
-	}
-
-});
-det_nyt_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Put on Hold</a></p>";
-det_nyt_html +="</td></tr></table>";
-});
-
-$( "#bdetail" ).append(det_nyt_html);
-$('.hold_req a').button();
-});
-};
-
 
 //change page
 function login(){
