@@ -636,6 +636,7 @@ $('.hold_req a').button();
 
 //case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
+$('#selection').collapsible( "collapse" );
 $('#blist').empty();
 $('#most_popular').empty();
 $('#new_dvds').empty();
@@ -657,6 +658,7 @@ $.ajax({
 });
 
 $(document).on('click', '#ndvd_btn', function () {
+$('#selection').collapsible( "collapse" );
 $('#blist').empty();
 $('#most_popular').empty();
 $('#news').empty();
@@ -1190,6 +1192,7 @@ page_counter=1;
 $('#blist').empty();
 $('#news').empty();
 $('#new_dvds').empty();
+$('#selection').collapsible( "collapse" );
 p_validate(12,'','','','','GET','',1);
 start_spin();
 });
@@ -1270,17 +1273,16 @@ $( "#most_popular" ).append(next_mplist_html);
 });
 }
 
-//take the ISBN to the library
+//case 13 take the ISBN to the library
 $(document).on('click', '.bc a', function () {
 var the_isbn=$(this).attr("id");
 //$.mobile.changePage("#scanner");
 start_spin();
 p_validate(13,''+the_isbn+'','','','','GET','','');
 });
-
 //case 13 Get NYT Detail in the Detail Page
 function get_det_nyt(code,reqstring,thedate){
-alert('nyt detail started');
+
 var det_nyt_html='';
 var settings = {
   "async": true,
@@ -1295,7 +1297,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-alert('ajax done');
+
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
 $( "#bdetail" ).empty();
 
@@ -1305,7 +1307,7 @@ $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
-alert(ISBN);
+
 switch(media){
 	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
@@ -1350,6 +1352,7 @@ det_nyt_html +="</td></tr></table>";
 });
 
 $( "#bdetail" ).append(det_nyt_html);
+stop_spin();
 $('.hold_req a').button();
 });
 };
@@ -1363,10 +1366,10 @@ $(document).on('click', '#nyt_nf_btn', function () {
 var type="nonfiction";
 nyt_bestseller(type);											
 });
-
 //source bestseller data
 function nyt_bestseller(type){
-//start_spin();
+start_spin();
+$('#selection').collapsible( "collapse" );
 if(type=='fiction'){
 var the_url="http://www.wolfsworld1.com/NYT_HCF.php";
 }
