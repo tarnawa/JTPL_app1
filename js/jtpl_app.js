@@ -105,9 +105,9 @@ $.ajax({
 }
 //case 2 - get barcode detail
 function getit_bc(code,reqstring,thedate,referer){
-if(referer=='nyt'){
-$.mobile.changePage("#bib_detail");
-}
+//if(referer=='nyt'){
+//$.mobile.changePage("#bib_detail");
+//}
 var detlist_html='';
 var settings = {
   "async": true,
@@ -177,11 +177,11 @@ detlist_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-rol
 detlist_html +="</td></tr></table>";
 });
  
-if(referer=='nyt'){
-$( "#bdetail" ).append(detlist_html);
-} else{
+//if(referer=='nyt'){
+//$( "#bdetail" ).append(detlist_html);
+//} else{
 $( "#bcode" ).append(detlist_html);
-}
+//}
 
 $('.hold_req a').button();
 });
@@ -1276,8 +1276,8 @@ $( "#most_popular" ).append(next_mplist_html);
 //take the ISBN to the library
 $(document).on('click', '.bc a', function () {
 var the_isbn=$(this).attr("id");
-getit_bc(the_isbn,nyt);
-//$.mobile.changePage("#scanner");
+$.mobile.changePage("#scanner");
+p_validate(13,''+the_isbn+'','','','','GET','','');
 });
 
 
@@ -1380,6 +1380,83 @@ $( "#nyt" ).append(nyt1_html);
 });
 }
 
+
+//case 13 Get NYT Detail in teh Detail Page
+function get_det_nyt(code,reqstring,thedate){
+
+var det_nyt_html='';
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": ""+reqstring+"",
+  "method": "GET",
+  "headers": {
+    "polarisdate": ""+thedate+"",
+    "authorization": ""+code+"",
+    "content-type": "application/json"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+
+var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
+$( "#bcode" ).empty();
+$( "#bdetail" ).empty();
+
+var det_nyt_html='';
+  
+$.each(response.BibSearchRows, function(key, value) {
+cont_no=value.ControlNumber;
+media=value.PrimaryTypeOfMaterial;
+ISBN=value.ISBN;
+
+switch(media){
+	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
+	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
+	case 33: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/dvd_icon.png" /></td ><td class="txtbox">'; break;
+	default: if(ISBN==''){
+		detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/Jacket.jpg" /></td ><td class="txtbox">';
+	} else{
+det_nyt_html +='<table class="bibtbl"><tr><td class="picbox"><img src="http://contentcafe2.btol.com/ContentCafe/Jacket.aspx?Return=T&Type=S&Value='+ISBN+'&userID=MAIN37789&password=CC10073" /></td ><td class="txtbox">';
+}
+}
+								  
+$.each(value, function(key2, value2) {
+	
+	if(jQuery.inArray( key2, selection )!== -1){
+		switch(key2){
+			case "PublicationDate":
+			key2="Publication Date";
+			break;
+			case "LocalItemsTotal":
+			key2="Local Items Total";
+			break;
+			case "LocalItemsIn":
+			key2="Local Items In";
+			break;
+			case "CurrentHoldRequests":
+			key2="Current Hold Requests";
+			break;
+			case "SystemItemsTotal":
+			key2="System Items Total";
+			break;
+			case "PrimaryTypeOfMaterial":
+			key2="Media Tyoe";
+			value2=matconv(value2);
+			break;
+		}
+	det_nyt_html += key2 + ": " + value2 + "<br>";
+	}
+
+});
+det_nyt_html +="<p class='hold_req'><a id=" + cont_no + " href='#login' data-role='button' data-inline='true' data-mini='true' data-icon='arrow-r' data-theme='a'>Put on Hold</a></p>";
+det_nyt_html +="</td></tr></table>";
+});
+
+$( "#bdetail" ).append(det_nyt_html);
+$('.hold_req a').button();
+});
+};
 
 
 //change page
