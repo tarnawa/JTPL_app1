@@ -1471,6 +1471,7 @@ $('.bc a[data-role=button]').button();
 $('.bc a').button('refresh');
 
 $( "#nyt" ).append(nyt1_html);
+$('.bc a').button();
 stop_spin();
 });
 }
