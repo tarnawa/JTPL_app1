@@ -1381,9 +1381,9 @@ $( "#nyt" ).append(nyt1_html);
 }
 
 
-//case 13 Get NYT Detail in teh Detail Page
+//case 13 Get NYT Detail in the Detail Page
 function get_det_nyt(code,reqstring,thedate){
-
+alert('nyt detail started');
 var det_nyt_html='';
 var settings = {
   "async": true,
@@ -1398,9 +1398,8 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
+alert('ajax done');
 var selection= ['Title', 'Author', 'PublicationDate', 'Description', 'ISBN', 'PrimaryTypeOfMaterial', 'LocalItemsTotal', 'LocalItemsIn', 'SystemItemsTotal','CurrentHoldRequests', 'Summary'];
-$( "#bcode" ).empty();
 $( "#bdetail" ).empty();
 
 var det_nyt_html='';
@@ -1409,7 +1408,7 @@ $.each(response.BibSearchRows, function(key, value) {
 cont_no=value.ControlNumber;
 media=value.PrimaryTypeOfMaterial;
 ISBN=value.ISBN;
-
+alert(ISBN);
 switch(media){
 	case 35: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/cd_icon.png" /></td ><td class="txtbox">'; break;
 	case 40: detlist_html +='<table class="bibtbl"><tr><td class="picbox"><img src="img/blueray_icon.png" /></td ><td class="txtbox">'; break;
