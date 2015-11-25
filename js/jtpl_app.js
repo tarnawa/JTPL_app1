@@ -8,6 +8,8 @@ var page_counter=1;
 if(page_counter<1){
 var page_counter=1;
 }
+
+var newtitle_list=0;
 //device detection and homepage size
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -368,7 +370,7 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&sortby=PD/sort.descending&bibsperpage=40&page="+p_holdID+""; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_searchitem+"%7B/list%7D&sortby=PD/sort.descending&bibsperpage=40&page="+p_holdID+""; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
@@ -565,9 +567,8 @@ next_news_search(page_counter);
 });
 
 function next_news_search(next_page){
-searchitem= $('#search_item').val();
-   	p_searchitem=searchitem.replace(/\s+/g,"+");
-	p_validate(4,''+p_searchitem+'','','','','GET','',''+next_page+'');
+searchitem= newtitle_list;
+   	p_validate(4,''+searchitem+'','','','','GET','',''+next_page+'');
 }
 
 //case 3 - get book detail (get encryption data)
@@ -690,7 +691,8 @@ $.ajax({
 		url: "http://www.jeffersonlibrary.net/newbook.php",
         crossDomain: true,
         success : function(response) {
-			p_validate(4,'','','','','GET','',''+response+'');
+			var newtitle_list=response;
+			p_validate(4,''+response+'','','','','GET','',1);
 			start_spin();
         },
         error      : function() {
@@ -701,6 +703,7 @@ $.ajax({
 });
 
 $(document).on('click', '#ndvd_btn', function () {
+page_counter=1;	
 $('#selection').collapsible( "collapse" );
 $('#blist').empty();
 $('#most_popular').empty();
@@ -711,7 +714,8 @@ $.ajax({
 		url: "http://www.jeffersonlibrary.net/newdvd.php",
         crossDomain: true,
         success : function(response) {
-			p_validate(4,'','','','','GET','',''+response+'');
+			var newtitle_list=response;
+			p_validate(4,''+response+'','','','','GET','',1);
 			start_spin();
         },
         error      : function() {
@@ -799,9 +803,8 @@ if(page_counter>1){
 next_batch_news +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
 $( "#news" ).append(next_batch_news);
 }
-
 });
-};
+}
 
 //case 5 - Hold Request or Login (get encryption)
 $(document).on('click', '.hold_req a', function () {
