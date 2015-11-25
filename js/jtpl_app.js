@@ -794,7 +794,7 @@ $('.trail a').button('refresh');
 $( "#news" ).append(np_list_html);
 $('.trail a').button();
 stop_spin();
-
+alert(page_counter);
 if(page_counter==1){
 next_batch_news +="<a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
 $( "#news" ).append(next_batch_news);
