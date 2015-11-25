@@ -368,7 +368,7 @@ switch(p_query){
 case 1:	var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/KW?q="+p_searchitem+"&bibsperpage=20&page="+p_holdID+""; break;
 case 2: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/ISBN?q="+p_searchitem+""; break;
 case 3: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/keyword/CN?q="+p_searchitem+""; break;
-case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&sortby=PD/sort.descending&bibsperpage=70"; break;
+case 4: var reqstring=""+dest+"/REST/public/v1/1033/100/13/search/bibs/boolean?q=CN=%7Blist%7D"+p_holdID+"%7B/list%7D&sortby=PD/sort.descending&bibsperpage=40&page="+p_holdID+""; break;
 case 5: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+""; break;
 case 6: var reqstring=""+dest+"/REST/public/v1/1033/100/1/holdrequest"; break;
 case 7: var reqstring=""+dest+"/REST/public/v1/1033/100/1/patron/"+p_bc+"/holdrequests/"+p_holdID+"/cancelled?wsid=1&userid=1"; break;
@@ -521,7 +521,6 @@ next_batch +="<a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-cloud
 $( "#blist" ).append(next_batch);
 }
 if(page_counter>1){
-	
 next_batch +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
 $( "#blist" ).append(next_batch);
 }
@@ -554,6 +553,21 @@ next_mp_search(page_counter);
 
 function next_mp_search(next_page){
 	p_validate(12,'','','','','GET','',''+next_page+'');
+}
+//next batch new books and dvds
+$(document).on('click', '#fwd_btn', function () {
+page_counter=page_counter+1;
+next_news_search(page_counter);
+});
+$(document).on('click', '#rev_btn', function () {
+page_counter=page_counter-1;
+next_news_search(page_counter);
+});
+
+function next_news_search(next_page){
+searchitem= $('#search_item').val();
+   	p_searchitem=searchitem.replace(/\s+/g,"+");
+	p_validate(4,''+p_searchitem+'','','','','GET','',''+next_page+'');
 }
 
 //case 3 - get book detail (get encryption data)
@@ -662,6 +676,7 @@ $('.hold_req a').button();
 
 //case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
+page_counter=1;										 
 $('#selection').collapsible( "collapse" );
 $( "#most_popular" ).empty();
 $( "#news" ).empty();
@@ -775,6 +790,16 @@ $('.trail a').button('refresh');
 $( "#news" ).append(np_list_html);
 $('.trail a').button();
 stop_spin();
+
+if(page_counter==1){
+next_batch_news +="<a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-cloud ui-btn-icon-left'>...next 20 results</a>";
+$( "#news" ).append(next_batch_news);
+}
+if(page_counter>1){
+next_batch_news +="<div data-role='controlgroup' data-type='horizontal' data-mini='true'><a href='#' id='rev_btn' class='ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-left'>show last 20</a><a href='#' id='fwd_btn' class='ui-btn ui-corner-all ui-icon-carat-r ui-btn-icon-left'>show next 20</a></div>";
+$( "#news" ).append(next_batch_news);
+}
+
 });
 };
 
