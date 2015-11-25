@@ -464,7 +464,13 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 var selection= ['Title', 'Author', 'PublicationDate', 'PrimaryTypeOfMaterial'];
+
+$( "#most_popular" ).empty();
+$( "#news" ).empty();
 $( "#blist" ).empty();
+$( "#news_dvd" ).empty();
+$( "#nyt" ).empty();
+
 var blist_html='';
 var next_batch='';
 
@@ -657,9 +663,11 @@ $('.hold_req a').button();
 //case 4 - get new publications - book & dvd  (encrypt)
 $(document).on('click', '#nb_btn', function () {
 $('#selection').collapsible( "collapse" );
-$('#blist').empty();
-$('#most_popular').empty();
-$('#new_dvds').empty();
+$( "#most_popular" ).empty();
+$( "#news" ).empty();
+$( "#blist" ).empty();
+$( "#news_dvd" ).empty();
+$( "#nyt" ).empty();
 
 $.ajax({
         type: "GET",
@@ -1209,9 +1217,11 @@ pwd=$('#libpin').val();
 //case 12 - get most popular (encrypt)
 $(document).on('click', '#mp_btn', function () {
 page_counter=1;
-$('#blist').empty();
-$('#news').empty();
-$('#new_dvds').empty();
+$( "#most_popular" ).empty();
+$( "#news" ).empty();
+$( "#blist" ).empty();
+$( "#news_dvd" ).empty();
+$( "#nyt" ).empty();
 $('#selection').collapsible( "collapse" );
 p_validate(12,'','','','','GET','',1);
 start_spin();
